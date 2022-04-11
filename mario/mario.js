@@ -59,6 +59,8 @@ scene('start', () => {
 scene('game', () => {
     layers(['bg', 'obj', 'ui'], 'obj');
 
+
+    //MARIO & HIS MOVEMENT
     const mario = add([
         sprite('mario'), 
         solid(), 
@@ -69,6 +71,24 @@ scene('game', () => {
         'mario'
     ]);
 
+    const marioSpeed = 120;
+    const marioJumpHeight = 600;
+
+    onKeyDown('left', () => {
+        mario.move(-marioSpeed, 0);
+    });
+
+    onKeyDown('right', () => {
+        mario.move(marioSpeed, 0);
+    });
+
+    onKeyPress('space', () => {
+        if (mario.isGrounded()) {
+            mario.jump(marioJumpHeight);
+        }
+    });
+
+    //GAME LEVEL CONFIG
     const gameLevel = addLevel([
         '                                     ',
         '                                     ',
@@ -101,6 +121,8 @@ scene('game', () => {
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', body()],
     });
 
+
+    //CAMERA POSITIONING
     onUpdate(() => {
         // camPos(mario.pos.x, 180);
         camPos(mario.pos);
