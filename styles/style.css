@@ -1,25 +1,19 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
 body {
-    /* https://coolors.co/generate and click export -> scss to get the colors to copy and paste below*/
-    /* --color1: hsla(349, 69%, 76%, 1);
-    --color2: hsla(207, 67%, 44%, 1);
-    --color3: hsla(200, 61%, 56%, 1);
-    --color4: hsla(187, 41%, 94%, 1);
-    --color5: hsla(170, 28%, 95%, 1); */
-
-    /* --color1: hsla(45, 86%, 83%, 1);
-    --color2: hsla(135, 65%, 98%, 1);
-    --color3: hsla(315, 37%, 86%, 1);
-    --color4: hsla(45, 73%, 98%, 1);
-    --color5: hsla(224, 40%, 79%, 1); */
+    --color1: #d17300;
+    --color2: #01c6bc;
+    --color3: #efda70;
+    --color4: #c10114;
+    --color5: #561313;
     
     --header-height: 80px;
     --shadow: 0px 10px 20px -12px rgba(0,0,0,0.45);
     /* --gutter: 30px; */
     --footer-height: 25px;
     
-    font-family: 'Titillium Web', sans-serif;
-    background-color: var(--color2);
+    font-family: 'orbitron', sans-serif;
+    background: linear-gradient(var(--color2), var(--color5));
+    /* background: linear-gradient(70deg, #4292a7 40%, rgba(0, 0, 0, 0) 80%), url(/assets/sign-up-page.png); */
 }
 
 main {
@@ -28,6 +22,7 @@ main {
     justify-content: center;
     align-items: center;
     margin-bottom: calc(var(--footer-height));
+    /* background: linear-gradient(var(--color2), var(--color5)); */
 }
 
 section {
@@ -48,7 +43,7 @@ section {
 header {
     display: flex;
     justify-content: flex-end;
-    background-color: var(--color3);
+    background-color: var(--color1);
     height: var(--header-height);
     box-shadow: var(--shadow);
 }
@@ -68,6 +63,7 @@ h2 {
 
 header img {
     height: var(--header-height);
+    border-radius: 50%;
 }
 
 p {
@@ -81,7 +77,7 @@ footer {
     height: var(--footer-height);
     display: flex;
     justify-content: flex-end;
-    background-color: var(--color3);
+    background-color: var(--color1);
     box-shadow: var(--shadow);
 }
 
@@ -113,12 +109,16 @@ footer {
 
 .auth-main {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
+    background: linear-gradient(70deg, #4292a7 40%, rgba(0, 0, 0, 0) 80%), url(/assets/sign-up-page.png);
+    height: 100%;
+    width: 100%;
 }
 
 .auth-container {
-    margin: 10px;
+    margin: 0px 100px;
 }
 
 .auth-container form {
