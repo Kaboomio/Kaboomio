@@ -13,9 +13,14 @@ export function checkAuth() {
     if (!user) location.replace('../');
 }
 
-export function redirectIfLoggedIn() {
+export async function redirectIfLoggedIn() {
     if (getUser()) {
-        location.replace('./mario');
+        const profile = await getProfile();
+        if (!profile.username) {
+            location.replace('../profile-setup');
+        } else {
+            location.replace('../mario');
+        }
     }
 }
 
@@ -37,7 +42,35 @@ export async function logout() {
     return (window.location.href = '../');
 }
 
-// function checkError({ data, error }) {
-//     return error ? console.error(error) : data;
-// }
+export async function createProfile() {
+    const response = await client
+        .from('profiles')
+        .insert({});
+    return checkError(response);
+}
 
+export async function getProfile() {
+    const user = getUser();
+    const response = await client
+        .from('profiles')
+        .select()
+        .match({ user_id: user.id })
+        .single();
+
+    return checkError(response);
+}
+
+export async function updateUsernameAndAvatar(username, avatar) {
+    const user = getUser();
+    const response = await client
+        .from('profiles')
+        .update({ username, img_url: `../assets/avatars/${avatar}.png` })
+        .match({ user_id: user.id });
+
+    return checkError(response);
+}
+
+
+function checkError({ data, error }) {
+    return error ? console.error(error) : data;
+}
