@@ -1,4 +1,4 @@
-import kaboom from "../kaboom/dist/kaboom.mjs";
+import kaboom from '../kaboom/dist/kaboom.mjs';
 
 kaboom({
     global: true,
@@ -11,7 +11,7 @@ kaboom({
 });
 
 add([
-    text("hello"),
+    text('hello'),
     pos(120, 80),
 ]);
 
@@ -63,10 +63,10 @@ scene('game', ({ score, count }) => {
 
 
     add([
-        sprite("castle"),
+        sprite('castle'),
         pos(1018, 286),
-        layer("bg"),
-        origin("bot"),
+        layer('bg'),
+        origin('bot'),
         scale(0.25)
     ]);
 
@@ -223,13 +223,13 @@ go('game', { score: 0, count: 0 });
 
 function patrol(distance = 150, speed = 50, dir = 1) {
     return {
-        id: "patrol",
-        require: ["pos", "area",],
+        id: 'patrol',
+        require: ['pos', 'area'],
         startingPos: vec2(0, 0),
         add() {
             this.startingPos = this.pos;
-            this.on("collide", (obj, side) => {
-                if (side === "left" || side === "right") {
+            this.on('collide', (obj, side) => {
+                if (side === 'left' || side === 'right') {
                     dir = -dir;
                 }
             });
