@@ -28,6 +28,8 @@ loadSprite('pipe', '../assets/pipe.png');
 //start screen sprites
 loadSprite('start-screen', '../assets/start-screen.png');
 
+
+//START SCENE
 scene('start', () => {
     
     const startScreen = add([
@@ -53,7 +55,7 @@ scene('start', () => {
 });
 
 
-
+//GAME SCENE
 scene('game', () => {
     layers(['bg', 'obj', 'ui'], 'obj');
 
@@ -104,5 +106,7 @@ scene('game', () => {
         camPos(mario.pos);
     });
 });
+
+//NEEDED - END GAME SCENE
 
 go('game');
