@@ -12,13 +12,18 @@
     <link rel="stylesheet" href="../styles/home.css">
     <title>Document</title>
     <style>
+        @font-face {
+            font-family: marioFont;
+            src: url('../assets/PixelEmulator-xq08.ttf');
+        }
+
         .hidden {
             display: none;
         }
 
         main {
             margin: 20px 10vw;
-
+            font-family: marioFont;
         }
 
         section {
@@ -29,6 +34,11 @@
         
         p {
             margin: 0px;
+            font-family: marioFont;
+        }
+
+        h2 {
+            font-family: marioFont;
         }
 
         .flex-row {
@@ -84,6 +94,36 @@
             height: 40px;
             width: 90%;
         }
+
+        table {
+            margin: 10px 70px 70px;
+            box-shadow: 0px 5px 5px grey;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: normal;
+            border: none;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 100%;
+            white-space: nowrap;
+            background-color: white;
+            max-width: 60vw;
+        }
+
+        td, th {
+            text-align: center;
+            padding: 8px;
+        }
+
+        th {
+            color: #ffffff;
+            background-color: #6A0400;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background-color: #F8F8F8;
+        }
     </style>
 </head>
 
@@ -95,7 +135,7 @@
         <section class="flex-row space-between">
             <div>
                 <div class="flex-row">
-                    <img src="../assets/mario.png" alt="No Avatar" id="avatar">
+                    <img src="" alt="No Avatar" id="avatar">
                     <h2 id="username">Mario!</h2>
                 </div>
                 <span id="joinedDate">Joined Date: </span>
@@ -121,9 +161,20 @@
         </div>
         <p id="bio"></p>
         <h3>Previous Scores</h3>
-        <ul id="previousScoresContainer">
+        <table>
+            <thead>
+                <tr>
+                    <th>Initials</th>
+                    <th>Score</th>
+                    <th>Level</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody id="previousScoresContainer">
 
-        </ul>
+            </tbody>
+        </table>
     </main>
     <script type="module" src="./profile.js"></script>
 </body>
