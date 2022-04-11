@@ -24,6 +24,8 @@ loadSprite('mushroom', '../assets/mushroom.png');
 loadSprite('evil-mushroom', '../assets/evil-mushroom.png');
 loadSprite('surprise-box', '../assets/surprise-box.png');
 loadSprite('pipe', '../assets/pipe.png');
+loadSprite('castle', '../assets/castle.png');
+
 
 //start screen sprites
 loadSprite('start-screen', '../assets/start-screen.png');
@@ -58,6 +60,16 @@ scene('start', () => {
 //GAME SCENE
 scene('game', ({ score, count }) => {
     layers(['bg', 'obj', 'ui'], 'obj');
+
+
+    add([
+        sprite("castle"),
+        pos(1018, 286),
+        layer("bg"),
+        origin("bot"),
+        scale(0.25)
+    ]);
+
 
 
     //MARIO & HIS MOVEMENT
