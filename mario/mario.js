@@ -88,6 +88,13 @@ scene('game', () => {
         }
     });
 
+    //EVIL MUSHROOM MOVEMENT
+    const evilMushroomMove = 20;
+
+    onUpdate('evil-mushroom', (obj) => {
+        obj.move(-evilMushroomMove, 0);
+    });
+
     //GAME LEVEL CONFIG
     const gameLevel = addLevel([
         '                                     ',
