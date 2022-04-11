@@ -27,3 +27,30 @@ loadSprite('pipe', '../assets/pipe.png');
 
 //start screen sprites
 loadSprite('start-screen', '../assets/start-screen.png');
+
+scene('start', () => {
+    
+    const startScreen = add([
+        sprite('start-screen'),
+        origin('center'), 
+        pos(0, 0), 
+        scale(0.65)
+    ]);
+    add([
+        text('Press Spacebar To Start'),
+        origin('center'), 
+        pos(0, 125), 
+        scale(0.25)
+    ]);
+
+    onKeyDown('space', () => {
+        go('game');
+    });
+    
+    onUpdate(() => {
+        camPos(startScreen.pos.x, (startScreen.pos.y + 50));
+    });
+});
+
+
+go('start');
