@@ -15,7 +15,38 @@
     },
     "globals": {
         "QUnit": false,
-        "supabase": false
+        "supabase": false,
+        "add": false,
+        "text": false,
+        "pos": false,
+        "loadSprite": false,
+        "scene": false,
+        "sprite": false,
+        "scale": false,
+        "onKeyDown": false,
+        "go": false,
+        "onUpdate": false,
+        "camPos": false,
+        "layers": false,
+        "layer": false,
+        "solid": false,
+        "area": false,
+        "body": false,
+        "onKeyPress": false,
+        "destroy": false,
+        "lifespan": false,
+        "gameLevel": false,
+        "addLevel": false,
+        "fixed": false,
+        "vec2": false,
+
+
+
+
+
+
+
+
     },
     "rules": {
         "eqeqeq": ["error", "always"],
