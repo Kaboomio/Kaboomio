@@ -4,13 +4,14 @@ import { checkAuth, logout, client, getUser } from '../fetch-utils.js';
 const avatarEl = document.getElementById('avatar');
 const usernameEl = document.getElementById('username');
 const joinedDateEl = document.getElementById('joinedDate');
-const gamesPlayedEl = document.getElementById('gamesPlayed');
 const bioEl = document.getElementById('bio');
-const editButtonEl = document.getElementById('editButtonEl');
+const editButtonEl = document.getElementById('editButton');
 const previousScoresContainer = document.getElementById('previousScoresContainer');
+const editProfileForm = document.getElementById('editProfile');
+const formContainer = document.querySelector('.formContainer');
 
 const params = new URLSearchParams(window.location.search);
-const profileId = 1;
+const profileId = params.get('id');
 
 
 checkAuth();
@@ -23,11 +24,28 @@ logoutButton.addEventListener('click', () => {
 
 window.addEventListener('load', setUserInfo);
 
-function setUserInfo() {
-    const profile = getProfile(profileId);
+async function setUserInfo() {
+    const profile = await getProfile(profileId);
 
+    const joinedDate = new Date(profile.created_at);
+
+    avatarEl.src = profile.img_url;
+    usernameEl.textContent = profile.username;
+    joinedDateEl.textContent = 'Joined Date: ' + joinedDate.toLocaleDateString('en-US');
+    bioEl.textContent = profile.bio;
+
+    const userProfileId = await getMyProfile();
+
+    if (userProfileId.id.toString() === profileId) {
+        editButtonEl.classList.remove('hidden');
+    }
 
 }
+
+editButtonEl.addEventListener('click', () => {
+    formContainer.classList.toggle('hidden');
+    bioEl.classList.toggle('hidden');
+});
 
 
 async function getProfile(id) {
@@ -50,12 +68,12 @@ async function getProfileScores(id) {
 }
 
 async function getMyProfile() {
-    const user = getUser();
+    const user = await getUser();
 
     const response = await client
         .from('profiles')
         .select('*')
-        .match({ email: user.email })
+        .match({ user_id: user.id })
         .single();
     
     return response.body;
