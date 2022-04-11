@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "esbuild": "^0.14.34",
+    "kaboom": "^2000.2.9"
+  },
+  "name": "kaboomio",
+  "description": "🦸 🦸‍♂️ `Stop starting and start finishing.` 🏁",
+  "version": "1.0.0",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kaboomio/Kaboomio.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kaboomio/Kaboomio/issues"
+  },
+  "homepage": "https://github.com/Kaboomio/Kaboomio#readme"
+}
