@@ -11,22 +11,121 @@
     <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/home.css">
     <title>Document</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        main {
+            margin: 20px 10vw;
+
+        }
+
+        section {
+            margin-top: 40px;
+            margin-bottom: 10px;
+            padding: 0px;
+        }
+        
+        p {
+            margin: 0px;
+        }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .space-between {
+            justify-content: space-between;
+            align-content: space-between;
+        }
+
+        #avatar {
+            height: 60px;
+            width: 60px;
+            padding: 10px;
+            border: 1px solid grey;
+            border-radius: 90px;
+            margin-right: 20px;
+        }
+
+        button {
+            border: 2px solid black;
+            border-radius: 5px;
+            background-color: white;
+            color: black;
+            height: 5vh;
+        }
+
+        button:hover {
+            border: 2px solid white;
+            border-radius: 5px;
+            background-color: black;
+            color: white;
+        }
+
+        label {
+            margin: 10px;
+        }
+
+        .labelName {
+            width: 10vw;
+        }
+
+        .editBio {
+            height: 40px;
+            width: 90%;
+        }
+    </style>
 </head>
 
 <body>
     <header>
-        <div class="gutter-right logo">
-            <img src="../assets/big-logo.png" />
-        </div>
-    </header>    
-    <button id="logout">Logout</button>
+        <button id="logout">Logout</button>
+    </header>
     <main>
-        <h1>You are logged in!</h1>
+        <section class="flex-row space-between">
+            <div>
+                <div class="flex-row">
+                    <img src="../assets/mario.png" alt="No Avatar" id="avatar">
+                    <h2 id="username">Mario!</h2>
+                </div>
+                <span id="joinedDate">Joined Date: </span>
+            </div>
+            <button id="editButton" class="hidden">Edit Profile</button>
+        </section>
+        <div class="formContainer hidden">
+            <form id="editProfile" class="flex-column">
+                <label for="editUsername">
+                    Username:
+                    <input type="text" name="editUsername">
+                </label>
+                <label for="editAvatar">
+                    Avatar Upload:
+                    <input type="file" name="editAvatar">
+                </label>
+                <label for="editBio">
+                     Bio: 
+                    <input type="text" name="editBio" class="editBio">
+                </label>
+                <button>Submit Changes</button>
+            </form>
+        </div>
+        <p id="bio"></p>
+        <h3>Previous Scores</h3>
+        <ul id="previousScoresContainer">
+
+        </ul>
     </main>
-    <footer>
-        <div class="copy gutter-right">&copy; 2021 Alchemy Code Lab</div>
-    </footer>
-    <script type="module" src="./other-page.js"></script>
+    <script type="module" src="./profile.js"></script>
 </body>
 
 </html>

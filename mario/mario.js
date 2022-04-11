@@ -102,11 +102,11 @@ scene('game', ({ score, count }) => {
     });
 
     //EVIL MUSHROOM MOVEMENT & COLLIDE
-    const evilMushroomMove = 20;
+    // const evilMushroomMove = 20;
 
-    onUpdate('evil-mushroom', (obj) => {
-        obj.move(-evilMushroomMove, 0);
-    });
+    // onUpdate('evil-mushroom', (obj) => {
+    //     obj.move(-evilMushroomMove, 0);
+    // });
 
     mario.onCollide('evil-mushroom', (obj) => {
         if (mario.pos.y === obj.pos.y) {
@@ -151,7 +151,7 @@ scene('game', ({ score, count }) => {
         '     **   =$=#=                      ',
         '                                     ',
         '                         ?           ',
-        '                    ^  ^             ',
+        '           ^  ^                      ',
         '===========================    ======',
     ], {
         // define the size of each block
@@ -162,7 +162,7 @@ scene('game', ({ score, count }) => {
         '*': () => [sprite('coin'), area(), 'coin'],
         '$': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise'],
         '#': () => [sprite('surprise-box'), solid(), area(), 'mushroom-surprise'],
-        '^': () => [sprite('evil-mushroom'), solid(), area(), 'evil-mushroom', body()],
+        '^': () => [sprite('evil-mushroom'), solid(), area(), 'evil-mushroom', body(), patrol(150)],
         '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
         '+': () => [sprite('block'), solid(), area()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', body()],
@@ -220,3 +220,25 @@ scene('game', ({ score, count }) => {
 //NEEDED - END GAME SCENE
 
 go('game', { score: 0, count: 0 });
+
+function patrol(distance = 150, speed = 50, dir = 1) {
+    return {
+        id: "patrol",
+        require: ["pos", "area",],
+        startingPos: vec2(0, 0),
+        add() {
+            this.startingPos = this.pos;
+            this.on("collide", (obj, side) => {
+                if (side === "left" || side === "right") {
+                    dir = -dir;
+                }
+            });
+        },
+        update() {
+            if (Math.abs(this.pos.x - this.startingPos.x) >= distance) {
+                dir = -dir;
+            }
+            this.move(speed * dir, 0);
+        },
+    };
+}
