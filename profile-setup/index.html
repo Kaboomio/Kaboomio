@@ -14,6 +14,8 @@
         form {
             display: flex;
             flex-direction: column;
+            align-items: center;
+            padding-bottom: 50px;
         }
         input[type=radio] {
             visibility: collapse;
@@ -24,7 +26,7 @@
             cursor: pointer;
         }
         input[type=radio]:checked + figure {
-        outline: 5px solid orange;
+            outline: 3px solid limegreen;
         }
         .avatar-select {
             display: flex;
@@ -36,6 +38,22 @@
         }
         figure {
             margin: 5px;
+            padding: 5px;
+            border-radius: 10px;
+        }
+        form > button {
+            margin: 10px 0;
+            width: 10%;
+            padding: 5px;
+        }
+        h3 {
+            margin: 0;
+            text-align: center;
+        }
+        input[type='text'] {
+            width: 30%;
+            margin: 7px;
+            padding: 5px;
         }
     </style>
     <title>Profile Setup</title>
@@ -47,10 +65,11 @@
     </header>    
     <button id="logout">Logout</button>
     <main>
-        <h1>Set a username and avatar to continue</h1>
+        <h1>Finish Profile Set Up to Continue</h1>
         <form action="">
-            <label for="username">Username</label>
-            <input type="text" name="username" placeholder="Username">
+            <h3>Create a Username:</h3>
+            <input type="text" name="username" placeholder="Username (6-15 characters)" minlength="6" maxlength="15">
+            <h3>Select an Avatar:</h3>
             <div class="avatar-select">
                 <label for="mario">
                     <input type="radio" name="avatar" id="mario" checked>
@@ -147,7 +166,7 @@
     <footer>
         <div class="copy gutter-right">&copy; 2021 Alchemy Code Lab</div>
     </footer>
-    <script type="module" src="./other-page.js"></script>
+    <script type="module" src="./profile-setup.js"></script>
 </body>
 
 </html>
