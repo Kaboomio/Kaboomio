@@ -8,7 +8,7 @@ const leaderboardDisplay = document.getElementById('display-leaderboard');
 checkAuth();
 
 window.addEventListener('load', async () => {
-    await fetchAndDisplayLeaderboard();
+    // await fetchAndDisplayLeaderboard();
 });
 
 playGameButton.addEventListener('click', () => {
