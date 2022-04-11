@@ -16,21 +16,29 @@
             flex-direction: column;
         }
         input[type=radio] {
-            /* opacity: 0; */
+            visibility: collapse;
+        }
+        .avatar-img {
+            height: 150px;
+            width: 150px;
             cursor: pointer;
         }
-        input#mario[type=radio] + label {
-            background-image: url("../assets/avatars/mario.png");
-            height: 200px;
-            width: 200px;
-            display:inline-block;
-            padding: 0 0 0 0px;
-        }
-        input[type=radio]:checked + label {
+        input[type=radio]:checked + figure {
         outline: 5px solid orange;
         }
+        .avatar-select {
+            display: flex;
+        }
+        label {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+        figure {
+            margin: 5px;
+        }
     </style>
-    <title>Document</title>
+    <title>Profile Setup</title>
 </head>
 
 <body>
@@ -43,32 +51,97 @@
         <form action="">
             <label for="username">Username</label>
             <input type="text" name="username" placeholder="Username">
-            <div id="avatar-select">
-                <input type="radio" name="mario" id="mario">
-                <label for="mario"></label>
-                <input type="radio" name="luigi" id="luigi">
-                <label for="luigi"></label>
-                <input type="radio" name="yoshi" id="yoshi">
-                <label for="yoshi"></label>
-                <input type="radio" name="toad" id="toad">
-                <label for="toad"></label>
-                <input type="radio" name="peach" id="peach">
-                <label for="peach"></label>
-                <input type="radio" name="daisy" id="daisy">
-                <label for="daisy"></label>
-                <input type="radio" name="donkey-kong" id="donkey-kong">
-                <label for="donkey-kong"></label>
-                <input type="radio" name="toadette" id="toadette">
-                <label for="toadette"></label>
-                <input type="radio" name="wario" id="wario">
-                <label for="wario"></label>
-                <input type="radio" name="koopa-troopa" id="koopa-troopa">
-                <label for="koopa-troopa"></label>
-                <input type="radio" name="boo" id="boo">
-                <label for="boo"></label>
-                <input type="radio" name="bowser" id="bowser">
-                <label for="bowser"></label>
+            <div class="avatar-select">
+                <label for="mario">
+                    <input type="radio" name="avatar" id="mario" checked>
+                    <figure>
+                        <img src="../assets/avatars/mario.png" alt="Mario" class="avatar-img">
+                        <figcaption>Mario</figcaption>
+                    </figure>
+                </label>
+                <label for="luigi">
+                    <input type="radio" name="avatar" id="luigi">
+                    <figure>
+                        <img src="../assets/avatars/luigi.png" alt="" class="avatar-img">
+                        <figcaption>Luigi</figcaption>
+                    </figure>
+                </label>
+                <label for="yoshi">
+                    <input type="radio" name="avatar" id="yoshi">
+                    <figure>
+                        <img src="../assets/avatars/yoshi.png" alt="" class="avatar-img">
+                        <figcaption>Yoshi</figcaption>
+                    </figure>
+                </label>
+                <label for="toad">
+                    <input type="radio" name="avatar" id="toad">
+                    <figure>
+                        <img src="../assets/avatars/toad.png" alt="" class="avatar-img">
+                        <figcaption>Toad</figcaption>
+                    </figure>
+                </label>
             </div>
+            <div class="avatar-select">
+                <label for="peach">
+                    <input type="radio" name="avatar" id="peach">
+                    <figure>
+                        <img src="../assets/avatars/peach.png" alt="" class="avatar-img">
+                        <figcaption>Peach</figcaption>
+                    </figure>
+                </label>
+                <label for="daisy">
+                    <input type="radio" name="avatar" id="daisy">
+                    <figure>
+                        <img src="../assets/avatars/daisy.png" alt="" class="avatar-img">
+                        <figcaption>Daisy</figcaption>
+                    </figure>
+                </label>
+                <label for="donkey-kong">
+                    <input type="radio" name="avatar" id="donkey-kong">
+                    <figure>
+                        <img src="../assets/avatars/donkey-kong.png" alt="" class="avatar-img">
+                        <figcaption>Donkey Kong</figcaption>
+                    </figure>
+                </label>
+                <label for="toadette">
+                    <input type="radio" name="avatar" id="toadette">
+                    <figure>
+                        <img src="../assets/avatars/toadette.png" alt="" class="avatar-img">
+                        <figcaption>Toadette</figcaption>
+                    </figure>
+                </label>
+            </div>
+            <div class="avatar-select">
+                <label for="bowser">
+                    <input type="radio" name="avatar" id="bowser">
+                    <figure>
+                        <img src="../assets/avatars/bowser.png" alt="" class="avatar-img">
+                        <figcaption>Bowser</figcaption>
+                    </figure>
+                </label>
+                <label for="wario">
+                    <input type="radio" name="avatar" id="wario">
+                    <figure>
+                        <img src="../assets/avatars/wario.png" alt="" class="avatar-img">
+                        <figcaption>Wario</figcaption>
+                    </figure>
+                </label>
+                <label for="boo">
+                    <input type="radio" name="avatar" id="boo">
+                    <figure>
+                        <img src="../assets/avatars/boo.png" alt="" class="avatar-img">
+                        <figcaption>Boo</figcaption>
+                    </figure>
+                </label>
+                <label for="koopa-troopa">
+                    <input type="radio" name="avatar" id="koopa-troopa">
+                    <figure>
+                        <img src="../assets/avatars/koopa-troopa.png" alt="" class="avatar-img">
+                        <figcaption>Koopa Troopa</figcaption>
+                    </figure>
+                </label>
+            </div>
+            <button>Submit</button>
         </form>
     </main>
     <footer>
