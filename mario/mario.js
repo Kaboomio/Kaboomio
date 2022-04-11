@@ -88,11 +88,17 @@ scene('game', () => {
         }
     });
 
-    //EVIL MUSHROOM MOVEMENT
+    //EVIL MUSHROOM MOVEMENT & COLLIDE
     const evilMushroomMove = 20;
 
     onUpdate('evil-mushroom', (obj) => {
         obj.move(-evilMushroomMove, 0);
+    });
+
+    mario.onCollide('evil-mushroom', (obj) => {
+        if (mario.pos.y === obj.pos.y) {
+            destroy(obj);
+        }
     });
 
     //GAME LEVEL CONFIG
