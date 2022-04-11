@@ -56,7 +56,7 @@ scene('start', () => {
 
 
 //GAME SCENE
-scene('game', () => {
+scene('game', ({ score, count }) => {
     layers(['bg', 'obj', 'ui'], 'obj');
 
 
@@ -73,6 +73,7 @@ scene('game', () => {
 
     const marioSpeed = 120;
     const marioJumpHeight = 600;
+    const coinScore = 200;
 
     onKeyDown('left', () => {
         mario.move(-marioSpeed, 0);
@@ -100,6 +101,27 @@ scene('game', () => {
             destroy(obj);
         }
     });
+
+    mario.onCollide('coin', (obj) => {
+        destroy(obj);
+        scoreLabel.value += coinScore;
+        scoreLabel.text = scoreLabel.value;
+        coinCountLabel.value += 1;
+        coinCountLabel.text = 'x' + coinCountLabel.value;
+        addScoreText(obj, coinScore);
+    });
+
+    function addScoreText(obj, score) {
+        const scoreText = add([
+            text(score, {
+                size: 8,
+                width: 20, 
+                font: 'sinko', 
+            }),
+            pos(obj.pos.x, obj.pos.y),
+            lifespan(1, { fade: 0.01 })
+        ]);
+    }
 
     //GAME LEVEL CONFIG
     const gameLevel = addLevel([
@@ -134,6 +156,47 @@ scene('game', () => {
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', body()],
     });
 
+    //GAMEPLAY HEADER TEXT
+    const usernameLabel = add([
+        text('MARIO', {
+            size: 18,
+            width: 320, 
+            font: 'sinko', 
+        }),
+        pos(30, 6),
+        fixed()
+    ]);
+
+    const scoreLabel = add([
+        text(score, {
+            size: 18,
+            width: 320, 
+            font: 'sinko', 
+        }),
+        pos(60, 30),
+        layer('ui'),
+        fixed(),
+        {
+            value: score
+        }
+    ]);
+
+    add([sprite('coin'), pos(200, 32), layer('ui'), fixed()]);
+    
+    const coinCountLabel = add([
+        text('x' + count, {
+            size: 18,
+            width: 320, 
+            font: 'sinko', 
+        }),
+        pos(220, 30),
+        fixed(),
+        layer('ui'),
+        {
+            value: count
+        }
+    ]);
+
 
     //CAMERA POSITIONING
     onUpdate(() => {
@@ -144,4 +207,4 @@ scene('game', () => {
 
 //NEEDED - END GAME SCENE
 
-go('game');
+go('game', { score: 0, count: 0 });
