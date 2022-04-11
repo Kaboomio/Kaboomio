@@ -53,4 +53,56 @@ scene('start', () => {
 });
 
 
-go('start');
+
+scene('game', () => {
+    layers(['bg', 'obj', 'ui'], 'obj');
+
+    const mario = add([
+        sprite('mario'), 
+        solid(), 
+        area(),
+        pos(30, 0),
+        body(),
+        origin('bot'),
+        'mario'
+    ]);
+
+    const gameLevel = addLevel([
+        '                                     ',
+        '                                     ',
+        '        ***                          ',
+        '                                     ',
+        '                                     ',
+        '                 ****                ',
+        '                                     ',
+        '                                     ',
+        '                 ====                ',
+        '                                     ',
+        '                                     ',
+        '     **   =$=#=                      ',
+        '                                     ',
+        '                         ?           ',
+        '                    ^  ^             ',
+        '===========================    ======',
+    ], {
+        // define the size of each block
+        width: 20,
+        height: 20,
+        // define what each symbol means, by a function returning a component list (what will be passed to add())
+        '=': () => [sprite('brick'), area(), solid(), 'brick'],
+        '*': () => [sprite('coin'), area(), 'coin'],
+        '$': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise'],
+        '#': () => [sprite('surprise-box'), solid(), area(), 'mushroom-surprise'],
+        '^': () => [sprite('evil-mushroom'), solid(), area(), 'evil-mushroom', body()],
+        '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
+        '+': () => [sprite('block'), solid(), area()],
+        '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', body()],
+    });
+
+    onUpdate(() => {
+        // camPos(mario.pos.x, 180);
+        camPos(mario.pos);
+    });
+});
+
+go('game');
