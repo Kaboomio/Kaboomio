@@ -1,7 +1,7 @@
 const SUPABASE_URL = 'https://houeghgfcehojgitoeuv.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhvdWVnaGdmY2Vob2pnaXRvZXV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDk2OTM3OTMsImV4cCI6MTk2NTI2OTc5M30.ILc0KmFBK-JZ7zwqJFfF1v1Hcp1IFa3tO1PD3lskmWc';
 
-const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+export const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 export function getUser() {
     return client.auth.session() && client.auth.session().user;
@@ -40,3 +40,4 @@ export async function logout() {
 // function checkError({ data, error }) {
 //     return error ? console.error(error) : data;
 // }
+
