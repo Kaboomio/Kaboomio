@@ -22,7 +22,9 @@ logoutButton.addEventListener('click', () => {
     logout();
 });
 
-window.addEventListener('load', setUserInfo);
+window.addEventListener('load', () => {
+    setUserInfo();
+});
 
 async function setUserInfo() {
     const profile = await getProfile(profileId);
