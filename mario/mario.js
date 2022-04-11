@@ -28,6 +28,8 @@ loadSprite('pipe', '../assets/pipe.png');
 //start screen sprites
 loadSprite('start-screen', '../assets/start-screen.png');
 
+
+//START SCENE
 scene('start', () => {
     
     const startScreen = add([
@@ -53,4 +55,93 @@ scene('start', () => {
 });
 
 
-go('start');
+//GAME SCENE
+scene('game', () => {
+    layers(['bg', 'obj', 'ui'], 'obj');
+
+
+    //MARIO & HIS MOVEMENT
+    const mario = add([
+        sprite('mario'), 
+        solid(), 
+        area(),
+        pos(30, 0),
+        body(),
+        origin('bot'),
+        'mario'
+    ]);
+
+    const marioSpeed = 120;
+    const marioJumpHeight = 600;
+
+    onKeyDown('left', () => {
+        mario.move(-marioSpeed, 0);
+    });
+
+    onKeyDown('right', () => {
+        mario.move(marioSpeed, 0);
+    });
+
+    onKeyPress('space', () => {
+        if (mario.isGrounded()) {
+            mario.jump(marioJumpHeight);
+        }
+    });
+
+    //EVIL MUSHROOM MOVEMENT & COLLIDE
+    const evilMushroomMove = 20;
+
+    onUpdate('evil-mushroom', (obj) => {
+        obj.move(-evilMushroomMove, 0);
+    });
+
+    mario.onCollide('evil-mushroom', (obj) => {
+        if (mario.pos.y === obj.pos.y) {
+            destroy(obj);
+        }
+    });
+
+    //GAME LEVEL CONFIG
+    const gameLevel = addLevel([
+        '                                     ',
+        '                                     ',
+        '        ***                          ',
+        '                                     ',
+        '                                     ',
+        '                 ****                ',
+        '                                     ',
+        '                                     ',
+        '                 ====                ',
+        '                                     ',
+        '                                     ',
+        '     **   =$=#=                      ',
+        '                                     ',
+        '                         ?           ',
+        '                    ^  ^             ',
+        '===========================    ======',
+    ], {
+        // define the size of each block
+        width: 20,
+        height: 20,
+        // define what each symbol means, by a function returning a component list (what will be passed to add())
+        '=': () => [sprite('brick'), area(), solid(), 'brick'],
+        '*': () => [sprite('coin'), area(), 'coin'],
+        '$': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise'],
+        '#': () => [sprite('surprise-box'), solid(), area(), 'mushroom-surprise'],
+        '^': () => [sprite('evil-mushroom'), solid(), area(), 'evil-mushroom', body()],
+        '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
+        '+': () => [sprite('block'), solid(), area()],
+        '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', body()],
+    });
+
+
+    //CAMERA POSITIONING
+    onUpdate(() => {
+        // camPos(mario.pos.x, 180);
+        camPos(mario.pos);
+    });
+});
+
+//NEEDED - END GAME SCENE
+
+go('game');
