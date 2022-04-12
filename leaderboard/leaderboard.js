@@ -1,7 +1,7 @@
-import { checkAuth, logout, client, getMyProfile } from '../fetch-utils.js';
+import { checkAuth, logout, client, getMyProfile, getUser } from '../fetch-utils.js';
 import { renderHeader } from '../render-utils.js';
 
-checkAuth();
+// checkAuth();
 
 const body = document.querySelector('body');
 const scoreContainerEl = document.querySelector('.score-container');
@@ -17,7 +17,9 @@ document.addEventListener('click', (e) => {
 
 window.addEventListener('load', async () => {
     fetchandDisplayLeaderboard();
-    fetchandDisplayHeader();
+    if (getUser()) {
+        fetchandDisplayHeader();
+    }
 });
 
 

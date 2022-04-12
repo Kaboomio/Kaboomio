@@ -104,6 +104,9 @@ header {
     height: 40px;
     cursor:pointer;
 }
+#sign-in-icon {
+    height: 40px;
+}
 
 .gutter-right {
     display: flex;
