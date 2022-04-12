@@ -26,6 +26,7 @@ loadSprite('surprise-box', '../assets/surprise-box.png');
 loadSprite('pipe', '../assets/pipe.png');
 loadSprite('castle', '../assets/castle.png');
 loadSprite('fireball', '../assets/fireball.png');
+loadSprite('invisible', '../assets/invisible-image.png');
 
 
 //start screen sprites
@@ -360,6 +361,7 @@ scene('lose', ({ score, time, level }) => {
         pos(center().x, center().y + 85)
     ]);
 
+
     // let rec = add([
     //     rect(500,75),
     //     outline(4),
@@ -368,7 +370,7 @@ scene('lose', ({ score, time, level }) => {
     // ])
 
     let n = add([
-        text(' '),
+        text(''),
         origin('center'),
         pos(center().x, center().y + 150),
         { value: '' }
@@ -393,7 +395,7 @@ scene('lose', ({ score, time, level }) => {
     });
 
     onKeyPress('enter', async () => {
-        await createScore(score, level, n.value, time);
+        await createScore(score, level, n.value, time/);
         location.replace('../home-page');
     });
 });

@@ -10,6 +10,68 @@
     <link rel="stylesheet" href="../styles/reset.css">
     <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/home.css">
+    <style>
+        @media (max-width: 650px) {
+            .footer-right {
+                font-size: .8rem
+            }
+        }
+        .footer-right {
+            margin-left: 0;
+        }
+        #about-main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #about-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: 80%;
+            margin: 50px 20%;
+        }
+        .about-team {
+            border: 1px black solid;
+            margin: 0px 5px;
+        }
+        .about-name {
+            text-align: center;
+        }
+        .about-bio {
+            margin: 10px;
+        }
+        #about-container-1 {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 70%;
+            margin: 50px 20%;
+        }
+        .about-team-1 {
+            display: flex;
+            border: 1px black solid;
+            margin: 5px 0;
+            width: 80%;
+        }
+        .about-name-1 {
+            text-align: center;
+        }
+        .about-bio-1 {
+            margin: 10px;
+        }
+        .about-name-img-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .about-bio-container {
+            padding: 10px;
+        }
+    </style>
     <title>Document</title>
 </head>
 
@@ -32,8 +94,93 @@
         </div>
     </header>    
     <!-- <button id="logout">Logout</button> -->
-    <main>
-        <h1>You are logged in!</h1>
+    <main id="about-main">
+        <h1>Vertical</h1>
+        <div id="about-container">
+            <div class="about-team">
+                <h3 class="about-name">Riley Hoffman</h3>
+                <img src="../assets/avatars/mario.png" alt="" class="about-imgs">
+                <p class="about-bio">blah blah blah blah blah</p>
+                <p class="about-bio">blah blah blah blah blah</p>
+                <p class="about-bio">blah blah blah blah blah</p>
+                <p class="about-bio">blah blah blah blah blah</p>
+            </div>
+            <div class="about-team">
+                <h3 class="about-name">Riley Hoffman</h3>
+                <img src="../assets/avatars/mario.png" alt="" class="about-imgs">
+                <p class="about-bio">blah blah blah blah blah</p>
+                <p class="about-bio">blah blah blah blah blah</p>
+                <p class="about-bio">blah blah blah blah blah</p>
+                <p class="about-bio">blah blah blah blah blah</p>
+            </div>
+            <div class="about-team">
+                <h3 class="about-name">Riley Hoffman</h3>
+                <img src="../assets/avatars/mario.png" alt="" class="about-imgs">
+                <p class="about-bio">blah blah blah blah blah</p>
+                <p class="about-bio">blah blah blah blah blah</p>
+                <p class="about-bio">blah blah blah blah blah</p>
+                <p class="about-bio">blah blah blah blah blah</p>
+            </div>
+            <div class="about-team">
+                <h3 class="about-name">Riley Hoffman</h3>
+                <img src="../assets/avatars/mario.png" alt="" class="about-imgs">
+                <p class="about-bio">blah blah blah blah blah</p>
+                <p class="about-bio">blah blah blah blah blah</p>
+                <p class="about-bio">blah blah blah blah blah</p>
+                <p class="about-bio">blah blah blah blah blah</p>
+            </div>
+        </div>
+        <h1>or Horizontal?</h1>
+        <div id="about-container-1">
+            <div class="about-team-1">
+                <div class="about-name-img-container">
+                    <h3 class="about-name-1">Riley Hoffman</h3>
+                    <img src="../assets/avatars/mario.png" alt="" class="about-imgs-1">
+                </div>
+                <div class="about-bio-container">
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                </div>
+            </div>
+            <div class="about-team-1">
+                <div class="about-name-img-container">
+                    <h3 class="about-name-1">Riley Hoffman</h3>
+                    <img src="../assets/avatars/mario.png" alt="" class="about-imgs-1">
+                </div>
+                <div class="about-bio-container">
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                </div>
+            </div>
+            <div class="about-team-1">
+                <div class="about-name-img-container">
+                    <h3 class="about-name-1">Riley Hoffman</h3>
+                    <img src="../assets/avatars/mario.png" alt="" class="about-imgs-1">
+                </div>
+                <div class="about-bio-container">
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                </div>
+            </div>
+            <div class="about-team-1">
+                <div class="about-name-img-container">
+                    <h3 class="about-name-1">Riley Hoffman</h3>
+                    <img src="../assets/avatars/mario.png" alt="" class="about-imgs-1">
+                </div>
+                <div class="about-bio-container">
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                </div>
+            </div>
+        </div>
     </main>
     <footer>
         <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>

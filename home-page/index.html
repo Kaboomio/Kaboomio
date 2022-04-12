@@ -10,19 +10,6 @@
     <link rel="stylesheet" href="../styles/reset.css">
     <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/home.css">
-    <style>
-
-.mini:hover{
-    opacity: .8;
-    background-color: rgb(73, 73, 73);
-    cursor: pointer;
-}
-
-#play-game-button:hover{
-    opacity: 1;
-    cursor: pointer;
-}
-    </style>
     <title>Document</title>
 </head>
 
@@ -30,17 +17,25 @@
     <header>
 
     </header>    
-    <!-- <button id="logout">Logout</button> -->
-    <main id="homepage">
-        <section id="display-games">
-            <img src="/assets/Mario.gif" />
-            <button id="play-game-button">Play Game</button>
+    <main id="homepage2">
+        <section id="kaboomio">
+            <h1>Welcome to Kaboomio</h1>
+            <img id="kaboomio-img" src="/assets/Kaboomio.gif" />
         </section>
-        <section id="leaderboard-container">
-            <p id="label">Leader Board 🏆</p>
-            <div id="display-leaderboard">
-            </div>
+        <h1>Lets play some games</h1>
+        <section id="second-row">
+            <section id="display-games">
+                <img src="/assets/Mario.gif" />
+                <button id="play-game-button">Play Game</button>
+            </section>
+            <section id="leaderboard-container">
+                <p id="label">Leader Board <a href="/leaderboard/index.html">🏆</a></p>
+                <div id="display-leaderboard">
+                </div>
+                <a href="/about-page/index.html" id="yoshi-egg"><img src="/assets/egg gif.gif"></a>
+            </section>
         </section>
+        <!-- <img  id='kaboomio-logo' src="/assets/Kaboomio.gif" /> -->
     </main>
     <footer>
         <div class="footer-left">
