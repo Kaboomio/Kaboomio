@@ -54,14 +54,25 @@ header {
     box-shadow: var(--shadow);
     border: 5px var(--color5) ridge;
 }
+
 .header-left {
     display: flex;
     align-items: center;
     margin-left: 15px;
 }
+
+#avatar-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+}
+
 .header-left h1 {
     margin: auto 10px;
 }
+
 .header-right {
     display: flex;
     align-items: center;
@@ -146,25 +157,12 @@ footer {
     box-shadow: var(--shadow);
 }
 
-  
-  @keyframes pulse {
-    20% {
-      transform: rotate3d(-10, -10, -10, 50deg) scale(1.2);
+
+@keyframes pulse {
+    50% {
+        transform: scale(1.2);
     }
-
-    40% {
-        transform: rotate3d(10, 10, -10, 50deg) scale(1);
-    }
-
-    60% {
-        transform: rotate3d(-10, 10, 10, 50deg) scale(1.2);
-      }
-
-    80% {
-        transform: rotate3d(10, 10, 10, 50deg) scale(1);
-    }
-
-  }
+}
 
 /* #logout {
     position: fixed;

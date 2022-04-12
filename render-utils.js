@@ -27,7 +27,7 @@
     </div>
 </div> */}
 
-export function renderHeader(profile, id) {
+export function renderHeader(profile, userId) {
     const header = document.createElement('header');
     const headerLeft = document.createElement('div');
     const avatarDiv = document.createElement('div');
@@ -49,6 +49,7 @@ export function renderHeader(profile, id) {
 
     headerLeft.classList.add('header-left');
     avatarImg.id = 'avatar-icon';
+    avatarDiv.id = 'avatar-div';
     headerRight.classList.add('header-right');
     homeDiv.classList.add('icons');
     homeImg.id = 'home-icon';
@@ -69,7 +70,7 @@ export function renderHeader(profile, id) {
     if (!profile.username) {
         settingsAnchor.href = '../profile-setup';
     } else {
-        settingsAnchor.href = '../profile-page';
+        settingsAnchor.href = `../profile-page/?id=${profile.id}`;
     }
     if (!profile.img_url) {
         avatarImg.src = '../assets/avatars/mario.png';
@@ -77,19 +78,35 @@ export function renderHeader(profile, id) {
         avatarImg.src = `${profile.img_url}`;
     }
     if (!profile.username) {
-        nameEl.textContent = 'Return to page setup when finished';
-    } else if (id === profile.id) {
-        nameEl.textContent = `It's a ${profile.username}`;
-    } else {
+        nameEl.textContent = 'Dont forget to finish profile setup!';
+        settingsImg.style.animation = 'pulse 2s infinite ease-in-out';
+        leaderboardAnchor.removeAttribute('href');
+    } else if (profile.user_id === userId) {
+        nameEl.textContent = `View and Edit Profile`;
+    } else if (userId) {
+        nameEl.textContent = `${profile.username}'s profile`;
+    } else if (window.location.pathname === '/home-page/') {
         nameEl.textContent = `It's a me, ${profile.username}`;
+    } else if (window.location.pathname === '/leaderboard/') {
+        nameEl.textContent = `Leaderboard`;
+        headerLeft.style.justifyItems = 'center';
     }
 
     avatarDiv.append(avatarImg);
-    headerLeft.append(avatarDiv, nameEl);
+    if (userId || !profile.username || window.location.pathname === '/leaderboard/') {
+        headerLeft.append(nameEl);
+    } else {
+        headerLeft.append(avatarDiv, nameEl);
+    }
     homeAnchor.append(homeImg);
-    homeDiv.append(homeAnchor);
     leaderboardAnchor.append(leaderboardImg);
-    leaderboardDiv.append(leaderboardAnchor);
+    if (!profile.username) {
+        homeDiv.append();
+        leaderboardDiv.append();
+    } else {
+        homeDiv.append(homeAnchor);
+        leaderboardDiv.append(leaderboardAnchor);
+    }
     settingsAnchor.append(settingsImg);
     settingsDiv.append(settingsAnchor);
     logoutAnchor.append(logoutImg);
