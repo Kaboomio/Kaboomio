@@ -34,6 +34,16 @@ loadSprite('fireball', '../assets/fireball.png');
 //start screen sprites
 loadSprite('start-screen', '../assets/start-screen.png');
 
+//sounds to play during gameplay
+// loadRoot('https://dazzling-vacherin-8cb912.netlify.app/assets/');
+loadRoot('../assets/sounds/');
+loadSound('jump', 'marioJump.mp3');
+loadSound('theme', 'mainTheme.mp3');
+loadSound('fireballSound', 'fireball.mp3');
+loadSound('gameOver', 'gameOver.mp3');
+loadSound('powerUp', 'powerUp.mp3');
+loadSound('pipeSound', 'pipe.mp3');
+
 
 //START SCENE
 scene('start', () => {
@@ -80,7 +90,7 @@ scene('game', ({ score, count }) => {
     const mario = add([
         sprite('mario'), 
         solid(), 
-        area(),
+        area({ width: 20, height: 20 }),
         pos(1400, 0),
         body(),
         origin('bot'),
@@ -92,6 +102,8 @@ scene('game', ({ score, count }) => {
     const coinScore = 200;
     let marioDirection = 'right';
 
+
+    //MARIO ACTIONS
     onKeyDown('left', () => {
         mario.move(-marioSpeed, 0);
         marioDirection = 'left';
@@ -102,23 +114,24 @@ scene('game', ({ score, count }) => {
         marioDirection = 'right';
     });
 
+    onKeyPress('space', () => {
+        if (mario.isGrounded()) {
+            mario.jump(marioJumpHeight);
+            play('jump');
+        }
+    });
+
+    onKeyPress('down', () => {
+        spawnFireball(mario.pos, marioDirection);
+        play('fireballSound');
+    });
+
     mario.onUpdate(() => {
         if (mario.isGrounded()) {
             isJumping = false;
         } else {
             isJumping = true;
         }
-    });
-
-
-    onKeyPress('space', () => {
-        if (mario.isGrounded()) {
-            mario.jump(marioJumpHeight);
-        }
-    });
-
-    onKeyPress('down', () => {
-        spawnFireball(mario.pos, marioDirection);
     });
 
     let fireballDirection = 'down';
@@ -176,6 +189,20 @@ scene('game', ({ score, count }) => {
             go('lose', { score: scoreLabel.value });
         }
     });
+
+    mario.onCollide('powerup', (obj) => {
+        if (obj.is('mushroom')) {
+            destroy(obj);
+            makeBig();
+        }
+    });
+
+    function makeBig() {
+        mario.isBig = true;
+        mario.area.width = 20;
+        mario.area.height = 20;
+        mario.area.scale = 2;
+    }
 
 
     mario.onCollide('coin', (obj) => {
@@ -253,7 +280,7 @@ scene('game', ({ score, count }) => {
         '^': () => [sprite('evil-mushroom'), solid(), area(), 'evil-mushroom', 'dangerous', body(), patrol(150)],
         '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
         '+': () => [sprite('block'), solid(), area()],
-        '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', body()],
+        '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body()],
         '>': () => [sprite('fireball'), solid(), area(), 'mario-fireball', body()],
     };
 
