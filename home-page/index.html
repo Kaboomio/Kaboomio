@@ -16,7 +16,11 @@
     opacity: .8;
     background-color: rgb(73, 73, 73);
     cursor: pointer;
-    padding: 0px 20px;
+}
+
+#play-game-button:hover{
+    opacity: 1;
+    cursor: pointer;
 }
     </style>
     <title>Document</title>
@@ -33,13 +37,20 @@
             <button id="play-game-button">Play Game</button>
         </section>
         <section id="leaderboard-container">
-            <p id="label">Leader Board</p>
+            <p id="label">Leader Board 🏆</p>
             <div id="display-leaderboard">
             </div>
         </section>
     </main>
     <footer>
-        <div class="copy gutter-right">&copy; 2021 Alchemy Code Lab</div>
+        <div class="footer-left">
+            <a href="../about-page" id="about-link">
+                <div>
+                    Meet the Team
+                </div>
+            </a>
+        </div>
+        <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
     </footer>
     <script type="module" src="./home-page.js"></script>
 </body>
