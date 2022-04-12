@@ -103,7 +103,7 @@ async function displayScoreTable() {
         scoreEl.textContent = score.score;
         level.textContent = score.level;
         date.textContent = playDate.toLocaleDateString('en-US');
-        time.textContent = score.time;
+        time.textContent = (100 - score.time) + ' sec';
 
         scoreRow.append(initials, scoreEl, level, date, time);
 
