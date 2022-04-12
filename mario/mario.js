@@ -356,10 +356,11 @@ scene('lose', ({ score }) => {
     // add([renderAndAppendForm(), origin('center'), pos(800, 800), fixed()]);
 
     let txt = add([
-        text("Enter your initials:"),
+        text('Enter your initials:'),
         origin('center'),
-        pos(center().x, center().y+85)
-    ])
+        pos(center().x, center().y + 85)
+    ]);
+    
 
     // let rec = add([
     //     rect(500,75),
@@ -369,11 +370,11 @@ scene('lose', ({ score }) => {
     // ])
 
     let n = add([
-        text(" "),
-        origin("center"),
-        pos(center().x, center().y+150),
+        text(''),
+        origin('center'),
+        pos(center().x, center().y + 150),
         { value: '' }
-    ])
+    ]);
 
     // let initials = add([
     //     text(" "),
@@ -382,17 +383,21 @@ scene('lose', ({ score }) => {
     // ])
 
     onCharInput((ch) => {
-        n.value += ch
-    })
+        n.value += ch;
+    });
 
-    keyPress("backspace", () => {
-       n.value = n.value.replace(n.value.charAt(n.value.length-1), "")
-    })
 
-    action(() => {
+    onKeyPress('backspace', () => {
+        n.value = n.value.replace(n.value.charAt(n.value.length-1), "")
+    });
+
+
+    onUpdate(() => {
         n.text = n.value;
-    })
-})
+    });
+
+});
+
     
    
 
@@ -427,8 +432,6 @@ function patrol(distance = 150, speed = 50, dir = 1) {
         },
     };
 }
-
-let main = document.querySelector('main');
 
 
 // function renderAndAppendForm(){
