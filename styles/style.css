@@ -287,3 +287,61 @@ justify-content: center;
 .hidden {
     display: none;
 }
+
+/* Homepage styling */
+#homepage{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+#leaderboard-container{
+    width: 100%;
+    font-size: 1rem;
+}
+
+.mini-leaderboard{
+    /* width: 100%; */
+    display: flex;
+    flex-wrap: wrap;
+    background-color: black;
+    color: white;
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex-direction: column;
+    padding: 0px 20px;
+    font-size: 1rem;
+    align-items: center;
+}
+
+.leaders{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+
+#display-games{
+    width: 100%;
+    margin: 60px;
+}
+
+#display-games img{
+    width: 100%;
+}
+
+#label{
+    margin: 0 auto;
+    background-color: black;
+    font-size: 2rem;
+    color: white;
+    padding: 5px;
+}
+
+#play-game-button{
+    position: absolute;
+    border: none;
+    color: white;
+    background-color: rgb(43, 43, 43);
+    opacity: .7;
+}
