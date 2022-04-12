@@ -39,7 +39,10 @@
         "fixed": false,
         "vec2": false,
         "width": false,
-        "height": false
+        "height": false,
+        "txt": false,
+        "center": false,
+        "onCharInput": false
 
 
 
