@@ -22,6 +22,44 @@
     opacity: 1;
     cursor: pointer;
 }
+
+@keyframes bounce {
+    0% {
+        left: 0;
+    }
+    50% {
+        left: 100%;
+    }
+    0% {
+        left: 0;
+    }
+} 
+
+#yoshi-egg{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    animation: bounce .4s linear;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    margin: 0px 50px;
+    width: 100%;
+}
+
+#yoshi-egg img{
+    height: 100px;
+    display: flex;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translate3d(0, 40px, 0);
+    }
+    20% {
+        transform: translate3d(0px, 40px, 0);
+    }
+}
+
     </style>
     <title>Document</title>
 </head>
@@ -41,6 +79,7 @@
             <div id="display-leaderboard">
             </div>
         </section>
+        <a href="/about-page/index.html" id="yoshi-egg"><img src="/assets/egg gif.gif"></a>
     </main>
     <footer>
         <div class="copy gutter-right">&copy; 2021 Alchemy Code Lab</div>
