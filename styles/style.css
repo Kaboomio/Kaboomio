@@ -425,3 +425,17 @@ justify-content: center;
     width: 90%;
     height: 100px;
 }
+
+@media (max-width: 780px){
+    header{
+        font-size: .5rem;
+    }
+
+    .mini-leaderboard{
+        font-size: .5rem;
+    }
+
+    .leaders{
+        font-size: .5rem;
+    }
+}
