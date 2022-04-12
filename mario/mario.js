@@ -101,6 +101,8 @@ scene('game', ({ score, count }) => {
     mario.onUpdate(() => {
         if (mario.isGrounded()) {
             isJumping = false;
+        } else {
+            isJumping = true;
         }
     });
 
@@ -128,6 +130,7 @@ scene('game', ({ score, count }) => {
         if (isJumping) {
             destroy(d);
         } else {
+            console.log(isJumping);
             go('lose', { score: scoreLabel.value });
         }
     });
