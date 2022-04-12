@@ -10,12 +10,8 @@ kaboom({
     background: [0, 0, 0, 1],
 });
 
-add([
-    text('hello'),
-    pos(120, 80),
-]);
 
-let isJumping = true;
+window.canvas.focus();
 
 
 //mario level sprites
@@ -101,6 +97,7 @@ scene('game', ({ score, count }) => {
     const marioJumpHeight = 600;
     const coinScore = 200;
     let marioDirection = 'right';
+    let isJumping = true;
 
 
     //MARIO ACTIONS
@@ -169,18 +166,6 @@ scene('game', ({ score, count }) => {
         wait(1, destroy(item));
     });
 
-    //EVIL MUSHROOM MOVEMENT & COLLIDE
-    // const evilMushroomMove = 20;
-
-    // onUpdate('evil-mushroom', (obj) => {
-    //     obj.move(-evilMushroomMove, 0);
-    // });
-
-    // mario.onCollide('evil-mushroom', (obj) => {
-    //     if (mario.pos.y === obj.pos.y) {
-    //         destroy(obj);
-    //     }
-    // });
 
     mario.onCollide('dangerous', (d) => {
         if (isJumping) {
@@ -193,16 +178,8 @@ scene('game', ({ score, count }) => {
     mario.onCollide('powerup', (obj) => {
         if (obj.is('mushroom')) {
             destroy(obj);
-            makeBig();
         }
     });
-
-    function makeBig() {
-        mario.isBig = true;
-        mario.area.width = 20;
-        mario.area.height = 20;
-        mario.area.scale = 2;
-    }
 
 
     mario.onCollide('coin', (obj) => {
@@ -419,3 +396,24 @@ function spawnFireball(marioPos, marioDirection) {
         { speed: marioDirection === 'right' ? 180 : -180 }
     ]);
 }
+
+
+    //EVIL MUSHROOM MOVEMENT & COLLIDE
+    // const evilMushroomMove = 20;
+
+    // onUpdate('evil-mushroom', (obj) => {
+    //     obj.move(-evilMushroomMove, 0);
+    // });
+
+    // mario.onCollide('evil-mushroom', (obj) => {
+    //     if (mario.pos.y === obj.pos.y) {
+    //         destroy(obj);
+    //     }
+    // });
+
+    // function makeBig() {
+    //     mario.isBig = true;
+    //     mario.area.width = 20;
+    //     mario.area.height = 20;
+    //     mario.area.scale = 2;
+    // }
