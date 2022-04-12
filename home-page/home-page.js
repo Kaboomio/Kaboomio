@@ -1,7 +1,8 @@
-import { checkAuth, logout, client } from '../fetch-utils.js';
+import { checkAuth, logout, client, getProfileScores } from '../fetch-utils.js';
+import { checkAuth, logout, client, getMyProfile } from '../fetch-utils.js';
+import { renderHeader } from '../render-utils.js';
 
-
-const logoutButton = document.getElementById('logout');
+const body = document.querySelector('body');
 const playGameButton = document.getElementById('play-game-button');
 const leaderboardDisplay = document.getElementById('display-leaderboard');
 
@@ -9,14 +10,18 @@ checkAuth();
 
 window.addEventListener('load', async () => {
     await fetchAndDisplayLeaderboard();
+    // await fetchAndDisplayLeaderboard();
+    fetchandDisplayHeader();
 });
 
 playGameButton.addEventListener('click', () => {
-    window.location.replace('./mario');
+    window.location.replace('../mario');
 });
 
-logoutButton.addEventListener('click', () => {
-    logout();
+document.addEventListener('click', (e) => {
+    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
+        logout();
+    }
 });
 
 async function fetchAndDisplayLeaderboard(){
@@ -24,21 +29,19 @@ async function fetchAndDisplayLeaderboard(){
     
     const leaderboard = await getScoreboard();
     const leaderDiv = document.createElement('div');
-    const leaderboardTag = document.createElement('h2');
+    const leaderboardTag = document.createElement('p');
     const leaderboardList = document.createElement('ol');
 
-    leaderboardTag.textContent = `Initials......Score......Time`;
+    leaderboardTag.textContent = `Initials.......Score........Time`;
 
     for (let leaders of leaderboard){
-        // const initials = document.createElement('h3');
-        // const score = document.createElement('h3');
-        // const time = document.createElement('h3');
-        const leaderboard = document.createElement('h3');
-
+        const leaderboard = document.createElement('a');
+        leaderboard.classList.add('mini');
         leaderboard.textContent = `${leaders.initials}.............${leaders.score}.........${leaders.time}`;
-        // initials.textContent = leaders.initials;
-        // score.textContent = leaders.score;
-        // time.textContent = leaders.time;
+        console.log(leaders.profile_id);
+        leaderboard.addEventListener('click', async () => {
+            leaderboard.href = `../profile-page/?id=${leaders.profile_id}`;
+        });
 
         leaderboardList.append(leaderboard);
         leaderboardList.classList.add('leaders');
@@ -53,7 +56,15 @@ async function getScoreboard(){
     const response = await client
         .from('scores')
         .select('*')
-        .order('score', { ascending: false });
+        .order('score', { ascending: false })
+        .range(0, 4);
 
     return response.body;
+}
+
+async function fetchandDisplayHeader() {
+    const profile = await getMyProfile();
+    const header = renderHeader(profile);
+    body.firstElementChild.remove();
+    body.prepend(header);
 }

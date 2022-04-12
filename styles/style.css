@@ -1,26 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
+
+@font-face {
+    font-family: marioFont;
+    src: url('../assets/PixelEmulator-xq08.ttf');
+}
 
 body {
-    /* https://coolors.co/generate and click export -> scss to get the colors to copy and paste below*/
-    /* --color1: hsla(349, 69%, 76%, 1);
-    --color2: hsla(207, 67%, 44%, 1);
-    --color3: hsla(200, 61%, 56%, 1);
-    --color4: hsla(187, 41%, 94%, 1);
-    --color5: hsla(170, 28%, 95%, 1); */
-
-    /* --color1: hsla(45, 86%, 83%, 1);
-    --color2: hsla(135, 65%, 98%, 1);
-    --color3: hsla(315, 37%, 86%, 1);
-    --color4: hsla(45, 73%, 98%, 1);
-    --color5: hsla(224, 40%, 79%, 1); */
+    --color1: #d17300;
+    --color2: #10c3f4;
+    --color3: #efda70;
+    --color4: #c10114;
+    --color5: #55310a;
     
     --header-height: 80px;
     --shadow: 0px 10px 20px -12px rgba(0,0,0,0.45);
-    /* --gutter: 30px; */
     --footer-height: 25px;
     
-    font-family: 'Titillium Web', sans-serif;
-    background-color: var(--color2);
+    font-family: 'orbitron', sans-serif;
+    background: linear-gradient(var(--color2) 70%, green 90%);
 }
+
 
 main {
     display: flex;
@@ -28,6 +28,7 @@ main {
     justify-content: center;
     align-items: center;
     margin-bottom: calc(var(--footer-height));
+    /* background: linear-gradient(var(--color2), var(--color5)); */
 }
 
 section {
@@ -47,27 +48,98 @@ section {
 
 header {
     display: flex;
-    justify-content: flex-end;
-    background-color: var(--color3);
+    justify-content: space-between;
+    background-color: var(--color1);
     height: var(--header-height);
     box-shadow: var(--shadow);
+    border: 5px var(--color5) ridge;
 }
+
+.header-left {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+
+#avatar-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+}
+
+.header-left h1 {
+    margin: auto 10px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+.icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    padding-top: 5px;
+}
+#avatar-icon {
+    height: 60px;
+}
+#home-icon {
+    height: 60px;
+    margin: 0 10px;
+}
+#trophy-icon{
+    height: 40px;
+}
+#settings-icon {
+    height: 40px;
+    cursor:pointer;
+}
+#logout-icon {
+    height: 40px;
+    cursor:pointer;
+}
+
+.gutter-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 20px;
+    width: 100%;
+}
+
+.gutter-right img {
+    height: var(--header-height);
+    border-radius: 50%;
+    height: 65px;
+}
+
+
+button {
+    border: 2px solid var(--color5);
+    border-radius: 5px;
+    background-color: white;
+    color: var(--color5);
+    height: 5vh;
+}
+
+button:hover {
+    border: 2px solid white;
+    border-radius: 5px;
+    background-color: var(--color5);
+    color: white;
+    border: none;
+}
+
 
 h2 {
     font-size: 1.8rem;
     font-weight: bold;
-}
-
-.gutter-right {
-    margin-right: 20px;
-}
-
-.main-logo {
-    animation: pulse 5s infinite ease-in-out;
-}
-
-header img {
-    height: var(--header-height);
 }
 
 p {
@@ -81,44 +153,35 @@ footer {
     height: var(--footer-height);
     display: flex;
     justify-content: flex-end;
-    background-color: var(--color3);
+    background-color: var(--color1);
     box-shadow: var(--shadow);
 }
 
-  
-  @keyframes pulse {
-    20% {
-      transform: rotate3d(-10, -10, -10, 50deg) scale(1.2);
+
+@keyframes pulse {
+    50% {
+        transform: scale(1.2);
     }
+}
 
-    40% {
-        transform: rotate3d(10, 10, -10, 50deg) scale(1);
-    }
-
-    60% {
-        transform: rotate3d(-10, 10, 10, 50deg) scale(1.2);
-      }
-
-    80% {
-        transform: rotate3d(10, 10, 10, 50deg) scale(1);
-    }
-
-  }
-
-#logout {
+/* #logout {
     position: fixed;
     right: 20px;
     top: 90px;
-}
+} */
 
 .auth-main {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
+    background: linear-gradient(70deg, #4292a7 40%, rgba(0, 0, 0, 0) 80%), url(/assets/sign-up-page.png);
+    height: 100%;
+    width: 100%;
 }
 
 .auth-container {
-    margin: 10px;
+    margin: 0px 100px;
 }
 
 .auth-container form {
@@ -170,12 +233,36 @@ h1{
     flex-direction: column;
 }
 
-.table{
-    display: flex;
+/* table css across all pages */
+
+table {
+    margin: 10px 70px 70px;
+    box-shadow: 0px 5px 5px grey;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
     width: 100%;
-    flex-direction: row; 
-    align-items: center;
-justify-content: center;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: white;
+    max-width: 60vw;
+}
+
+td, th {
+    text-align: center;
+    padding: 8px;
+}
+
+th {
+    color: #ffffff;
+    background-color: var(--color5);
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #F8F8F8;
 }
 
 .score{
@@ -196,4 +283,105 @@ justify-content: center;
 
 .score P {
     margin: 0;
+}
+
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.space-between {
+    justify-content: space-between;
+    align-content: space-between;
+}
+
+
+/* profile setup */
+
+.labelName {
+    width: 10vw;
+}
+
+.editBio {
+    height: 40px;
+    width: 90%;
+}
+
+#avatar {
+    height: 80px;
+    width: 80px;
+    padding: 10px;
+    border: 1px solid grey;
+    border-radius: 90px;
+    margin-right: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Homepage styling */
+#homepage{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+#leaderboard-container{
+    width: 100%;
+    font-size: 1rem;
+}
+
+.mini-leaderboard{
+    /* width: 100%; */
+    display: flex;
+    flex-wrap: wrap;
+    background-color: black;
+    color: white;
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex-direction: column;
+    padding: 0px 20px;
+    font-size: 1rem;
+    align-items: center;
+}
+
+.leaders{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+
+#display-games{
+    width: 100%;
+    margin: 60px;
+}
+
+#display-games img{
+    width: 100%;
+}
+
+#label{
+    margin: 0 auto;
+    background-color: black;
+    font-size: 2rem;
+    color: white;
+    padding: 5px;
+}
+
+#play-game-button{
+    position: absolute;
+    border: none;
+    color: white;
+    background-color: rgb(43, 43, 43);
+    opacity: .7;
 }

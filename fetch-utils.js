@@ -7,19 +7,19 @@ export function getUser() {
     return client.auth.session() && client.auth.session().user;
 }
 
-export function checkAuth() {
-    const user = getUser();
+export async function checkAuth() {
+    const user = await getUser();
 
     if (!user) location.replace('../');
 }
 
 export async function redirectIfLoggedIn() {
     if (getUser()) {
-        const profile = await getProfile();
+        const profile = await getMyProfile();
         if (!profile.username) {
             location.replace('../profile-setup');
         } else {
-            location.replace('../mario');
+            location.replace('../home-page');
         }
     }
 }
@@ -49,7 +49,7 @@ export async function createProfile() {
     return checkError(response);
 }
 
-export async function getProfile() {
+export async function getMyProfile() {
     const user = getUser();
     const response = await client
         .from('profiles')
@@ -60,14 +60,49 @@ export async function getProfile() {
     return checkError(response);
 }
 
-export async function updateUsernameAndAvatar(username, avatar) {
+export async function getAllUsernames() {
+    const response = await client
+        .from('profiles')
+        .select('username');
+
+    const usernames = response.body
+        .filter(username => {if (username.username !== null) return username.username;})
+        .map(username => username.username.toLowerCase());
+
+    return usernames;
+}
+
+export async function updateProfile(username, avatar, bio) {
     const user = getUser();
     const response = await client
         .from('profiles')
-        .update({ username, img_url: `../assets/avatars/${avatar}.png` })
+        .update({ 
+            username, 
+            img_url: `../assets/avatars/${avatar}.png`,
+            bio
+        })
         .match({ user_id: user.id });
 
     return checkError(response);
+}
+
+export async function getProfile(id) {
+    const response = await client
+        .from('profiles')
+        .select('*')
+        .match({ id: id })
+        .single();
+
+    return response.body;
+}
+
+export async function getProfileScores(id) {
+    const response = await client
+        .from('scores')
+        .select('*')
+        .match({ profile_id: id });
+
+    return response.body;
 }
 
 

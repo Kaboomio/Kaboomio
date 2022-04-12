@@ -1,6 +1,7 @@
-import { checkAuth, logout, client, getUser } from '../fetch-utils.js';
+import { checkAuth, logout, getMyProfile, getProfile, getProfileScores, getUser } from '../fetch-utils.js';
+import { renderHeader } from '../render-utils.js';
 
-
+const body = document.querySelector('body');
 const avatarEl = document.getElementById('avatar');
 const usernameEl = document.getElementById('username');
 const joinedDateEl = document.getElementById('joinedDate');
@@ -16,14 +17,16 @@ const profileId = params.get('id');
 
 checkAuth();
 
-const logoutButton = document.getElementById('logout');
-
-logoutButton.addEventListener('click', () => {
-    logout();
+document.addEventListener('click', (e) => {
+    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
+        logout();
+    }
 });
 
 window.addEventListener('load', () => {
     setUserInfo();
+    displayScoreTable();
+    fetchandDisplayHeader();
 });
 
 async function setUserInfo() {
@@ -32,7 +35,7 @@ async function setUserInfo() {
     const joinedDate = new Date(profile.created_at);
 
     avatarEl.src = profile.img_url;
-    usernameEl.textContent = profile.username;
+    usernameEl.textContent = `It's a me, ${profile.username}`;
     joinedDateEl.textContent = 'Joined Date: ' + joinedDate.toLocaleDateString('en-US');
     bioEl.textContent = profile.bio;
 
@@ -44,40 +47,41 @@ async function setUserInfo() {
 
 }
 
+async function displayScoreTable() {
+    const scores = await getProfileScores(profileId);
+
+    for (let score of scores) {
+        const scoreRow = document.createElement('tr');
+        const initials = document.createElement('td');
+        const scoreEl = document.createElement('td');
+        const level = document.createElement('td');
+        const date = document.createElement('td');
+        const time = document.createElement('td');
+
+        const playDate = new Date(score.created_at);
+
+        initials.textContent = score.initials;
+        scoreEl.textContent = score.score;
+        level.textContent = score.level;
+        date.textContent = playDate.toLocaleDateString('en-US');
+        time.textContent = score.time;
+
+        scoreRow.append(initials, scoreEl, level, date, time);
+
+        previousScoresContainer.append(scoreRow);
+    }
+}
+
+
 editButtonEl.addEventListener('click', () => {
     formContainer.classList.toggle('hidden');
     bioEl.classList.toggle('hidden');
 });
 
-
-async function getProfile(id) {
-    const response = await client
-        .from('profiles')
-        .select('*')
-        .match({ id: id })
-        .single();
-
-    return response.body;
-}
-
-async function getProfileScores(id) {
-    const response = await client
-        .from('scores')
-        .select('*')
-        .match({ profile_id: id });
-
-    return response.body;
-}
-
-async function getMyProfile() {
-    const user = await getUser();
-
-    const response = await client
-        .from('profiles')
-        .select('*')
-        .match({ user_id: user.id })
-        .single();
-    
-    return response.body;
-
+async function fetchandDisplayHeader() {
+    const profile = await getProfile(profileId);
+    const user = getUser();
+    const header = renderHeader(profile, user.id);
+    body.firstElementChild.remove();
+    body.prepend(header);
 }
