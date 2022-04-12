@@ -48,11 +48,77 @@ section {
 
 header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     background-color: var(--color1);
     height: var(--header-height);
     box-shadow: var(--shadow);
+    border: 5px var(--color5) ridge;
 }
+
+.header-left {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+
+#avatar-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+}
+
+.header-left h1 {
+    margin: auto 10px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+.icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    padding-top: 5px;
+}
+#avatar-icon {
+    height: 60px;
+}
+#home-icon {
+    height: 60px;
+    margin: 0 10px;
+}
+#trophy-icon{
+    height: 40px;
+}
+#settings-icon {
+    height: 40px;
+    cursor:pointer;
+}
+#logout-icon {
+    height: 40px;
+    cursor:pointer;
+}
+
+.gutter-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 20px;
+    width: 100%;
+}
+
+.gutter-right img {
+    height: var(--header-height);
+    border-radius: 50%;
+    height: 65px;
+}
+
 
 button {
     border: 2px solid var(--color5);
@@ -76,19 +142,6 @@ h2 {
     font-weight: bold;
 }
 
-.gutter-right {
-    margin-right: 20px;
-}
-
-.main-logo {
-    animation: pulse 5s infinite ease-in-out;
-}
-
-header img {
-    height: var(--header-height);
-    border-radius: 50%;
-}
-
 p {
     margin: var(--gutter);
 }
@@ -104,31 +157,18 @@ footer {
     box-shadow: var(--shadow);
 }
 
-  
-  @keyframes pulse {
-    20% {
-      transform: rotate3d(-10, -10, -10, 50deg) scale(1.2);
+
+@keyframes pulse {
+    50% {
+        transform: scale(1.2);
     }
+}
 
-    40% {
-        transform: rotate3d(10, 10, -10, 50deg) scale(1);
-    }
-
-    60% {
-        transform: rotate3d(-10, 10, 10, 50deg) scale(1.2);
-      }
-
-    80% {
-        transform: rotate3d(10, 10, 10, 50deg) scale(1);
-    }
-
-  }
-
-#logout {
+/* #logout {
     position: fixed;
     right: 20px;
     top: 90px;
-}
+} */
 
 .auth-main {
     display: flex;

@@ -6,11 +6,11 @@ import {
 } from '../fetch-utils.js';
 
 const form = document.querySelector('form');
-const logoutButton = document.getElementById('logout');
 
 let usernames = [];
 
 checkAuth();
+
 window.addEventListener('load', async () => {
     usernames = await getAllUsernames();
 });
@@ -30,8 +30,10 @@ form.addEventListener('submit', async (e) => {
     }
 });
 
-logoutButton.addEventListener('click', () => {
-    logout();
+document.addEventListener('click', (e) => {
+    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
+        logout();
+    }
 });
 
 async function checkUsername(check) {

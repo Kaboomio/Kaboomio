@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/home.css">
     <style>
+    /* Form Stuff */
         form {
             display: flex;
             flex-direction: column;
@@ -59,17 +60,92 @@
             width: 90%;
             height: 100px;
         }
+    /* Header Stuff */
+        body {
+            --color1: #d17300;
+            --color2: #10c3f4;
+            --color3: #efda70;
+            --color4: #c10114;
+            --color5: #55310a;
+            
+            --header-height: 80px;
+            --shadow: 0px 10px 20px -12px rgba(0,0,0,0.45);
+            --footer-height: 25px;
+            
+            font-family: 'orbitron', sans-serif;
+            background: linear-gradient(var(--color2) 70%, green 90%);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            background-color: var(--color1);
+            height: var(--header-height);
+            box-shadow: var(--shadow);
+            border: 5px var(--color5) ridge;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+        }
+        .header-left h1 {
+            margin: auto 10px;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        .icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80px;
+            height: 80px;
+            padding-top: 5px;
+        }
+        #avatar-icon {
+            height: 60px;
+        }
+        #home-icon {
+            height: 60px;
+            margin: 0 10px;
+        }
+        #trophy-icon{
+            height: 40px;
+        }
+        #settings-icon {
+            height: 40px;
+            cursor:pointer;
+        }
+        #logout-icon {
+            height: 40px;
+            cursor:pointer;
+        }
     </style>
     <title>Profile Setup</title>
 </head>
 
 <body>
     <header>
-
+        <div class="header-left">
+            <h1>Finish Profile Set Up to Continue</h1>
+        </div>
+        <div class="header-right">
+            <div class="icons">
+                <a href="../leaderboard/">
+                    <img src="../assets/trophy-icon.png" id="trophy-icon" />
+                </a>
+            </div>
+            <div class="icons">
+                <a>
+                    <img src="../assets/logout-icon.png" id="logout-icon" />
+                </a>
+            </div>
+        </div>
     </header>    
-    <button id="logout">Logout</button>
+    <!-- <button id="logout">Logout</button> -->
     <main>
-        <h1>Finish Profile Set Up to Continue</h1>
         <form action="">
             <h3>Create a Username:</h3>
             <input type="text" name="username" placeholder="Username (6-15 characters)" minlength="6" maxlength="15" id="username" required>

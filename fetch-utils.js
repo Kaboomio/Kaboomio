@@ -7,8 +7,8 @@ export function getUser() {
     return client.auth.session() && client.auth.session().user;
 }
 
-export function checkAuth() {
-    const user = getUser();
+export async function checkAuth() {
+    const user = await getUser();
 
     if (!user) location.replace('../');
 }

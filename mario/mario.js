@@ -28,10 +28,21 @@ loadSprite('evil-mushroom', '../assets/evil-mushroom.png');
 loadSprite('surprise-box', '../assets/surprise-box.png');
 loadSprite('pipe', '../assets/pipe.png');
 loadSprite('castle', '../assets/castle.png');
+loadSprite('fireball', '../assets/fireball.png');
 
 
 //start screen sprites
 loadSprite('start-screen', '../assets/start-screen.png');
+
+//sounds to play during gameplay
+// loadRoot('https://dazzling-vacherin-8cb912.netlify.app/assets/');
+loadRoot('../assets/sounds/');
+loadSound('jump', 'marioJump.mp3');
+loadSound('theme', 'mainTheme.mp3');
+loadSound('fireballSound', 'fireball.mp3');
+loadSound('gameOver', 'gameOver.mp3');
+loadSound('powerUp', 'powerUp.mp3');
+loadSound('pipeSound', 'pipe.mp3');
 
 
 //START SCENE
@@ -79,7 +90,7 @@ scene('game', ({ score, count }) => {
     const mario = add([
         sprite('mario'), 
         solid(), 
-        area(),
+        area({ width: 20, height: 20 }),
         pos(1400, 0),
         body(),
         origin('bot'),
@@ -89,13 +100,30 @@ scene('game', ({ score, count }) => {
     const marioSpeed = 120;
     const marioJumpHeight = 600;
     const coinScore = 200;
+    let marioDirection = 'right';
 
+
+    //MARIO ACTIONS
     onKeyDown('left', () => {
         mario.move(-marioSpeed, 0);
+        marioDirection = 'left';
     });
 
     onKeyDown('right', () => {
         mario.move(marioSpeed, 0);
+        marioDirection = 'right';
+    });
+
+    onKeyPress('space', () => {
+        if (mario.isGrounded()) {
+            mario.jump(marioJumpHeight);
+            play('jump');
+        }
+    });
+
+    onKeyPress('down', () => {
+        spawnFireball(mario.pos, marioDirection);
+        play('fireballSound');
     });
 
     mario.onUpdate(() => {
@@ -106,11 +134,39 @@ scene('game', ({ score, count }) => {
         }
     });
 
+    let fireballDirection = 'down';
 
-    onKeyPress('space', () => {
-        if (mario.isGrounded()) {
-            mario.jump(marioJumpHeight);
+    onUpdate('fireball', (e) => {
+
+        if (e.pos.y >= 174) {
+            fireballDirection = 'up';
         }
+
+        if (e.pos.y <= 166) {
+            fireballDirection = 'down';
+        }
+
+        if ((e.pos.x < 0) || (e.pos.x > mapWidth)) {
+            destroy(e);
+        }
+        if (fireballDirection === 'down') {
+            e.move(e.speed, 40);
+        } else {
+            e.move(e.speed, -40);
+        }
+
+        if (e.pos.y < 159) {
+            e.move(10, 220);
+        }
+    });
+
+    onCollide('dangerous', 'fireball', (item, item2) => {
+        wait(1, destroy(item));
+        wait(1, destroy(item2));
+    });
+
+    onCollide('fireball', 'brick', (item) => {
+        wait(1, destroy(item));
     });
 
     //EVIL MUSHROOM MOVEMENT & COLLIDE
@@ -133,6 +189,20 @@ scene('game', ({ score, count }) => {
             go('lose', { score: scoreLabel.value });
         }
     });
+
+    mario.onCollide('powerup', (obj) => {
+        if (obj.is('mushroom')) {
+            destroy(obj);
+            makeBig();
+        }
+    });
+
+    function makeBig() {
+        mario.isBig = true;
+        mario.area.width = 20;
+        mario.area.height = 20;
+        mario.area.scale = 2;
+    }
 
 
     mario.onCollide('coin', (obj) => {
@@ -183,6 +253,8 @@ scene('game', ({ score, count }) => {
     }
 
     //GAME LEVEL CONFIG
+    const mapWidth = 1700;
+
     const map = [
         '                                                                                  ',
         '                                           %%%%                                   ',
@@ -202,13 +274,14 @@ scene('game', ({ score, count }) => {
         height: 20,
         '=': () => [sprite('brick'), area(), solid(), 'brick'],
         '*': () => [sprite('coin'), area(), 'coin'],
-        '%': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise'],
+        '%': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise', 'brick'],
         // '$': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise'],
-        '#': () => [sprite('surprise-box'), solid(), area(), 'mushroom-surprise'],
+        '#': () => [sprite('surprise-box'), solid(), area(), 'mushroom-surprise', 'brick'],
         '^': () => [sprite('evil-mushroom'), solid(), area(), 'evil-mushroom', 'dangerous', body(), patrol(150)],
         '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
         '+': () => [sprite('block'), solid(), area()],
-        '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', body()],
+        '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body()],
+        '>': () => [sprite('fireball'), solid(), area(), 'mario-fireball', body()],
     };
 
     const gameLevel = addLevel(map, levelConfig);
@@ -220,7 +293,7 @@ scene('game', ({ score, count }) => {
             width: 320, 
             font: 'sinko', 
         }),
-        pos(1400, 6),
+        pos(60, 6),
         fixed()
     ]);
 
@@ -264,7 +337,7 @@ scene('game', ({ score, count }) => {
             width: 320, 
             font: 'sinko', 
         }),
-        pos(80, 30),
+        pos(500, 30),
         layer('ui'),
         fixed(),
         {
@@ -326,4 +399,23 @@ function patrol(distance = 150, speed = 50, dir = 1) {
             this.move(speed * dir, 0);
         },
     };
+}
+
+function spawnFireball(marioPos, marioDirection) {
+    let fireballPos = marioPos;
+    if (marioDirection === 'left'){
+        fireballPos = marioPos.sub(10, 10);
+    } else if (marioDirection === 'right'){
+        fireballPos = marioPos.add(10, -10);
+    }
+    add([
+        sprite('fireball'),
+        scale(0.5),
+        pos(fireballPos),
+        origin('center'),
+        area(),
+        solid(),
+        'fireball',
+        { speed: marioDirection === 'right' ? 180 : -180 }
+    ]);
 }

@@ -1,7 +1,8 @@
 import { checkAuth, logout, client, getProfileScores } from '../fetch-utils.js';
+import { checkAuth, logout, client, getMyProfile } from '../fetch-utils.js';
+import { renderHeader } from '../render-utils.js';
 
-
-const logoutButton = document.getElementById('logout');
+const body = document.querySelector('body');
 const playGameButton = document.getElementById('play-game-button');
 const leaderboardDisplay = document.getElementById('display-leaderboard');
 
@@ -9,14 +10,18 @@ checkAuth();
 
 window.addEventListener('load', async () => {
     await fetchAndDisplayLeaderboard();
+    // await fetchAndDisplayLeaderboard();
+    fetchandDisplayHeader();
 });
 
 playGameButton.addEventListener('click', () => {
     window.location.replace('../mario');
 });
 
-logoutButton.addEventListener('click', () => {
-    logout();
+document.addEventListener('click', (e) => {
+    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
+        logout();
+    }
 });
 
 async function fetchAndDisplayLeaderboard(){
@@ -55,4 +60,11 @@ async function getScoreboard(){
         .range(0, 4);
 
     return response.body;
+}
+
+async function fetchandDisplayHeader() {
+    const profile = await getMyProfile();
+    const header = renderHeader(profile);
+    body.firstElementChild.remove();
+    body.prepend(header);
 }
