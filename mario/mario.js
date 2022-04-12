@@ -1,7 +1,5 @@
 import kaboom from '../kaboom/dist/kaboom.mjs';
-
-
-
+import { createScore } from '../fetch-utils.js';
 
 kaboom({
     global: true,
@@ -174,7 +172,7 @@ scene('game', ({ score, count }) => {
         if (isJumping) {
             destroy(d);
         } else {
-            go('lose', { score: scoreLabel.value });
+            go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
         }
     });
 
@@ -309,6 +307,7 @@ scene('game', ({ score, count }) => {
 
     //TIMER CODE
     let timeLeft = 6000;
+    let currentLevel = 1;
 
     add([
         
@@ -342,7 +341,7 @@ scene('game', ({ score, count }) => {
     });
 });
 
-scene('lose', ({ score }) => {
+scene('lose', ({ score, time, level }) => {
     add([
         text('Game Over', {
             size: 226,
@@ -356,10 +355,10 @@ scene('lose', ({ score }) => {
     // add([renderAndAppendForm(), origin('center'), pos(800, 800), fixed()]);
 
     let txt = add([
-        text("Enter your initials:"),
+        text('Enter your initials:'),
         origin('center'),
-        pos(center().x, center().y+85)
-    ])
+        pos(center().x, center().y + 85)
+    ]);
 
     // let rec = add([
     //     rect(500,75),
@@ -369,11 +368,11 @@ scene('lose', ({ score }) => {
     // ])
 
     let n = add([
-        text(" "),
-        origin("center"),
-        pos(center().x, center().y+150),
+        text(' '),
+        origin('center'),
+        pos(center().x, center().y + 150),
         { value: '' }
-    ])
+    ]);
 
     // let initials = add([
     //     text(" "),
@@ -382,17 +381,22 @@ scene('lose', ({ score }) => {
     // ])
 
     onCharInput((ch) => {
-        n.value += ch
-    })
+        n.value += ch;
+    });
 
-    keyPress("backspace", () => {
-       n.value = n.value.replace(n.value.charAt(n.value.length-1), "")
-    })
+    onKeyPress('backspace', () => {
+        n.value = n.value.replace(n.value.charAt(n.value.length - 1), '');
+    });
 
-    action(() => {
+    onUpdate(() => {
         n.text = n.value;
-    })
-})
+    });
+
+    onKeyPress('enter', async () => {
+        await createScore(score, level, n.value, time);
+        location.replace('../home-page');
+    });
+});
     
    
 
