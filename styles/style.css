@@ -328,29 +328,26 @@ justify-content: center;
 
 #leaderboard-container{
     width: 100%;
-    font-size: 1rem;
+    margin: 0 auto;
+    background-color: black;
 }
 
 .mini-leaderboard{
-    /* width: 100%; */
     display: flex;
     flex-wrap: wrap;
-    background-color: black;
     color: white;
-    background-repeat: no-repeat;
-    background-size: cover;
     flex-direction: column;
-    padding: 0px 20px;
-    font-size: 1rem;
-    align-items: center;
+    font-size: .8rem;
+    align-items: flex-start;
 }
 
 .leaders{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    font-size: 1rem;
+    align-items: flex-start;
+    font-size: .8rem;
+    padding: 5px;
 }
 
 #display-games{
@@ -365,7 +362,7 @@ justify-content: center;
 #label{
     margin: 0 auto;
     background-color: black;
-    font-size: 2rem;
+    font-size: 1rem;
     color: white;
     padding: 5px;
 }
@@ -427,4 +424,18 @@ justify-content: center;
 #profile-setup-form #bio {
     width: 90%;
     height: 100px;
+}
+
+@media (max-width: 780px){
+    header{
+        font-size: .5rem;
+    }
+
+    .mini-leaderboard{
+        font-size: .5rem;
+    }
+
+    .leaders{
+        font-size: .5rem;
+    }
 }
