@@ -152,6 +152,27 @@ footer {
     box-shadow: var(--shadow);
 }
 
+.footer-left {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    z-index: 1;
+}
+
+#about-link {
+    color: black;
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    margin-left: 400px;
+}
+
 @keyframes pulse {
     50% {
         transform: scale(1.2);
