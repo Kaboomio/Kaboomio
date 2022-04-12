@@ -130,7 +130,6 @@ scene('game', ({ score, count }) => {
         if (isJumping) {
             destroy(d);
         } else {
-            console.log(isJumping);
             go('lose', { score: scoreLabel.value });
         }
     });
