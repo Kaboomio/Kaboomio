@@ -1,7 +1,5 @@
 import kaboom from '../kaboom/dist/kaboom.mjs';
-
-
-
+import { createScore } from '../fetch-utils.js';
 
 kaboom({
     global: true,
@@ -83,13 +81,6 @@ scene('game', ({ score, count }) => {
         origin('bot'),
         scale(0.25)
     ]);
-
-    // add([
-    //     sprite('invisible'),
-    //     pos(1478, 180),
-    //     layer('obj'),
-    //     origin('bot'),
-    // ]);
 
 
 
@@ -182,7 +173,7 @@ scene('game', ({ score, count }) => {
         if (isJumping) {
             destroy(d);
         } else {
-            go('lose', { score: scoreLabel.value });
+            go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
         }
     });
 
@@ -252,7 +243,7 @@ scene('game', ({ score, count }) => {
         '     *   =#=%=                          %===#%==*=             %%%                ',
         '                                  ===                   =                         ',
         '                                                        =                         ',
-        '        *           ^   ^                             ^ =                    i    ',
+        '        *           ^   ^                             ^ =                         ',
         '==============================   ========================    =====================',
     ];
 
@@ -260,7 +251,6 @@ scene('game', ({ score, count }) => {
     const levelConfig = {
         width: 20,
         height: 20,
-        'i': () => [sprite('invisible'), area(), solid(), 'invisble'],
         '=': () => [sprite('brick'), area(), solid(), 'brick'],
         '*': () => [sprite('coin'), area(), 'coin'],
         '%': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise', 'brick'],
@@ -318,6 +308,7 @@ scene('game', ({ score, count }) => {
 
     //TIMER CODE
     let timeLeft = 6000;
+    let currentLevel = 1;
 
     add([
         
@@ -351,7 +342,7 @@ scene('game', ({ score, count }) => {
     });
 });
 
-scene('lose', ({ score }) => {
+scene('lose', ({ score, time, level }) => {
     add([
         text('Game Over', {
             size: 226,
@@ -395,18 +386,19 @@ scene('lose', ({ score }) => {
         n.value += ch;
     });
 
-
     onKeyPress('backspace', () => {
-        n.value = n.value.replace(n.value.charAt(n.value.length-1), "")
+        n.value = n.value.replace(n.value.charAt(n.value.length - 1), '');
     });
-
 
     onUpdate(() => {
         n.text = n.value;
     });
 
+    onKeyPress('enter', async () => {
+        await createScore(score, level, n.value, time/);
+        location.replace('../home-page');
+    });
 });
-
     
    
 
@@ -441,6 +433,8 @@ function patrol(distance = 150, speed = 50, dir = 1) {
         },
     };
 }
+
+let main = document.querySelector('main');
 
 
 // function renderAndAppendForm(){

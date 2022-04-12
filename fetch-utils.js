@@ -109,3 +109,25 @@ export async function getProfileScores(id) {
 function checkError({ data, error }) {
     return error ? console.error(error) : data;
 }
+
+
+export async function createScore(score, level, initials, time) {
+
+    const myProfile = await getMyProfile();
+
+    const scoreObject = {
+        score: score,
+        level: level,
+        initials: initials,
+        time: time,
+        profile_id: myProfile.id
+    };
+
+
+    const response = await client
+        .from('scores')
+        .insert(scoreObject)
+        .single();
+
+    return checkError(response);
+}
