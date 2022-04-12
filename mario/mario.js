@@ -154,9 +154,9 @@ scene('game', ({ score, count }) => {
                     destroy(mushroomSurprise);
                     gameLevel.spawn('@', mushroomSurprise.gridPos.sub(0, 1));
                     gameLevel.spawn('+', mushroomSurprise.gridPos.sub(0, 0));
-                    onUpdate('mushroom', (obj) => {
-                        obj.move(mushroomMove, 0);
-                    });
+                    // onUpdate('mushroom', (obj) => {
+                    //     obj.move(mushroomMove, 0);
+                    // });
                 }
             }
             for (let coinSurprise of coinSurprises) {
@@ -203,7 +203,7 @@ scene('game', ({ score, count }) => {
         '=': () => [sprite('brick'), area(), solid(), 'brick'],
         '*': () => [sprite('coin'), area(), 'coin'],
         '%': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise'],
-        '$': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise'],
+        // '$': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise'],
         '#': () => [sprite('surprise-box'), solid(), area(), 'mushroom-surprise'],
         '^': () => [sprite('evil-mushroom'), solid(), area(), 'evil-mushroom', 'dangerous', body(), patrol(150)],
         '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
