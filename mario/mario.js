@@ -249,7 +249,7 @@ scene('lose', ({ score }) => {
 });
 
 
-//NEEDED - END GAME SCENE
+//NEEDED - END GAMEScene
 
 go('game', { score: 0, count: 0 });
 
