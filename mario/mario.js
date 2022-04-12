@@ -144,6 +144,32 @@ scene('game', ({ score, count }) => {
         addScoreText(obj, coinScore);
     });
 
+    mario.onCollide('brick', (obj) => {
+        if (mario.pos.y === obj.pos.y + 40) {
+            const mushroomSurprises = get('mushroom-surprise');
+            const coinSurprises = get('coin-surprise');
+            for (let mushroomSurprise of mushroomSurprises) {
+                const marioDistance = mushroomSurprise.pos.x - mario.pos.x;
+                if (mario.pos.y === mushroomSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
+                    destroy(mushroomSurprise);
+                    gameLevel.spawn('@', mushroomSurprise.gridPos.sub(0, 1));
+                    gameLevel.spawn('+', mushroomSurprise.gridPos.sub(0, 0));
+                    onUpdate('mushroom', (obj) => {
+                        obj.move(mushroomMove, 0);
+                    });
+                }
+            }
+            for (let coinSurprise of coinSurprises) {
+                const marioDistance = coinSurprise.pos.x - mario.pos.x;
+                if (mario.pos.y === coinSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
+                    destroy(coinSurprise);
+                    gameLevel.spawn('*', coinSurprise.gridPos.sub(0, 1));
+                    gameLevel.spawn('+', coinSurprise.gridPos.sub(0, 0));
+                }
+            }
+        }
+    });
+
     function addScoreText(obj, score) {
         const scoreText = add([
             text(score, {
@@ -228,6 +254,33 @@ scene('game', ({ score, count }) => {
         }
     ]);
 
+    //TIMER CODE
+    let timeLeft = 6000;
+
+    add([
+        
+        text(timeLeft / 60, {
+            size: 18,
+            width: 320, 
+            font: 'sinko', 
+        }),
+        pos(80, 30),
+        layer('ui'),
+        fixed(),
+        {
+            value: time
+        },
+        'timer'        
+    ]);
+
+    let timer = get('timer');
+
+    onUpdate(() => {
+        timeLeft--; 
+        if ((timeLeft / 60) % 1 === 0) {
+            timer[0].text = timeLeft / 60;
+        }
+    });
 
     //CAMERA POSITIONING
     onUpdate(() => {
