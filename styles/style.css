@@ -8,20 +8,19 @@
 
 body {
     --color1: #d17300;
-    --color2: #01c6bc;
+    --color2: #10c3f4;
     --color3: #efda70;
     --color4: #c10114;
-    --color5: #561313;
+    --color5: #55310a;
     
     --header-height: 80px;
     --shadow: 0px 10px 20px -12px rgba(0,0,0,0.45);
-    /* --gutter: 30px; */
     --footer-height: 25px;
     
     font-family: 'orbitron', sans-serif;
-    background: linear-gradient(var(--color2), var(--color5));
-    /* background: linear-gradient(70deg, #4292a7 40%, rgba(0, 0, 0, 0) 80%), url(/assets/sign-up-page.png); */
+    background: linear-gradient(var(--color2) 70%, green 90%);
 }
+
 
 main {
     display: flex;
@@ -287,4 +286,62 @@ justify-content: center;
 
 .hidden {
     display: none;
+}
+
+/* Homepage styling */
+#homepage{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+#leaderboard-container{
+    width: 100%;
+    font-size: 1rem;
+}
+
+.mini-leaderboard{
+    /* width: 100%; */
+    display: flex;
+    flex-wrap: wrap;
+    background-color: black;
+    color: white;
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex-direction: column;
+    padding: 0px 20px;
+    font-size: 1rem;
+    align-items: center;
+}
+
+.leaders{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+
+#display-games{
+    width: 100%;
+    margin: 60px;
+}
+
+#display-games img{
+    width: 100%;
+}
+
+#label{
+    margin: 0 auto;
+    background-color: black;
+    font-size: 2rem;
+    color: white;
+    padding: 5px;
+}
+
+#play-game-button{
+    position: absolute;
+    border: none;
+    color: white;
+    background-color: rgb(43, 43, 43);
+    opacity: .7;
 }

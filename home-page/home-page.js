@@ -12,7 +12,7 @@ window.addEventListener('load', async () => {
 });
 
 playGameButton.addEventListener('click', () => {
-    window.location.replace('./mario');
+    window.location.replace('../mario');
 });
 
 logoutButton.addEventListener('click', () => {
