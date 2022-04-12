@@ -1,5 +1,8 @@
 import kaboom from '../kaboom/dist/kaboom.mjs';
 
+
+
+
 kaboom({
     global: true,
     // width: 600,
@@ -349,7 +352,54 @@ scene('lose', ({ score }) => {
         scale(0.25)
     ]);
     add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)]);
-});
+
+    // add([renderAndAppendForm(), origin('center'), pos(800, 800), fixed()]);
+
+    let txt = add([
+        text("Enter your initials:"),
+        origin('center'),
+        pos(center().x, center().y+85)
+    ])
+
+    // let rec = add([
+    //     rect(500,75),
+    //     outline(4),
+    //     origin('center'),
+    //     pos(center().x, center().y+150),
+    // ])
+
+    let n = add([
+        text(" "),
+        origin("center"),
+        pos(center().x, center().y+150),
+        { value: '' }
+    ])
+
+    // let initials = add([
+    //     text(" "),
+    //     origin("center"),
+    //     pos(center().x, center().y+150)
+    // ])
+
+    onCharInput((ch) => {
+        n.value += ch
+    })
+
+    keyPress("backspace", () => {
+       n.value = n.value.replace(n.value.charAt(n.value.length-1), "")
+    })
+
+    action(() => {
+        n.text = n.value;
+    })
+})
+    
+   
+
+
+    
+
+// });
 
 
 //NEEDED - END GAMEScene
@@ -378,6 +428,27 @@ function patrol(distance = 150, speed = 50, dir = 1) {
     };
 }
 
+let main = document.querySelector('main');
+
+
+// function renderAndAppendForm(){
+//     const form = document.createElement('form');
+//     const inputEl = document.createElement('input');
+//     const submitEl = document.createElement('input');
+
+//     inputEl.setAttribute('type', 'text');
+//     inputEl.setAttribute('name', 'initials');
+
+//     submitEl.setAttribute('type', 'submit');
+
+//     form.append(inputEl, submitEl);
+
+//     main.append(form);
+
+
+
+// }
+
 function spawnFireball(marioPos, marioDirection) {
     let fireballPos = marioPos;
     if (marioDirection === 'left'){
@@ -396,6 +467,7 @@ function spawnFireball(marioPos, marioDirection) {
         { speed: marioDirection === 'right' ? 180 : -180 }
     ]);
 }
+
 
 
     //EVIL MUSHROOM MOVEMENT & COLLIDE

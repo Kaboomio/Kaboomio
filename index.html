@@ -15,8 +15,16 @@
 
 <body>
     <header>
-        <div class="gutter-right logo">
-            <img src="assets/Kaboomio.gif" />
+        <div class="header-left">
+            <img src="assets/Kaboomio.gif" class="logo" />
+            <h1 id="sign-in-header">Welcome to Kaboomio!</h1>
+        </div>
+        <div class="header-right">
+            <div class="icons">
+                <a href="../leaderboard/">
+                    <img src="../assets/trophy-icon.png" id="trophy-icon" />
+                </a>
+            </div>
         </div>
     </header>
     <main class="auth-main">
@@ -42,7 +50,14 @@
         </div>
     </main>
     <footer>
-        <div class="copy gutter-right">&copy; 2021 Alchemy Code Lab</div>
+        <div class="footer-left">
+            <a href="../about-page" id="about-link">
+                <div>
+                    Meet the Team
+                </div>
+            </a>
+        </div>
+        <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
     </footer>
     <script type="module" src="./app.js"></script>
 </body>
