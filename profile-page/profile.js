@@ -1,4 +1,4 @@
-import { checkAuth, logout, client, getUser } from '../fetch-utils.js';
+import { checkAuth, logout, getMyProfile, getProfile, getProfileScores } from '../fetch-utils.js';
 
 
 const avatarEl = document.getElementById('avatar');
@@ -75,36 +75,3 @@ editButtonEl.addEventListener('click', () => {
     formContainer.classList.toggle('hidden');
     bioEl.classList.toggle('hidden');
 });
-
-
-async function getProfile(id) {
-    const response = await client
-        .from('profiles')
-        .select('*')
-        .match({ id: id })
-        .single();
-
-    return response.body;
-}
-
-async function getProfileScores(id) {
-    const response = await client
-        .from('scores')
-        .select('*')
-        .match({ profile_id: id });
-
-    return response.body;
-}
-
-async function getMyProfile() {
-    const user = await getUser();
-
-    const response = await client
-        .from('profiles')
-        .select('*')
-        .match({ user_id: user.id })
-        .single();
-    
-    return response.body;
-
-}
