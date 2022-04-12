@@ -50,10 +50,14 @@
             margin: 0;
             text-align: center;
         }
-        input[type='text'] {
+        #username {
             width: 30%;
             margin: 7px;
             padding: 5px;
+        }
+        #bio {
+            width: 90%;
+            height: 100px;
         }
     </style>
     <title>Profile Setup</title>
@@ -68,7 +72,7 @@
         <h1>Finish Profile Set Up to Continue</h1>
         <form action="">
             <h3>Create a Username:</h3>
-            <input type="text" name="username" placeholder="Username (6-15 characters)" minlength="6" maxlength="15">
+            <input type="text" name="username" placeholder="Username (6-15 characters)" minlength="6" maxlength="15" id="username" required>
             <h3>Select an Avatar:</h3>
             <div class="avatar-select">
                 <label for="mario">
@@ -160,6 +164,8 @@
                     </figure>
                 </label>
             </div>
+            <h3>Create a Bio (Optional):</h3>
+            <textarea name="bio" placeholder="Write a brief bio to be displayed on your profile page" id="bio"></textarea>
             <button>Submit</button>
         </form>
     </main>
