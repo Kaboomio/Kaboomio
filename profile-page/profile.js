@@ -2,6 +2,7 @@ import { checkAuth, logout, getMyProfile, getProfile, getProfileScores, getUser,
 import { renderHeader } from '../render-utils.js';
 
 const body = document.querySelector('body');
+const loadingScreen = document.querySelector('.loading-screen');
 const avatarEl = document.getElementById('avatar');
 const usernameEl = document.getElementById('username');
 const joinedDateEl = document.getElementById('joinedDate');
@@ -25,6 +26,14 @@ document.addEventListener('click', (e) => {
     }
 });
 
+window.addEventListener('load', async () => {
+    loadingScreen.classList.toggle('invisible');
+    await setUserInfo();
+    await displayScoreTable();
+    await fetchandDisplayHeader();
+    loadingScreen.classList.toggle('invisible');
+});
+
 editProfileForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -41,12 +50,6 @@ editProfileForm.addEventListener('submit', async (e) => {
     setUserInfo();
 
     toggleEditing();
-});
-
-window.addEventListener('load', () => {
-    setUserInfo();
-    displayScoreTable();
-    fetchandDisplayHeader();
 });
 
 function toggleEditing() {
@@ -114,7 +117,8 @@ editButtonEl.addEventListener('click', toggleEditing);
 async function fetchandDisplayHeader() {
     const profile = await getProfile(profileId);
     const user = getUser();
+    const hardHeader = document.querySelector('header');
+    body.removeChild(hardHeader);
     const header = renderHeader(profile, user.id);
-    body.firstElementChild.remove();
     body.prepend(header);
 }
