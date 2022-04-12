@@ -12,115 +12,67 @@
     <link rel="stylesheet" href="../styles/home.css">
     <style>
     /* Form Stuff */
-        form {
+        body {
+                --color1: #d17300;
+                --color2: #10c3f4;
+                --color3: #efda70;
+                --color4: #c10114;
+                --color5: #55310a;
+                
+                --header-height: 80px;
+                --shadow: 0px 10px 20px -12px rgba(0,0,0,0.45);
+                --footer-height: 25px;
+                
+                font-family: 'orbitron', sans-serif;
+                background: linear-gradient(var(--color2) 70%, green 90%);
+        }
+        #profile-setup-form {
             display: flex;
             flex-direction: column;
             align-items: center;
             padding-bottom: 50px;
         }
-        input[type=radio] {
+        #profile-setup-form input[type=radio] {
             visibility: collapse;
         }
-        .avatar-img {
+        #profile-setup-form .avatar-imgs {
             height: 150px;
             width: 150px;
             cursor: pointer;
         }
-        input[type=radio]:checked + figure {
-            outline: 3px solid limegreen;
+        #profile-setup-form input[type=radio]:checked + figure {
+            outline: 3px ridge var(--color3);
         }
-        .avatar-select {
+        #profile-setup-form .avatar-select {
             display: flex;
         }
-        label {
+        #profile-setup-form label {
             display: flex;
             flex-direction: column;
             text-align: center;
         }
-        figure {
+        #profile-setup-form figure {
             margin: 5px;
             padding: 5px;
             border-radius: 10px;
         }
-        form > button {
+        #profile-setup-form button {
             margin: 10px 0;
             width: 10%;
             padding: 5px;
         }
-        h3 {
+        #profile-setup-form h3 {
             margin: 0;
             text-align: center;
         }
-        #username {
+        #profile-setup-form #username {
             width: 30%;
             margin: 7px;
             padding: 5px;
         }
-        #bio {
+        #profile-setup-form #bio {
             width: 90%;
             height: 100px;
-        }
-    /* Header Stuff */
-        body {
-            --color1: #d17300;
-            --color2: #10c3f4;
-            --color3: #efda70;
-            --color4: #c10114;
-            --color5: #55310a;
-            
-            --header-height: 80px;
-            --shadow: 0px 10px 20px -12px rgba(0,0,0,0.45);
-            --footer-height: 25px;
-            
-            font-family: 'orbitron', sans-serif;
-            background: linear-gradient(var(--color2) 70%, green 90%);
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            background-color: var(--color1);
-            height: var(--header-height);
-            box-shadow: var(--shadow);
-            border: 5px var(--color5) ridge;
-        }
-        .header-left {
-            display: flex;
-            align-items: center;
-            margin-left: 15px;
-        }
-        .header-left h1 {
-            margin: auto 10px;
-        }
-        .header-right {
-            display: flex;
-            align-items: center;
-            margin-right: 15px;
-        }
-        .icons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 80px;
-            height: 80px;
-            padding-top: 5px;
-        }
-        #avatar-icon {
-            height: 60px;
-        }
-        #home-icon {
-            height: 60px;
-            margin: 0 10px;
-        }
-        #trophy-icon{
-            height: 40px;
-        }
-        #settings-icon {
-            height: 40px;
-            cursor:pointer;
-        }
-        #logout-icon {
-            height: 40px;
-            cursor:pointer;
         }
     </style>
     <title>Profile Setup</title>
@@ -146,7 +98,7 @@
     </header>    
     <!-- <button id="logout">Logout</button> -->
     <main>
-        <form action="">
+        <form id="profile-setup-form">
             <h3>Create a Username:</h3>
             <input type="text" name="username" placeholder="Username (6-15 characters)" minlength="6" maxlength="15" id="username" required>
             <h3>Select an Avatar:</h3>
@@ -154,28 +106,28 @@
                 <label for="mario">
                     <input type="radio" name="avatar" id="mario" checked>
                     <figure>
-                        <img src="../assets/avatars/mario.png" alt="Mario" class="avatar-img">
+                        <img src="../assets/avatars/mario.png" alt="" class="avatar-imgs">
                         <figcaption>Mario</figcaption>
                     </figure>
                 </label>
                 <label for="luigi">
                     <input type="radio" name="avatar" id="luigi">
                     <figure>
-                        <img src="../assets/avatars/luigi.png" alt="" class="avatar-img">
+                        <img src="../assets/avatars/luigi.png" alt="" class="avatar-imgs">
                         <figcaption>Luigi</figcaption>
                     </figure>
                 </label>
                 <label for="yoshi">
                     <input type="radio" name="avatar" id="yoshi">
                     <figure>
-                        <img src="../assets/avatars/yoshi.png" alt="" class="avatar-img">
+                        <img src="../assets/avatars/yoshi.png" alt="" class="avatar-imgs">
                         <figcaption>Yoshi</figcaption>
                     </figure>
                 </label>
                 <label for="toad">
                     <input type="radio" name="avatar" id="toad">
                     <figure>
-                        <img src="../assets/avatars/toad.png" alt="" class="avatar-img">
+                        <img src="../assets/avatars/toad.png" alt="" class="avatar-imgs">
                         <figcaption>Toad</figcaption>
                     </figure>
                 </label>
@@ -184,28 +136,28 @@
                 <label for="peach">
                     <input type="radio" name="avatar" id="peach">
                     <figure>
-                        <img src="../assets/avatars/peach.png" alt="" class="avatar-img">
+                        <img src="../assets/avatars/peach.png" alt="" class="avatar-imgs">
                         <figcaption>Peach</figcaption>
                     </figure>
                 </label>
                 <label for="daisy">
                     <input type="radio" name="avatar" id="daisy">
                     <figure>
-                        <img src="../assets/avatars/daisy.png" alt="" class="avatar-img">
+                        <img src="../assets/avatars/daisy.png" alt="" class="avatar-imgs">
                         <figcaption>Daisy</figcaption>
                     </figure>
                 </label>
                 <label for="donkey-kong">
                     <input type="radio" name="avatar" id="donkey-kong">
                     <figure>
-                        <img src="../assets/avatars/donkey-kong.png" alt="" class="avatar-img">
+                        <img src="../assets/avatars/donkey-kong.png" alt="" class="avatar-imgs">
                         <figcaption>Donkey Kong</figcaption>
                     </figure>
                 </label>
                 <label for="toadette">
                     <input type="radio" name="avatar" id="toadette">
                     <figure>
-                        <img src="../assets/avatars/toadette.png" alt="" class="avatar-img">
+                        <img src="../assets/avatars/toadette.png" alt="" class="avatar-imgs">
                         <figcaption>Toadette</figcaption>
                     </figure>
                 </label>
@@ -214,28 +166,28 @@
                 <label for="bowser">
                     <input type="radio" name="avatar" id="bowser">
                     <figure>
-                        <img src="../assets/avatars/bowser.png" alt="" class="avatar-img">
+                        <img src="../assets/avatars/bowser.png" alt="" class="avatar-imgs">
                         <figcaption>Bowser</figcaption>
                     </figure>
                 </label>
                 <label for="wario">
                     <input type="radio" name="avatar" id="wario">
                     <figure>
-                        <img src="../assets/avatars/wario.png" alt="" class="avatar-img">
+                        <img src="../assets/avatars/wario.png" alt="" class="avatar-imgs">
                         <figcaption>Wario</figcaption>
                     </figure>
                 </label>
                 <label for="boo">
                     <input type="radio" name="avatar" id="boo">
                     <figure>
-                        <img src="../assets/avatars/boo.png" alt="" class="avatar-img">
+                        <img src="../assets/avatars/boo.png" alt="" class="avatar-imgs">
                         <figcaption>Boo</figcaption>
                     </figure>
                 </label>
                 <label for="koopa-troopa">
                     <input type="radio" name="avatar" id="koopa-troopa">
                     <figure>
-                        <img src="../assets/avatars/koopa-troopa.png" alt="" class="avatar-img">
+                        <img src="../assets/avatars/koopa-troopa.png" alt="" class="avatar-imgs">
                         <figcaption>Koopa Troopa</figcaption>
                     </figure>
                 </label>
