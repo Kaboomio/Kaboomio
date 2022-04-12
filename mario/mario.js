@@ -237,11 +237,19 @@ scene('game', ({ score, count }) => {
 });
 
 scene('lose', ({ score }) => {
+    add([
+        text('Game Over', {
+            size: 226,
+        }),
+        origin('center'), 
+        pos(480, 125),
+        scale(0.25)
+    ]);
     add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)]);
 });
 
 
-//NEEDED - END GAME SCENE
+//NEEDED - END GAMEScene
 
 go('game', { score: 0, count: 0 });
 
