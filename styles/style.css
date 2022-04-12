@@ -351,8 +351,6 @@ justify-content: center;
     display: flex;
     justify-content: center;
     text-align: center;
-    padding: 5px;
-    margin: 2px;
 }
 
 #profilePage .profileEditForm div {
@@ -383,6 +381,18 @@ justify-content: center;
     border-radius: 90px;
     margin-right: 20px;
     background-color: whitesmoke;
+}
+
+#profilePage figure {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+#profilePage .avatar-imgs {
+    height: 110px;
+    width: 110px;
+    cursor: pointer;
 }
 
 .hidden {
@@ -455,7 +465,7 @@ justify-content: center;
 input[type=radio] {
     visibility: collapse;
 }
-.avatar-imgs {
+#profile-setup-form .avatar-imgs {
     height: 150px;
     width: 150px;
     cursor: pointer;
