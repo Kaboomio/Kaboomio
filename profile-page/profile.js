@@ -9,7 +9,7 @@ const bioEl = document.getElementById('bio');
 const editButtonEl = document.getElementById('editButton');
 const previousScoresContainer = document.getElementById('previousScoresContainer');
 const editProfileForm = document.getElementById('editProfile');
-const formContainer = document.querySelector('.formContainer');
+const formContainer = document.querySelector('.profileEditForm');
 
 const params = new URLSearchParams(window.location.search);
 const profileId = params.get('id');

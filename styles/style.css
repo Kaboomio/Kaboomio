@@ -125,6 +125,7 @@ button {
     background-color: white;
     color: var(--color5);
     height: 5vh;
+    margin: 5px;
 }
 
 button:hover {
@@ -278,11 +279,17 @@ justify-content: center;
 }
 
 
+
+
+
+/* profile page styling */
+
 .flex-row {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .flex-column {
@@ -295,25 +302,70 @@ justify-content: center;
     align-content: space-between;
 }
 
+#profilePage .profileMargins {
+    margin: 10px;
+}
 
-/* profile page */
+#profilePage .infoSection {
+    margin: 10px;
+    background-color: var(--color1);
+    border: none;
+}
 
-.labelName {
+#profilePage .profileEditForm {
+    width: 80vw;
+}
+
+#profilePage .profileEditForm form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#profilePage .profileEditForm input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    text-align: center;
+}
+
+#profilePage .profileEditForm label {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
+    margin: 2px;
+}
+
+#profilePage .profileEditForm div {
+    width: 100%;
+}
+
+#profilePage .profileEditForm button {
+    width: 80%;
+    height: 40px;
+}
+
+#profilePage .profileEditForm textarea {
+    width: 80%;
+    height: 100px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#profilePage .labelName {
     width: 10vw;
 }
 
-.editBio {
-    height: 40px;
-    width: 90%;
-}
-
-#avatar {
+#profilePage #avatar {
     height: 80px;
     width: 80px;
     padding: 10px;
     border: 1px solid grey;
     border-radius: 90px;
     margin-right: 20px;
+    background-color: whitesmoke;
 }
 
 .hidden {
@@ -386,15 +438,15 @@ justify-content: center;
     align-items: center;
     padding-bottom: 50px;
 }
-#profile-setup-form input[type=radio] {
+input[type=radio] {
     visibility: collapse;
 }
-#profile-setup-form .avatar-imgs {
+.avatar-imgs {
     height: 150px;
     width: 150px;
     cursor: pointer;
 }
-#profile-setup-form input[type=radio]:checked + figure {
+input[type=radio]:checked + figure {
     outline: 3px ridge var(--color3);
 }
 #profile-setup-form .avatar-select {
