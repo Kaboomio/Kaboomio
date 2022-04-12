@@ -73,6 +73,11 @@ header {
     margin: auto 10px;
 }
 
+#sign-in-header {
+    width: 100%;
+    text-align: center;
+}
+
 .header-right {
     display: flex;
     align-items: center;
@@ -170,7 +175,7 @@ footer {
     display: flex;
     align-items: center;
     margin-right: 15px;
-    margin-left: 400px;
+    margin-left: 275px;
 }
 
 @keyframes pulse {
@@ -454,5 +459,11 @@ justify-content: center;
 
     .leaders{
         font-size: .5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .footer-right {
+        font-size: .5rem
     }
 }
