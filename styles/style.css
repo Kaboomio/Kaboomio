@@ -18,7 +18,7 @@ body {
     --footer-height: 25px;
     
     font-family: 'orbitron', sans-serif;
-    background: linear-gradient(var(--color2) 70%, green 90%);
+    background: linear-gradient(var(--color2) 70%, green 90%) fixed;
 }
 
 
@@ -413,7 +413,7 @@ justify-content: center;
     padding: 5px;
 }
 #profile-setup-form h3 {
-    margin: 0;
+    margin: 15px 0 5px;
     text-align: center;
 }
 #profile-setup-form #username {
