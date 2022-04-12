@@ -4,6 +4,7 @@ import { renderHeader } from '../render-utils.js';
 const body = document.querySelector('body');
 const playGameButton = document.getElementById('play-game-button');
 const leaderboardDisplay = document.getElementById('display-leaderboard');
+const yoshiEgg = document.getElementById('yoshi-egg');
 
 checkAuth();
 
@@ -20,6 +21,14 @@ document.addEventListener('click', (e) => {
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
         logout();
     }
+});
+
+yoshiEgg.addEventListener('click', () =>{
+    const yoshiSound = new Audio('../assets/sounds/yoshi_1.mp3'); 
+    function playYoshi(){
+        yoshiSound.play();
+    }
+    playYoshi();
 });
 
 async function fetchAndDisplayLeaderboard(){
