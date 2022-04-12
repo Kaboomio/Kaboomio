@@ -12,16 +12,21 @@
     <link rel="stylesheet" href="../styles/home.css">
     <title>Document</title>
 </head>
-
 <body>
+    <div class="loading-screen invisible">
+        <div class="loading-img-container">
+            <img src="../assets/mario-running.gif" class="loading-img" />
+        </div>
+        <p>Loading...</p>
+    </div>
     <header>
         
         
     </header>
     <!-- <button id="logout">Logout</button> -->
-    <main>
-        <section class="flex-row space-between">
-            <div>
+    <main id="profilePage">
+        <section class="flex-row space-between infoSection">
+            <div class="profileMargins">
                 <div class="flex-row">
                     <img src="" alt="No Avatar" id="avatar">
                     <h2 id="username">Mario!</h2>
@@ -30,20 +35,99 @@
             </div>
             <button id="editButton" class="hidden">Edit Profile</button>
         </section>
-        <div class="formContainer hidden">
+        <div class="profileEditForm hidden">
             <form id="editProfile" class="flex-column">
-                <label for="editUsername">
-                    Username:
-                    <input type="text" name="editUsername">
-                </label>
-                <label for="editAvatar">
-                    Avatar Upload:
-                    <input type="file" name="editAvatar">
-                </label>
-                <label for="editBio">
-                     Bio: 
-                    <input type="text" name="editBio" class="editBio">
-                </label>
+                <h3>Edit Username:</h3>
+                <input type="text" name="username" minlength="6" maxlength="15" id="editUsername" required>
+                <h3>Choose A New Avatar:</h3>
+                <div class="flex-row">
+                    <label for="mario">
+                        <input type="radio" name="avatar" id="mario">
+                        <figure>
+                            <img src="../assets/avatars/mario.png" alt="" class="avatar-imgs">
+                            <figcaption>Mario</figcaption>
+                        </figure>
+                    </label>
+                    <label for="luigi">
+                        <input type="radio" name="avatar" id="luigi">
+                        <figure>
+                            <img src="../assets/avatars/luigi.png" alt="" class="avatar-imgs">
+                            <figcaption>Luigi</figcaption>
+                        </figure>
+                    </label>
+                    <label for="yoshi">
+                        <input type="radio" name="avatar" id="yoshi">
+                        <figure>
+                            <img src="../assets/avatars/yoshi.png" alt="" class="avatar-imgs">
+                            <figcaption>Yoshi</figcaption>
+                        </figure>
+                    </label>
+                    <label for="toad">
+                        <input type="radio" name="avatar" id="toad">
+                        <figure>
+                            <img src="../assets/avatars/toad.png" alt="" class="avatar-imgs">
+                            <figcaption>Toad</figcaption>
+                        </figure>
+                    </label>
+                    <label for="peach">
+                        <input type="radio" name="avatar" id="peach">
+                        <figure>
+                            <img src="../assets/avatars/peach.png" alt="" class="avatar-imgs">
+                            <figcaption>Peach</figcaption>
+                        </figure>
+                    </label>
+                    <label for="daisy">
+                        <input type="radio" name="avatar" id="daisy">
+                        <figure>
+                            <img src="../assets/avatars/daisy.png" alt="" class="avatar-imgs">
+                            <figcaption>Daisy</figcaption>
+                        </figure>
+                    </label>
+                    <label for="donkey-kong">
+                        <input type="radio" name="avatar" id="donkey-kong">
+                        <figure>
+                            <img src="../assets/avatars/donkey-kong.png" alt="" class="avatar-imgs">
+                            <figcaption>Donkey Kong</figcaption>
+                        </figure>
+                    </label>
+                    <label for="toadette">
+                        <input type="radio" name="avatar" id="toadette">
+                        <figure>
+                            <img src="../assets/avatars/toadette.png" alt="" class="avatar-imgs">
+                            <figcaption>Toadette</figcaption>
+                        </figure>
+                    </label>
+                    <label for="bowser">
+                        <input type="radio" name="avatar" id="bowser">
+                        <figure>
+                            <img src="../assets/avatars/bowser.png" alt="" class="avatar-imgs">
+                            <figcaption>Bowser</figcaption>
+                        </figure>
+                    </label>
+                    <label for="wario">
+                        <input type="radio" name="avatar" id="wario">
+                        <figure>
+                            <img src="../assets/avatars/wario.png" alt="" class="avatar-imgs">
+                            <figcaption>Wario</figcaption>
+                        </figure>
+                    </label>
+                    <label for="boo">
+                        <input type="radio" name="avatar" id="boo">
+                        <figure>
+                            <img src="../assets/avatars/boo.png" alt="" class="avatar-imgs">
+                            <figcaption>Boo</figcaption>
+                        </figure>
+                    </label>
+                    <label for="koopa-troopa">
+                        <input type="radio" name="avatar" id="koopa-troopa">
+                        <figure>
+                            <img src="../assets/avatars/koopa-troopa.png" alt="" class="avatar-imgs">
+                            <figcaption>Koopa Troopa</figcaption>
+                        </figure>
+                    </label>
+                </div>
+                <h3>Edit Bio:</h3>
+                <textarea id="editBio" name="bio"></textarea>
                 <button>Submit Changes</button>
             </form>
         </div>

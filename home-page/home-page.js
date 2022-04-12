@@ -5,22 +5,26 @@ const body = document.querySelector('body');
 const playGameButton = document.getElementById('play-game-button');
 const leaderboardDisplay = document.getElementById('display-leaderboard');
 const yoshiEgg = document.getElementById('yoshi-egg');
+const loadingScreen = document.querySelector('.loading-screen');
+
 
 checkAuth();
-
-window.addEventListener('load', async () => {
-    await fetchAndDisplayLeaderboard();
-    fetchandDisplayHeader();
-});
-
-playGameButton.addEventListener('click', () => {
-    window.location.replace('../mario');
-});
 
 document.addEventListener('click', (e) => {
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
         logout();
     }
+});
+
+window.addEventListener('load', async () => {
+    loadingScreen.classList.toggle('invisible');
+    await fetchAndDisplayLeaderboard();
+    await fetchandDisplayHeader();
+    loadingScreen.classList.toggle('invisible');
+});
+
+playGameButton.addEventListener('click', () => {
+    window.location.replace('../mario');
 });
 
 yoshiEgg.addEventListener('click', () =>{
@@ -71,7 +75,8 @@ async function getScoreboard(){
 
 async function fetchandDisplayHeader() {
     const profile = await getMyProfile();
+    const hardHeader = document.querySelector('header');
+    body.removeChild(hardHeader);
     const header = renderHeader(profile);
-    body.firstElementChild.remove();
     body.prepend(header);
 }
