@@ -84,8 +84,18 @@ justify-content: center;
 
 <body>
     <header>
+        <div class="header-left">
+            <h1>Leaderboard</h1>
+        </div>
+        <div class="header-right">
+            <div class="icons">
+                <a href="../">
+                    <img src="../assets/sign-in-icon.png" id="sign-in-icon" />
+                </a>
+            </div>
+        </div>
     </header>    
-    <!-- <button id="logout">Logout</button> -->
+    <!-- <button id="logout">Logout</button -->
     <div class="leaderboard">
 <div class="leaderboard-left">
 
@@ -98,6 +108,7 @@ justify-content: center;
     <h1>Top Scores</h1>
     <select name="sort-param" id="sort-param">
      <option value="score">Sort by Score</option>
+     <option value="time">Sort by Time</option>
     </select>
     <select name="sort-asc-desc" id="sort-asc-desc">
         <option value="asc">Lowest</option>

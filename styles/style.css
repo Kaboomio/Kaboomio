@@ -18,7 +18,7 @@ body {
     --footer-height: 25px;
     
     font-family: 'orbitron', sans-serif;
-    background: linear-gradient(var(--color2) 70%, green 90%);
+    background: linear-gradient(var(--color2) 70%, green 90%) fixed;
 }
 
 
@@ -103,6 +103,9 @@ header {
 #logout-icon {
     height: 40px;
     cursor:pointer;
+}
+#sign-in-icon {
+    height: 40px;
 }
 
 .gutter-right {
@@ -380,29 +383,26 @@ justify-content: center;
 
 #leaderboard-container{
     width: 100%;
-    font-size: 1rem;
+    margin: 0 auto;
+    background-color: black;
 }
 
 .mini-leaderboard{
-    /* width: 100%; */
     display: flex;
     flex-wrap: wrap;
-    background-color: black;
     color: white;
-    background-repeat: no-repeat;
-    background-size: cover;
     flex-direction: column;
-    padding: 0px 20px;
-    font-size: 1rem;
-    align-items: center;
+    font-size: .8rem;
+    align-items: flex-start;
 }
 
 .leaders{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    font-size: 1rem;
+    align-items: flex-start;
+    font-size: .8rem;
+    padding: 5px;
 }
 
 #display-games{
@@ -417,7 +417,7 @@ justify-content: center;
 #label{
     margin: 0 auto;
     background-color: black;
-    font-size: 2rem;
+    font-size: 1rem;
     color: white;
     padding: 5px;
 }
@@ -468,7 +468,7 @@ input[type=radio]:checked + figure {
     padding: 5px;
 }
 #profile-setup-form h3 {
-    margin: 0;
+    margin: 15px 0 5px;
     text-align: center;
 }
 #profile-setup-form #username {
@@ -479,4 +479,18 @@ input[type=radio]:checked + figure {
 #profile-setup-form #bio {
     width: 90%;
     height: 100px;
+}
+
+@media (max-width: 780px){
+    header{
+        font-size: .5rem;
+    }
+
+    .mini-leaderboard{
+        font-size: .5rem;
+    }
+
+    .leaders{
+        font-size: .5rem;
+    }
 }
