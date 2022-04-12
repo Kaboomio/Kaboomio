@@ -48,10 +48,50 @@ section {
 
 header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     background-color: var(--color1);
     height: var(--header-height);
     box-shadow: var(--shadow);
+    border: 5px var(--color5) ridge;
+}
+.header-left {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+.header-left h1 {
+    margin: auto 10px;
+}
+.header-right {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+.icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    padding-top: 5px;
+}
+#avatar-icon {
+    height: 60px;
+}
+#home-icon {
+    height: 60px;
+    margin: 0 10px;
+}
+#trophy-icon{
+    height: 40px;
+}
+#settings-icon {
+    height: 40px;
+    cursor:pointer;
+}
+#logout-icon {
+    height: 40px;
+    cursor:pointer;
 }
 
 button {
@@ -74,19 +114,6 @@ button:hover {
 h2 {
     font-size: 1.8rem;
     font-weight: bold;
-}
-
-.gutter-right {
-    margin-right: 20px;
-}
-
-.main-logo {
-    animation: pulse 5s infinite ease-in-out;
-}
-
-header img {
-    height: var(--header-height);
-    border-radius: 50%;
 }
 
 p {
@@ -124,11 +151,11 @@ footer {
 
   }
 
-#logout {
+/* #logout {
     position: fixed;
     right: 20px;
     top: 90px;
-}
+} */
 
 .auth-main {
     display: flex;

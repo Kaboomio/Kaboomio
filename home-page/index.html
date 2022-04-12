@@ -10,16 +10,104 @@
     <link rel="stylesheet" href="../styles/reset.css">
     <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/home.css">
+    <style>
+        body {
+            --color1: #d17300;
+            --color2: #10c3f4;
+            --color3: #efda70;
+            --color4: #c10114;
+            --color5: #55310a;
+            
+            --header-height: 80px;
+            --shadow: 0px 10px 20px -12px rgba(0,0,0,0.45);
+            --footer-height: 25px;
+            
+            font-family: 'orbitron', sans-serif;
+            background: linear-gradient(var(--color2) 70%, green 90%);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            background-color: var(--color1);
+            height: var(--header-height);
+            box-shadow: var(--shadow);
+            border: 5px var(--color5) ridge;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+        }
+        .header-left h1 {
+            margin: auto 10px;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        .icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80px;
+            height: 80px;
+            padding-top: 5px;
+        }
+        #avatar-icon {
+            height: 60px;
+        }
+        #home-icon {
+            height: 60px;
+            margin: 0 10px;
+        }
+        #trophy-icon{
+            height: 40px;
+        }
+        #settings-icon {
+            height: 40px;
+            cursor:pointer;
+        }
+        #logout-icon {
+            height: 40px;
+            cursor:pointer;
+        }
+    </style>
     <title>Document</title>
 </head>
 
 <body>
     <header>
-        <div class="gutter-right logo">
-            <img src="../assets/big-logo.png" />
+        <div class="header-left">
+            <div>
+                <img src="../assets/avatars/mario.png" alt="" id="avatar-icon">
+            </div>
+            <h1>It's a me, rileyjhoff</h1>
+        </div>
+        <div class="header-right">
+            <div class="icons">
+                <a href="../home-page/">
+                    <img src="../assets/home-icon.png" id="home-icon" />
+                </a>
+            </div>
+            <div class="icons">
+                <a href="../leaderboard/">
+                    <img src="../assets/trophy-icon.png" id="trophy-icon" />
+                </a>
+            </div>
+            <div class="icons">
+                <a href="../profile-page/">
+                    <img src="../assets/settings-icon.png" id="settings-icon" />
+                </a>
+            </div>
+            <div class="icons">
+                <a>
+                    <img src="../assets/logout-icon.png" id="logout-icon" />
+                </a>
+            </div>
         </div>
     </header>    
-    <button id="logout">Logout</button>
+    <!-- <button id="logout">Logout</button> -->
     <main id="homepage">
         <section id="display-games">
             <img src="/assets/Mario.gif" />

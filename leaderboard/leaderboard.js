@@ -1,19 +1,32 @@
-import { checkAuth, logout, client } from '../fetch-utils.js';
+import { checkAuth, logout, client, getMyProfile } from '../fetch-utils.js';
+import { renderHeader } from '../render-utils.js';
 
 checkAuth();
 
 const scoreContainerEl = document.querySelector('.score-container');
 const sortParameter = document.getElementById('sort-param');
 const ascdescSelect = document.getElementById('sort-asc-desc');
+const body = document.querySelector('body');
 
 
-const logoutButton = document.getElementById('logout');
+// const logoutButton = document.getElementById('logout');
 
-logoutButton.addEventListener('click', () => {
+// logoutButton.addEventListener('click', () => {
+//     logout();
+// });
+
+document.addEventListener('click', (e) => {
+    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon');
     logout();
 });
 
 window.addEventListener('load', fetchandDisplayLeaderboard);
+
+window.addEventListener('load', async () => {
+    fetchandDisplayLeaderboard();
+    fetchandDisplayHeader();
+});
+
 
 sortParameter.addEventListener('change', fetchandDisplayLeaderboard);
 
@@ -61,4 +74,12 @@ async function fetchandDisplayLeaderboard() {
         scoreContainerEl.append(scoreEl);
 
     }
+}
+
+async function fetchandDisplayHeader() {
+    const profile = await getMyProfile();
+    console.log(profile);
+    const header = renderHeader(profile);
+    body.firstElementChild.remove();
+    body.prepend(header);
 }
