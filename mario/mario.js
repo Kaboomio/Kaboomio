@@ -28,6 +28,7 @@ loadSprite('surprise-box', '../assets/surprise-box.png');
 loadSprite('pipe', '../assets/pipe.png');
 loadSprite('castle', '../assets/castle.png');
 loadSprite('fireball', '../assets/fireball.png');
+loadSprite('invisible', '../assets/invisible-image.png');
 
 
 //start screen sprites
@@ -82,6 +83,13 @@ scene('game', ({ score, count }) => {
         origin('bot'),
         scale(0.25)
     ]);
+
+    // add([
+    //     sprite('invisible'),
+    //     pos(1478, 180),
+    //     layer('obj'),
+    //     origin('bot'),
+    // ]);
 
 
 
@@ -244,7 +252,7 @@ scene('game', ({ score, count }) => {
         '     *   =#=%=                          %===#%==*=             %%%                ',
         '                                  ===                   =                         ',
         '                                                        =                         ',
-        '        *           ^   ^                             ^ =                         ',
+        '        *           ^   ^                             ^ =                    i    ',
         '==============================   ========================    =====================',
     ];
 
@@ -252,6 +260,7 @@ scene('game', ({ score, count }) => {
     const levelConfig = {
         width: 20,
         height: 20,
+        'i': () => [sprite('invisible'), area(), solid(), 'invisble'],
         '=': () => [sprite('brick'), area(), solid(), 'brick'],
         '*': () => [sprite('coin'), area(), 'coin'],
         '%': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise', 'brick'],
@@ -360,7 +369,7 @@ scene('lose', ({ score }) => {
         origin('center'),
         pos(center().x, center().y + 85)
     ]);
-    
+
 
     // let rec = add([
     //     rect(500,75),
