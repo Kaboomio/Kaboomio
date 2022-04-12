@@ -1,6 +1,7 @@
 import { checkAuth, logout, getMyProfile, getProfile, getProfileScores, getUser, updateProfile } from '../fetch-utils.js';
 import { renderHeader } from '../render-utils.js';
 
+const title = document.querySelector('title');
 const body = document.querySelector('body');
 const loadingScreen = document.querySelector('.loading-screen');
 const avatarEl = document.getElementById('avatar');
@@ -16,7 +17,6 @@ const editBioEl = document.querySelector('#editBio');
 
 const params = new URLSearchParams(window.location.search);
 const profileId = params.get('id');
-
 
 checkAuth();
 
@@ -84,6 +84,7 @@ async function setUserInfo() {
     editUsernameEl.value = profile.username;
     editBioEl.textContent = profile.bio;
 
+    title.textContent = profile.username + ' | Kaboomio';
 }
 
 async function displayScoreTable() {
