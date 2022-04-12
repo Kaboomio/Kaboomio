@@ -140,7 +140,7 @@ scene('game', ({ score, count }) => {
             isJumping = true;
         }
         music.play();
-        
+
     });
 
     mario.onUpdate(() => {
@@ -450,7 +450,7 @@ scene('lose', ({ score, time, level }) => {
     });
 
     onKeyPress('enter', async () => {
-        await createScore(score, level, n.value, time / 60);
+        await createScore(score, level, n.value, time);
         location.replace('../home-page');
     });
 });
@@ -488,25 +488,6 @@ function patrol(distance = 150, speed = 50, dir = 1) {
         },
     };
 }
-
-
-// function renderAndAppendForm(){
-//     const form = document.createElement('form');
-//     const inputEl = document.createElement('input');
-//     const submitEl = document.createElement('input');
-
-//     inputEl.setAttribute('type', 'text');
-//     inputEl.setAttribute('name', 'initials');
-
-//     submitEl.setAttribute('type', 'submit');
-
-//     form.append(inputEl, submitEl);
-
-//     main.append(form);
-
-
-
-// }
 
 function spawnFireball(marioPos, marioDirection) {
     let fireballPos = marioPos;

@@ -78,8 +78,10 @@ export function renderHeader(profile, userId) {
         avatarImg.src = `${profile.img_url}`;
     }
     if (userId === 'about') {
-        nameEl.textContent = `Meet the Team`;
-        settingsImg.style.animation = 'pulse 2s infinite ease-in-out';
+        nameEl.textContent = `Meet the Kaboomio Team`;
+        if (!profile.username) {
+            settingsImg.style.animation = 'pulse 2s infinite ease-in-out';
+        }
     } else if (!profile.username) {
         nameEl.textContent = 'Dont forget to finish profile setup!';
         settingsImg.style.animation = 'pulse 2s infinite ease-in-out';
