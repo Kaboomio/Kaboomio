@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <link rel="icon" href="../assets/kaboomio-logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/reset.css">
     <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/home.css">
     <style>
-        @media (min-width: 660px) {
+        @media (max-width: 836px) {
             header {
-                font-size: 1rem;
+                font-size: .5rem;
             }
         }
         @media (max-width: 650px) {
@@ -32,52 +33,34 @@
         #about-container {
             display: flex;
             justify-content: center;
-            width: 100%;
-            height: 80%;
-            margin: 50px 20%;
-        }
-        .about-team {
-            border: 1px black solid;
-            margin: 0px 5px;
-        }
-        .about-name {
-            text-align: center;
-        }
-        .about-bio {
-            margin: 10px;
-        }
-        #about-container-1 {
-            display: flex;
-            justify-content: center;
             flex-direction: column;
             align-items: center;
             width: 100%;
             height: 70%;
             margin: 50px 20%;
         }
-        .about-team-1 {
+        .about-team {
             display: flex;
+            flex-direction: column;
             border: 1px black solid;
             margin: 5px 0;
             width: 80%;
         }
-        .about-name-1 {
+        .about-name {
             text-align: center;
+            padding: 10px;
         }
-        .about-bio-1 {
+        .about-bio {
             margin: 10px;
         }
-        .about-name-img-container {
+        .about-img-bio-container {
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-        }
-        .about-bio-container {
             padding: 10px;
         }
     </style>
-    <title>Document</title>
+    <title>Meet The Team | Kaboomio</title>
 </head>
 <body>
     <div class="loading-screen invisible">
@@ -88,7 +71,7 @@
     </div>
     <header>
         <div class="header-left">
-            <h1>Meet the Team</h1>
+            <h1>Meet the Kaboomio Team</h1>
         </div>
         <div class="header-right">
             <div class="icons">
@@ -103,91 +86,57 @@
             </div>
         </div>
     </header>    
-    <!-- <button id="logout">Logout</button> -->
     <main id="about-main">
-        <h1>Vertical</h1>
+        <h1></h1>
         <div id="about-container">
             <div class="about-team">
                 <h3 class="about-name">Riley Hoffman</h3>
-                <img src="../assets/avatars/mario.png" alt="" class="about-imgs">
-                <p class="about-bio">blah blah blah blah blah</p>
-                <p class="about-bio">blah blah blah blah blah</p>
-                <p class="about-bio">blah blah blah blah blah</p>
-                <p class="about-bio">blah blah blah blah blah</p>
+                <div class="about-img-bio-container">
+                    <div class="about-img">
+                        <img src="../assets/avatars/mario.png" alt="" class="about-imgs">
+                    </div>
+                    <div class="about-bio">
+                        <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                        <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                        <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                        <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                    </div>
+                </div>
             </div>
             <div class="about-team">
-                <h3 class="about-name">Riley Hoffman</h3>
-                <img src="../assets/avatars/mario.png" alt="" class="about-imgs">
-                <p class="about-bio">blah blah blah blah blah</p>
-                <p class="about-bio">blah blah blah blah blah</p>
-                <p class="about-bio">blah blah blah blah blah</p>
-                <p class="about-bio">blah blah blah blah blah</p>
+                <div class="about-name-img-container">
+                    <h3 class="about-name">Riley Hoffman</h3>
+                    <img src="../assets/avatars/mario.png" alt="" class="about-imgs">
+                </div>
+                <div class="about-bio-container">
+                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                </div>
             </div>
             <div class="about-team">
-                <h3 class="about-name">Riley Hoffman</h3>
-                <img src="../assets/avatars/mario.png" alt="" class="about-imgs">
-                <p class="about-bio">blah blah blah blah blah</p>
-                <p class="about-bio">blah blah blah blah blah</p>
-                <p class="about-bio">blah blah blah blah blah</p>
-                <p class="about-bio">blah blah blah blah blah</p>
+                <div class="about-name-img-container">
+                    <h3 class="about-name">Riley Hoffman</h3>
+                    <img src="../assets/avatars/mario.png" alt="" class="about-imgs">
+                </div>
+                <div class="about-bio-container">
+                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                </div>
             </div>
             <div class="about-team">
-                <h3 class="about-name">Riley Hoffman</h3>
-                <img src="../assets/avatars/mario.png" alt="" class="about-imgs">
-                <p class="about-bio">blah blah blah blah blah</p>
-                <p class="about-bio">blah blah blah blah blah</p>
-                <p class="about-bio">blah blah blah blah blah</p>
-                <p class="about-bio">blah blah blah blah blah</p>
-            </div>
-        </div>
-        <h1>or Horizontal?</h1>
-        <div id="about-container-1">
-            <div class="about-team-1">
                 <div class="about-name-img-container">
-                    <h3 class="about-name-1">Riley Hoffman</h3>
-                    <img src="../assets/avatars/mario.png" alt="" class="about-imgs-1">
+                    <h3 class="about-name">Riley Hoffman</h3>
+                    <img src="../assets/avatars/mario.png" alt="" class="about-imgs">
                 </div>
                 <div class="about-bio-container">
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                </div>
-            </div>
-            <div class="about-team-1">
-                <div class="about-name-img-container">
-                    <h3 class="about-name-1">Riley Hoffman</h3>
-                    <img src="../assets/avatars/mario.png" alt="" class="about-imgs-1">
-                </div>
-                <div class="about-bio-container">
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                </div>
-            </div>
-            <div class="about-team-1">
-                <div class="about-name-img-container">
-                    <h3 class="about-name-1">Riley Hoffman</h3>
-                    <img src="../assets/avatars/mario.png" alt="" class="about-imgs-1">
-                </div>
-                <div class="about-bio-container">
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                </div>
-            </div>
-            <div class="about-team-1">
-                <div class="about-name-img-container">
-                    <h3 class="about-name-1">Riley Hoffman</h3>
-                    <img src="../assets/avatars/mario.png" alt="" class="about-imgs-1">
-                </div>
-                <div class="about-bio-container">
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio-1">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
                 </div>
             </div>
         </div>
