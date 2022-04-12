@@ -333,6 +333,7 @@ justify-content: center;
     margin: 10px;
     background-color: var(--color1);
     border: none;
+    width: 80vw;
 }
 
 #profilePage .profileEditForm {
@@ -342,14 +343,14 @@ justify-content: center;
 #profilePage .profileEditForm form {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    height: 100%;
 }
 
-#profilePage .profileEditForm input {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40%;
+#profilePage .profileEditForm input[type=text] {
+    margin: 7px;
+    padding: 5px;
+    width: 180px;
     text-align: center;
 }
 
@@ -357,6 +358,7 @@ justify-content: center;
     display: flex;
     justify-content: center;
     text-align: center;
+    font-size: .8rem;
 }
 
 #profilePage .profileEditForm div {
@@ -364,15 +366,23 @@ justify-content: center;
 }
 
 #profilePage .profileEditForm button {
-    width: 80%;
+    margin: 30px 0;
+    width: 120px;
     height: 40px;
+}
+
+#profilePage .profileEditForm h3 {
+    margin: 15px 0;
+    text-align: center;
 }
 
 #profilePage .profileEditForm textarea {
     width: 80%;
     height: 100px;
+    margin: 7px;
+    padding: 5px;
     text-align: center;
-    margin-bottom: 20px;
+    resize: none;
 }
 
 #profilePage .labelName {
@@ -395,9 +405,13 @@ justify-content: center;
     border-radius: 10px;
 }
 
+#profilePage figcaption {
+    margin-top: 2px;
+}
+
 #profilePage .avatar-imgs {
-    height: 110px;
-    width: 110px;
+    height: 100px;
+    width: 100px;
     cursor: pointer;
 }
 
@@ -532,54 +546,87 @@ justify-content: center;
 }
 
 /* profile setup page styling */
-
+#profile-setup-main {
+    height: 90%;
+    padding-top: 3%;
+}
 #profile-setup-form {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: center;
     padding-bottom: 50px;
+    height: 100%;
+    width: 80vw;
 }
 input[type=radio] {
     visibility: collapse;
 }
 #profile-setup-form .avatar-imgs {
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
     cursor: pointer;
 }
 input[type=radio]:checked + figure {
     outline: 3px ridge var(--color3);
 }
-#profile-setup-form .avatar-select {
-    display: flex;
-}
 #profile-setup-form label {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     text-align: center;
+    font-size: .8rem;
 }
 #profile-setup-form figure {
     margin: 5px;
     padding: 5px;
     border-radius: 10px;
 }
+#profile-setup-form figcaption {
+    margin-top: 2px;
+}
 #profile-setup-form button {
-    margin: 10px 0;
-    width: 10%;
-    padding: 5px;
+    margin: 30px 0;
+    width: 120px;
+    height: 40px;
 }
 #profile-setup-form h3 {
-    margin: 15px 0 5px;
+    margin: 15px 0;
     text-align: center;
 }
 #profile-setup-form #username {
-    width: 30%;
+    width: 180px;
     margin: 7px;
     padding: 5px;
+    text-align: center;
 }
-#profile-setup-form #bio {
-    width: 90%;
+#profile-setup-form textarea {
+    width: 80%;
     height: 100px;
+    margin: 7px;
+    padding: 5px;
+    text-align: center;
+    resize: none;
+}
+
+.username-bio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    height: 100%;
+    justify-content: flex-start;
+}
+
+.username-bio div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.avatar-select {
+    width: 60%;
 }
 
 @media (max-width: 780px){
