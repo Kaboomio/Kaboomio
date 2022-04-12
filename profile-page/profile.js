@@ -1,6 +1,7 @@
-import { checkAuth, logout, getMyProfile, getProfile, getProfileScores } from '../fetch-utils.js';
+import { checkAuth, logout, getMyProfile, getProfile, getProfileScores, getUser } from '../fetch-utils.js';
+import { renderHeader } from '../render-utils.js';
 
-
+const body = document.querySelector('body');
 const avatarEl = document.getElementById('avatar');
 const usernameEl = document.getElementById('username');
 const joinedDateEl = document.getElementById('joinedDate');
@@ -16,15 +17,16 @@ const profileId = params.get('id');
 
 checkAuth();
 
-const logoutButton = document.getElementById('logout');
-
-logoutButton.addEventListener('click', () => {
-    logout();
+document.addEventListener('click', (e) => {
+    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
+        logout();
+    }
 });
 
 window.addEventListener('load', () => {
     setUserInfo();
     displayScoreTable();
+    fetchandDisplayHeader();
 });
 
 async function setUserInfo() {
@@ -75,3 +77,11 @@ editButtonEl.addEventListener('click', () => {
     formContainer.classList.toggle('hidden');
     bioEl.classList.toggle('hidden');
 });
+
+async function fetchandDisplayHeader() {
+    const profile = await getProfile(profileId);
+    const user = getUser();
+    const header = renderHeader(profile, user.id);
+    body.firstElementChild.remove();
+    body.prepend(header);
+}
