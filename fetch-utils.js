@@ -15,7 +15,7 @@ export function checkAuth() {
 
 export async function redirectIfLoggedIn() {
     if (getUser()) {
-        const profile = await getProfile();
+        const profile = await getMyProfile();
         if (!profile.username) {
             location.replace('../profile-setup');
         } else {
@@ -49,7 +49,7 @@ export async function createProfile() {
     return checkError(response);
 }
 
-export async function getProfile() {
+export async function getMyProfile() {
     const user = getUser();
     const response = await client
         .from('profiles')
@@ -85,6 +85,26 @@ export async function updateProfile(username, avatar, bio) {
 
     return checkError(response);
 }
+
+export async function getProfile(id) {
+    const response = await client
+        .from('profiles')
+        .select('*')
+        .match({ id: id })
+        .single();
+
+    return response.body;
+}
+
+export async function getProfileScores(id) {
+    const response = await client
+        .from('scores')
+        .select('*')
+        .match({ profile_id: id });
+
+    return response.body;
+}
+
 
 function checkError({ data, error }) {
     return error ? console.error(error) : data;

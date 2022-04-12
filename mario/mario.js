@@ -15,6 +15,9 @@ add([
     pos(120, 80),
 ]);
 
+let isJumping = true;
+
+
 //mario level sprites
 loadSprite('coin', '../assets/coin.png');
 loadSprite('brick', '../assets/brick.png');
@@ -95,6 +98,13 @@ scene('game', ({ score, count }) => {
         mario.move(marioSpeed, 0);
     });
 
+    mario.onUpdate(() => {
+        if (mario.isGrounded()) {
+            isJumping = false;
+        }
+    });
+
+
     onKeyPress('space', () => {
         if (mario.isGrounded()) {
             mario.jump(marioJumpHeight);
@@ -108,11 +118,20 @@ scene('game', ({ score, count }) => {
     //     obj.move(-evilMushroomMove, 0);
     // });
 
-    mario.onCollide('evil-mushroom', (obj) => {
-        if (mario.pos.y === obj.pos.y) {
-            destroy(obj);
+    // mario.onCollide('evil-mushroom', (obj) => {
+    //     if (mario.pos.y === obj.pos.y) {
+    //         destroy(obj);
+    //     }
+    // });
+
+    mario.onCollide('dangerous', (d) => {
+        if (isJumping) {
+            destroy(d);
+        } else {
+            go('lose', { score: scoreLabel.value });
         }
     });
+
 
     mario.onCollide('coin', (obj) => {
         destroy(obj);
@@ -162,7 +181,7 @@ scene('game', ({ score, count }) => {
         '*': () => [sprite('coin'), area(), 'coin'],
         '$': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise'],
         '#': () => [sprite('surprise-box'), solid(), area(), 'mushroom-surprise'],
-        '^': () => [sprite('evil-mushroom'), solid(), area(), 'evil-mushroom', body(), patrol(150)],
+        '^': () => [sprite('evil-mushroom'), solid(), area(), 'evil-mushroom', 'dangerous', body(), patrol(150)],
         '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
         '+': () => [sprite('block'), solid(), area()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', body()],
@@ -217,7 +236,20 @@ scene('game', ({ score, count }) => {
     });
 });
 
-//NEEDED - END GAME SCENE
+scene('lose', ({ score }) => {
+    add([
+        text('Game Over', {
+            size: 226,
+        }),
+        origin('center'), 
+        pos(480, 125),
+        scale(0.25)
+    ]);
+    add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)]);
+});
+
+
+//NEEDED - END GAMEScene
 
 go('game', { score: 0, count: 0 });
 

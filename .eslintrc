@@ -35,10 +35,11 @@
         "onKeyPress": false,
         "destroy": false,
         "lifespan": false,
-        "gameLevel": false,
         "addLevel": false,
         "fixed": false,
         "vec2": false,
+        "width": false,
+        "height": false
 
 
 
