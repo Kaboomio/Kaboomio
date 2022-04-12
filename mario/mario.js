@@ -67,7 +67,7 @@ scene('game', ({ score, count }) => {
 
     add([
         sprite('castle'),
-        pos(1018, 286),
+        pos(1560, 188),
         layer('bg'),
         origin('bot'),
         scale(0.25)
@@ -80,7 +80,7 @@ scene('game', ({ score, count }) => {
         sprite('mario'), 
         solid(), 
         area(),
-        pos(30, 0),
+        pos(1400, 0),
         body(),
         origin('bot'),
         'mario'
@@ -157,37 +157,35 @@ scene('game', ({ score, count }) => {
     }
 
     //GAME LEVEL CONFIG
-    const gameLevel = addLevel([
-        '                                     ',
-        '                                     ',
-        '        ***                          ',
-        '                                     ',
-        '                                     ',
-        '                 ****                ',
-        '                                     ',
-        '                                     ',
-        '                 ====                ',
-        '                                     ',
-        '                                     ',
-        '     **   =$=#=                      ',
-        '                                     ',
-        '                         ?           ',
-        '           ^  ^                      ',
-        '===========================    ======',
-    ], {
-        // define the size of each block
+    const map = [
+        '                                                                                  ',
+        '                                           %%%%                                   ',
+        '                                                                                  ',
+        '                                                          ===                     ',
+        '                                                                                  ',
+        '     *   =#=%=                          %===#%==*=             %%%                ',
+        '                                  ===                   =                         ',
+        '                                                        =                         ',
+        '        *           ^   ^                             ^ =                         ',
+        '==============================   ========================    =====================',
+    ];
+
+    //configuring the map to display
+    const levelConfig = {
         width: 20,
         height: 20,
-        // define what each symbol means, by a function returning a component list (what will be passed to add())
         '=': () => [sprite('brick'), area(), solid(), 'brick'],
         '*': () => [sprite('coin'), area(), 'coin'],
+        '%': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise'],
         '$': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise'],
         '#': () => [sprite('surprise-box'), solid(), area(), 'mushroom-surprise'],
         '^': () => [sprite('evil-mushroom'), solid(), area(), 'evil-mushroom', 'dangerous', body(), patrol(150)],
         '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
         '+': () => [sprite('block'), solid(), area()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', body()],
-    });
+    };
+
+    const gameLevel = addLevel(map, levelConfig);
 
     //GAMEPLAY HEADER TEXT
     const usernameLabel = add([
@@ -196,7 +194,7 @@ scene('game', ({ score, count }) => {
             width: 320, 
             font: 'sinko', 
         }),
-        pos(30, 6),
+        pos(1400, 6),
         fixed()
     ]);
 
