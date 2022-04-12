@@ -77,10 +77,12 @@ export function renderHeader(profile, userId) {
     } else {
         avatarImg.src = `${profile.img_url}`;
     }
-    if (!profile.username) {
+    if (userId === 'about') {
+        nameEl.textContent = `Meet the Team`;
+        settingsImg.style.animation = 'pulse 2s infinite ease-in-out';
+    } else if (!profile.username) {
         nameEl.textContent = 'Dont forget to finish profile setup!';
         settingsImg.style.animation = 'pulse 2s infinite ease-in-out';
-        leaderboardAnchor.removeAttribute('href');
     } else if (profile.user_id === userId) {
         nameEl.textContent = `View and Edit Profile`;
     } else if (userId) {
@@ -100,7 +102,10 @@ export function renderHeader(profile, userId) {
     }
     homeAnchor.append(homeImg);
     leaderboardAnchor.append(leaderboardImg);
-    if (!profile.username) {
+    if (userId === 'about') {
+        homeDiv.append();
+        leaderboardDiv.append(leaderboardAnchor);
+    } else if (!profile.username) {
         homeDiv.append();
         leaderboardDiv.append();
     } else {
