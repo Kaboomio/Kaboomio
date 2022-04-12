@@ -42,7 +42,9 @@ loadSound('gameOver', 'gameOver.mp3');
 loadSound('powerUp', 'powerUp.mp3');
 loadSound('pipeSound', 'pipe.mp3');
 
+const fallToDeath = 500;
 
+const music = play('theme'); 
 
 
 
@@ -65,6 +67,7 @@ scene('start', () => {
 
     onKeyDown('space', () => {
         go('game', { score: 0, count: 0 });
+        
     });
     
     onUpdate(() => {
@@ -72,14 +75,11 @@ scene('start', () => {
     });
 });
 
-const music = play('theme');
-
-    
 //GAME SCENE
 scene('game', ({ score, count }) => {
     layers(['bg', 'obj', 'ui'], 'obj');
 
-    music.play();
+    
     
 
     add([
@@ -97,7 +97,7 @@ scene('game', ({ score, count }) => {
         sprite('mario'), 
         solid(), 
         area({ width: 20, height: 20 }),
-        pos(36, 0),
+        pos(36, 0),        
         body(),
         origin('bot'),
         'mario'
@@ -139,7 +139,17 @@ scene('game', ({ score, count }) => {
         } else {
             isJumping = true;
         }
+        music.play();
+
     });
+
+    mario.onUpdate(() => {
+        camPos(mario.pos);
+        if (mario.pos.y >= fallToDeath) {
+            go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
+        }
+    });
+
 
     let fireballDirection = 'down';
 
@@ -377,7 +387,10 @@ scene('game', ({ score, count }) => {
 
 });
 
+
 scene('lose', ({ score, time, level }) => {
+    const gameOverMusic = play('gameOver');
+
     add([
         text('Game Over', {
             size: 226,
@@ -385,7 +398,8 @@ scene('lose', ({ score, time, level }) => {
         origin('center'), 
         pos(480, 125),
         scale(0.25),
-        music.pause()
+        music.pause(),
+        gameOverMusic.play()
     ]);
     add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)]);
 
@@ -474,27 +488,6 @@ function patrol(distance = 150, speed = 50, dir = 1) {
         },
     };
 }
-
-let main = document.querySelector('main');
-
-
-// function renderAndAppendForm(){
-//     const form = document.createElement('form');
-//     const inputEl = document.createElement('input');
-//     const submitEl = document.createElement('input');
-
-//     inputEl.setAttribute('type', 'text');
-//     inputEl.setAttribute('name', 'initials');
-
-//     submitEl.setAttribute('type', 'submit');
-
-//     form.append(inputEl, submitEl);
-
-//     main.append(form);
-
-
-
-// }
 
 function spawnFireball(marioPos, marioDirection) {
     let fireballPos = marioPos;
