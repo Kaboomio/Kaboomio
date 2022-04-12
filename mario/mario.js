@@ -260,10 +260,7 @@ scene('game', ({ score, count }) => {
     const levelConfig = {
         width: 20,
         height: 20,
-<<<<<<< HEAD
         'i': () => [sprite('invisible'), area(), solid(), 'invisible'],
-=======
->>>>>>> d1a51a365e4ba5298f557c965e429219a7be77f4
         '=': () => [sprite('brick'), area(), solid(), 'brick'],
         '*': () => [sprite('coin'), area(), 'coin'],
         '%': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise', 'brick'],
@@ -380,16 +377,7 @@ scene('game', ({ score, count }) => {
 
 });
 
-<<<<<<< HEAD
-// End of Level Collision
-
-
-
-
-scene('lose', ({ score }) => {
-=======
 scene('lose', ({ score, time, level }) => {
->>>>>>> d1a51a365e4ba5298f557c965e429219a7be77f4
     add([
         text('Game Over', {
             size: 226,
@@ -447,17 +435,10 @@ scene('lose', ({ score, time, level }) => {
         n.text = n.value;
     });
 
-<<<<<<< HEAD
-    onKeyDown('enter', () => {
-        go('start');
-    });
-
-=======
     onKeyPress('enter', async () => {
-        await createScore(score, level, n.value, time/);
+        await createScore(score, level, n.value, time / 60);
         location.replace('../home-page');
     });
->>>>>>> d1a51a365e4ba5298f557c965e429219a7be77f4
 });
     
    
