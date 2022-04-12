@@ -4,12 +4,7 @@ import { renderHeader } from '../render-utils.js';
 // checkAuth();
 
 const body = document.querySelector('body');
-
-window.addEventListener('load', async () => {
-    if (getUser()) {
-        await fetchandDisplayHeader();
-    }
-});
+const loadingScreen = document.querySelector('.loading-screen');
 
 document.addEventListener('click', (e) => {
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
@@ -17,10 +12,19 @@ document.addEventListener('click', (e) => {
     }
 });
 
+window.addEventListener('load', async () => {
+    loadingScreen.classList.toggle('invisible');
+    if (getUser()) {
+        await fetchandDisplayHeader();
+    }
+    loadingScreen.classList.toggle('invisible');
+});
+
 async function fetchandDisplayHeader() {
     const profile = await getMyProfile();
     const userId = 'about';
+    const hardHeader = document.querySelector('header');
+    body.removeChild(hardHeader);
     const header = renderHeader(profile, userId);
-    body.firstElementChild.remove();
     body.prepend(header);
 }

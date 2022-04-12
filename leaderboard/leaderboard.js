@@ -7,6 +7,7 @@ const body = document.querySelector('body');
 const scoreContainerEl = document.querySelector('.score-container');
 const sortParameter = document.getElementById('sort-param');
 const ascdescSelect = document.getElementById('sort-asc-desc');
+const loadingScreen = document.querySelector('.loading-screen');
 
 
 document.addEventListener('click', (e) => {
@@ -16,10 +17,12 @@ document.addEventListener('click', (e) => {
 });
 
 window.addEventListener('load', async () => {
-    fetchandDisplayLeaderboard();
+    loadingScreen.classList.toggle('invisible');
+    await fetchandDisplayLeaderboard();
     if (getUser()) {
-        fetchandDisplayHeader();
+        await fetchandDisplayHeader();
     }
+    loadingScreen.classList.toggle('invisible');
 });
 
 
@@ -73,7 +76,8 @@ async function fetchandDisplayLeaderboard() {
 
 async function fetchandDisplayHeader() {
     const profile = await getMyProfile();
+    const hardHeader = document.querySelector('header');
+    body.removeChild(hardHeader);
     const header = renderHeader(profile);
-    body.firstElementChild.remove();
     body.prepend(header);
 }
