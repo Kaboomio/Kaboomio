@@ -101,6 +101,8 @@ scene('game', ({ score, count }) => {
     mario.onUpdate(() => {
         if (mario.isGrounded()) {
             isJumping = false;
+        } else {
+            isJumping = true;
         }
     });
 

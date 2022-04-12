@@ -217,7 +217,7 @@ td, th {
 
 th {
     color: #ffffff;
-    background-color: #6A0400;
+    background-color: var(--color5);
     text-transform: uppercase;
 }
 
