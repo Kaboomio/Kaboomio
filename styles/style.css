@@ -127,6 +127,7 @@ button {
     background-color: white;
     color: var(--color5);
     height: 5vh;
+    margin: 5px;
 }
 
 button:hover {
@@ -301,11 +302,17 @@ justify-content: center;
 }
 
 
+
+
+
+/* profile page styling */
+
 .flex-row {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .flex-column {
@@ -318,25 +325,80 @@ justify-content: center;
     align-content: space-between;
 }
 
+#profilePage .profileMargins {
+    margin: 10px;
+}
 
-/* profile page */
+#profilePage .infoSection {
+    margin: 10px;
+    background-color: var(--color1);
+    border: none;
+}
 
-.labelName {
+#profilePage .profileEditForm {
+    width: 80vw;
+}
+
+#profilePage .profileEditForm form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#profilePage .profileEditForm input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    text-align: center;
+}
+
+#profilePage .profileEditForm label {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+#profilePage .profileEditForm div {
+    width: 100%;
+}
+
+#profilePage .profileEditForm button {
+    width: 80%;
+    height: 40px;
+}
+
+#profilePage .profileEditForm textarea {
+    width: 80%;
+    height: 100px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#profilePage .labelName {
     width: 10vw;
 }
 
-.editBio {
-    height: 40px;
-    width: 90%;
-}
-
-#avatar {
+#profilePage #avatar {
     height: 80px;
     width: 80px;
     padding: 10px;
     border: 1px solid grey;
     border-radius: 90px;
     margin-right: 20px;
+    background-color: whitesmoke;
+}
+
+#profilePage figure {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+#profilePage .avatar-imgs {
+    height: 110px;
+    width: 110px;
+    cursor: pointer;
 }
 
 .hidden {
@@ -344,14 +406,10 @@ justify-content: center;
 }
 
 /* Homepage styling */
-#homepage{
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-}
 
 #leaderboard-container{
     width: 100%;
-    margin: 0 auto;
+    margin-right: 20px;
     background-color: black;
 }
 
@@ -362,6 +420,7 @@ justify-content: center;
     flex-direction: column;
     font-size: .8rem;
     align-items: flex-start;
+    padding-right: 10px;
 }
 
 .leaders{
@@ -375,7 +434,7 @@ justify-content: center;
 
 #display-games{
     width: 100%;
-    margin: 60px;
+    margin: 20px;
 }
 
 #display-games img{
@@ -398,6 +457,80 @@ justify-content: center;
     opacity: .7;
 }
 
+.mini:hover{
+    opacity: .8;
+    background-color: rgb(73, 73, 73);
+    cursor: pointer;
+}
+
+#play-game-button:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+
+#homepage2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#kaboomio{
+    display: flex;
+    align-items: flex-start;
+    background-color: rgb(45, 0, 93);
+    padding: 20px;
+    width: 70%;
+    height: 200px;
+    margin: 20px 0px 60px 0px;
+    flex-wrap: wrap;
+}
+
+#kaboomio img{
+    height: 200px;
+    padding: 10px;
+}
+
+#kaboomio h1{
+    color: white;
+    padding: 0;
+    border-bottom: #d17300 5px solid;
+    border-radius: 5px;
+}
+
+#yoshi-egg{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    animation: bounce .4s linear;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    margin: 0px 50px;
+    width: 100%;
+}
+
+#yoshi-egg img{
+    height: 50px;
+    display: flex;
+}
+
+#second-row{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    margin-top: 20px;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translate3d(0, 20px, 0);
+    }
+    20% {
+        transform: translate3d(0px, 20px, 0);
+    }
+}
+
 /* profile setup page styling */
 
 #profile-setup-form {
@@ -406,7 +539,7 @@ justify-content: center;
     align-items: center;
     padding-bottom: 50px;
 }
-#profile-setup-form input[type=radio] {
+input[type=radio] {
     visibility: collapse;
 }
 #profile-setup-form .avatar-imgs {
@@ -414,7 +547,7 @@ justify-content: center;
     width: 150px;
     cursor: pointer;
 }
-#profile-setup-form input[type=radio]:checked + figure {
+input[type=radio]:checked + figure {
     outline: 3px ridge var(--color3);
 }
 #profile-setup-form .avatar-select {
@@ -460,6 +593,10 @@ justify-content: center;
 
     .leaders{
         font-size: .5rem;
+    }
+
+    #kaboomio img{
+        display: none;
     }
 }
 
