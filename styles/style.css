@@ -108,18 +108,11 @@ header {
     height: 40px;
 }
 
-.gutter-right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-right: 20px;
-    width: 100%;
-}
-
-.gutter-right img {
+.logo {
     height: var(--header-height);
     border-radius: 50%;
     height: 65px;
+    margin-left: 10px;
 }
 
 button {
@@ -170,8 +163,8 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    background: linear-gradient(70deg, #4292a7 40%, rgba(0, 0, 0, 0) 80%), url(/assets/sign-up-page.png);
-    height: 100%;
+    background: linear-gradient(70deg, #4292a7 40%, rgba(0, 0, 0, 0) 80%), url(/assets/sign-up-page.png) fixed;
+    height: calc(100% - var(--header-height) - var(--footer-height));
     width: 100%;
 }
 
