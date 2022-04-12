@@ -395,7 +395,7 @@ scene('lose', ({ score, time, level }) => {
     });
 
     onKeyPress('enter', async () => {
-        await createScore(score, level, n.value, time/);
+        await createScore(score, level, n.value, time);
         location.replace('../home-page');
     });
 });
