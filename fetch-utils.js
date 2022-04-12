@@ -19,7 +19,7 @@ export async function redirectIfLoggedIn() {
         if (!profile.username) {
             location.replace('../profile-setup');
         } else {
-            location.replace('../mario');
+            location.replace('../home-page');
         }
     }
 }
@@ -60,16 +60,31 @@ export async function getProfile() {
     return checkError(response);
 }
 
-export async function updateUsernameAndAvatar(username, avatar) {
+export async function getAllUsernames() {
+    const response = await client
+        .from('profiles')
+        .select('username');
+
+    const usernames = response.body
+        .filter(username => {if (username.username !== null) return username.username;})
+        .map(username => username.username.toLowerCase());
+
+    return usernames;
+}
+
+export async function updateProfile(username, avatar, bio) {
     const user = getUser();
     const response = await client
         .from('profiles')
-        .update({ username, img_url: `../assets/avatars/${avatar}.png` })
+        .update({ 
+            username, 
+            img_url: `../assets/avatars/${avatar}.png`,
+            bio
+        })
         .match({ user_id: user.id });
 
     return checkError(response);
 }
-
 
 function checkError({ data, error }) {
     return error ? console.error(error) : data;
