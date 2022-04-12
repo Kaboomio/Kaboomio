@@ -109,6 +109,10 @@ header {
     height: 40px;
     cursor:pointer;
 }
+#sign-in-icon {
+    height: 40px;
+    cursor:pointer;
+}
 
 .logo {
     height: var(--header-height);
@@ -463,4 +467,41 @@ justify-content: center;
     .footer-right {
         font-size: .5rem
     }
+}
+
+@keyframes mario {
+    100% {
+        transform: translateX(105%);
+    }
+}
+
+.loading-screen {
+    position: fixed;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(15, 15, 15);
+    width: 100%;
+    height: 100%;
+}
+
+.loading-img-container {
+    width: 100%;
+    position: relative;
+    animation: mario 1.3s linear infinite;
+}
+
+.loading-img-container + p {
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+    width: 100%;
+    animation: pulse 0.9s infinite ease-in-out;
+    margin: 10px 0
+}
+
+.loading-img {
+    height: 40px;
 }
