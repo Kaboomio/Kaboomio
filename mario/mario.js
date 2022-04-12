@@ -45,6 +45,10 @@ loadSound('powerUp', 'powerUp.mp3');
 loadSound('pipeSound', 'pipe.mp3');
 
 
+
+
+
+
 //START SCENE
 scene('start', () => {
     
@@ -62,7 +66,7 @@ scene('start', () => {
     ]);
 
     onKeyDown('space', () => {
-        go('game');
+        go('game', { score: 0, count: 0 });
     });
     
     onUpdate(() => {
@@ -70,11 +74,15 @@ scene('start', () => {
     });
 });
 
+const music = play('theme');
 
+    
 //GAME SCENE
 scene('game', ({ score, count }) => {
     layers(['bg', 'obj', 'ui'], 'obj');
 
+    music.play();
+    
 
     add([
         sprite('castle'),
@@ -84,13 +92,6 @@ scene('game', ({ score, count }) => {
         scale(0.25)
     ]);
 
-    // add([
-    //     sprite('invisible'),
-    //     pos(1478, 180),
-    //     layer('obj'),
-    //     origin('bot'),
-    // ]);
-
 
 
     //MARIO & HIS MOVEMENT
@@ -98,7 +99,7 @@ scene('game', ({ score, count }) => {
         sprite('mario'), 
         solid(), 
         area({ width: 20, height: 20 }),
-        pos(1400, 0),
+        pos(36, 0),
         body(),
         origin('bot'),
         'mario'
@@ -183,6 +184,8 @@ scene('game', ({ score, count }) => {
             destroy(d);
         } else {
             go('lose', { score: scoreLabel.value });
+            music.pause();
+            
         }
     });
 
@@ -260,7 +263,7 @@ scene('game', ({ score, count }) => {
     const levelConfig = {
         width: 20,
         height: 20,
-        'i': () => [sprite('invisible'), area(), solid(), 'invisble'],
+        'i': () => [sprite('invisible'), area(), solid(), 'invisible'],
         '=': () => [sprite('brick'), area(), solid(), 'brick'],
         '*': () => [sprite('coin'), area(), 'coin'],
         '%': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise', 'brick'],
@@ -274,6 +277,9 @@ scene('game', ({ score, count }) => {
     };
 
     const gameLevel = addLevel(map, levelConfig);
+
+    let levelNumber = 1;
+
 
     //GAMEPLAY HEADER TEXT
     const usernameLabel = add([
@@ -349,7 +355,34 @@ scene('game', ({ score, count }) => {
         // camPos(mario.pos.x, 180);
         camPos(mario.pos);
     });
+
+    mario.onCollide('invisible', () => {
+        add([
+            text('You Beat The Level!', { size: 24 }),
+            pos(toWorld(vec2(160, 120))),
+            color(255, 255, 255),
+            origin('center'),
+            layer('ui'),
+            music.pause(),
+        ]);
+        wait(1, () => {
+            let nextLevel = levelNumber + 1;
+  
+            if (nextLevel > map.length) {
+                go('start');
+            } else {
+                go('game', { score: 0, count: 0 }, nextLevel);
+            }
+        });
+
+    });
+
 });
+
+// End of Level Collision
+
+
+
 
 scene('lose', ({ score }) => {
     add([
@@ -358,14 +391,16 @@ scene('lose', ({ score }) => {
         }),
         origin('center'), 
         pos(480, 125),
-        scale(0.25)
+        scale(0.25),
+        music.pause()
     ]);
     add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)]);
 
     // add([renderAndAppendForm(), origin('center'), pos(800, 800), fixed()]);
 
     let txt = add([
-        text('Enter your initials:'),
+        text('Enter your initials and press Enter:'),
+        scale(0.25),
         origin('center'),
         pos(center().x, center().y + 85)
     ]);
@@ -390,9 +425,13 @@ scene('lose', ({ score }) => {
     //     origin("center"),
     //     pos(center().x, center().y+150)
     // ])
-
+    let maxChar = 3;
     onCharInput((ch) => {
         n.value += ch;
+        if (n.value.length > maxChar){
+            n.value = n.value.slice(0, 2);
+        }
+
     });
 
 
@@ -403,6 +442,10 @@ scene('lose', ({ score }) => {
 
     onUpdate(() => {
         n.text = n.value;
+    });
+
+    onKeyDown('enter', () => {
+        go('start');
     });
 
 });
@@ -418,7 +461,7 @@ scene('lose', ({ score }) => {
 
 //NEEDED - END GAMEScene
 
-go('game', { score: 0, count: 0 });
+go('start', { score: 0, count: 0 });
 
 function patrol(distance = 150, speed = 50, dir = 1) {
     return {
