@@ -192,7 +192,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    background: linear-gradient(70deg, #4292a7 40%, rgba(0, 0, 0, 0) 80%), url(/assets/sign-up-page.png) fixed;
+    background: linear-gradient(70deg, #4292a7 30%, rgba(0, 0, 0, 0) 50%), url(/assets/kaboomio\ zoom\ background.png) -20% fixed;
     height: calc(100% - var(--header-height) - var(--footer-height));
     width: 100%;
 }
@@ -214,7 +214,7 @@ footer {
 /* leaderboard CSS */
 
 #leaderboard-body{
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .leaderboard{
@@ -240,9 +240,10 @@ footer {
     background-color: black;
     color: white;
     overflow: hidden;
-    height: 100%;
+    height: 90%;
     border-radius: 10px;
     min-width: 270px;
+    margin-bottom: 40px;
 }
 
 select{
@@ -261,10 +262,11 @@ h1{
 .score-container{
     display: flex;
     width: 90%;
-    height: 300px;
+    height: 100%;
     flex-direction: column;
     animation: scrolling 5s linear forwards;
     position: relative;
+    overflow: hidden;
 }
 
 .table{
@@ -280,10 +282,8 @@ display: flex;
 flex-direction: row;
 align-items: center;
 justify-content: center;
-font: 3vw;
+font-size: 2vw;
 color: goldenrod;
-margin: 0px;
-padding: 0px;
 }
 
 .score:hover{
@@ -304,8 +304,8 @@ padding: 0px;
 }
 
 @keyframes scrolling {
-    0% {top: 400px;}
-    100% {top: 0px; }
+    0% {top: 100%;}
+    100% {top: 0%; }
     
 }
 
@@ -500,6 +500,7 @@ tr:nth-child(even) {
 
 #leaderboard-container{
     width: 100%;
+    height: 250px;
     margin-right: 20px;
     background-color: black;
 }
@@ -509,9 +510,9 @@ tr:nth-child(even) {
     flex-wrap: wrap;
     color: white;
     flex-direction: column;
-    font-size: .8rem;
+    font-size: 1rem;
     align-items: flex-start;
-    padding-right: 10px;
+    padding-right: 5px;
 }
 
 .leaders{
@@ -519,7 +520,7 @@ tr:nth-child(even) {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    font-size: .8rem;
+    font-size: 1rem;
     padding: 5px;
 }
 
@@ -530,6 +531,7 @@ tr:nth-child(even) {
 
 #display-games img{
     width: 100%;
+    height: 250px;
 }
 
 #label{
@@ -544,7 +546,7 @@ tr:nth-child(even) {
     position: absolute;
     border: none;
     color: white;
-    background-color: rgb(43, 43, 43);
+    background-color: rgb(45, 0, 93);
     opacity: .7;
 }
 
@@ -570,7 +572,7 @@ tr:nth-child(even) {
     align-items: flex-start;
     background-color: rgb(45, 0, 93);
     padding: 20px;
-    width: 70%;
+    width: 90%;
     height: 200px;
     margin: 20px 0px 60px 0px;
     flex-wrap: wrap;
