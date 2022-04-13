@@ -138,7 +138,8 @@ export async function deleteScore(id) {
     const response = await client
         .from('scores')
         .delete()
-        .match({ id: id });
+        .match({ id: id })
+        .single();
     
     return response.body;
 }

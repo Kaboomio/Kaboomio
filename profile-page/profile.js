@@ -120,6 +120,7 @@ async function displayScoreTable() {
         const userProfileId = await getMyProfile();
 
         removeScoreEl.addEventListener('click', async () => {
+            console.log(removeScoreEl.id);
             await deleteScore(removeScoreEl.id);
             displayScoreTable();
         });
