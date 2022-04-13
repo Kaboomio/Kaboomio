@@ -90,26 +90,23 @@ async function setUserInfo() {
 async function displayScoreTable() {
     const scores = await getProfileScores(profileId);
 
+    previousScoresContainer.textContent = '';
+
+    const scoreboardHeader = document.createElement('p');
+    const scoresList = document.createElement('ol');
+
+    scoreboardHeader.textContent = `Initials.......Score........Level........Date........Elapsed Time`;
+
     for (let score of scores) {
-        const scoreRow = document.createElement('tr');
-        const initials = document.createElement('td');
-        const scoreEl = document.createElement('td');
-        const level = document.createElement('td');
-        const date = document.createElement('td');
-        const time = document.createElement('td');
-
         const playDate = new Date(score.created_at);
+        const scoreRow = document.createElement('li');
+        scoreRow.classList.add('mini');
+        scoreRow.textContent = `${score.initials}.............${score.score}.............${score.level}.............${playDate.toLocaleDateString('en-US')}.............${(100 - score.time)} sec`;
 
-        initials.textContent = score.initials;
-        scoreEl.textContent = score.score;
-        level.textContent = score.level;
-        date.textContent = playDate.toLocaleDateString('en-US');
-        time.textContent = (100 - score.time) + ' sec';
-
-        scoreRow.append(initials, scoreEl, level, date, time);
-
-        previousScoresContainer.append(scoreRow);
+        scoresList.append(scoreRow);
     }
+
+    previousScoresContainer.append(scoreboardHeader, scoresList);
 }
 
 
