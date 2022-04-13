@@ -41,15 +41,18 @@ loadSound('fireballSound', 'fireball.mp3');
 loadSound('gameOver', 'gameOver.mp3');
 loadSound('powerUp', 'powerUp.mp3');
 loadSound('pipeSound', 'pipe.mp3');
+loadSound('silence', 'silence.mp3');
 
 const fallToDeath = 500;
 let music = play('theme'); 
+music.pause();
 
 
 
 
 //START SCENE
 scene('start', () => {
+
     
     const startScreen = add([
         sprite('start-screen'),
@@ -77,10 +80,9 @@ scene('start', () => {
 
 //GAME SCENE
 scene('game', ({ score, count }) => {
-    layers(['bg', 'obj', 'ui'], 'obj');
+    layers(['bg', 'obj', 'ui'], 'obj'); 
     music.play();
-    music.volume(0.25);  
-
+    music.volume(0.25); 
     
     add([
         sprite('castle'),
@@ -119,6 +121,8 @@ scene('game', ({ score, count }) => {
     onKeyDown('right', () => {
         mario.move(marioSpeed, 0);
         marioDirection = 'right';
+        play('silence');
+
     });
 
     onKeyPress('space', () => {
@@ -265,7 +269,7 @@ scene('game', ({ score, count }) => {
         '     *   =#=%=                          %===#%==*=             %%%                ',
         '                                  ===                   =                         ',
         '                                                        =                         ',
-        '        *           ^   ^                             ^ =                         ',
+        '        *           ^   ^                             ^ =                    i    ',
         '==============================   ========================    =====================',
     ];
 
@@ -439,11 +443,13 @@ scene('lose', ({ score, time, level }) => {
     let maxChar = 3;
     onCharInput((ch) => {
         n.value += ch;
+        n.value = n.value.toUpperCase();
         if (n.value.length > maxChar){
             n.value = n.value.slice(0, 2);
         }
 
     });
+
 
     onKeyPress('backspace', () => {
         n.value = n.value.replace(n.value.charAt(n.value.length - 1), '');
