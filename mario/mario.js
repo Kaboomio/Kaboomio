@@ -45,6 +45,7 @@ loadSound('silence', 'silence.mp3');
 
 const fallToDeath = 500;
 let music = play('theme'); 
+music.pause();
 
 
 
@@ -442,11 +443,13 @@ scene('lose', ({ score, time, level }) => {
     let maxChar = 3;
     onCharInput((ch) => {
         n.value += ch;
+        n.value = n.value.toUpperCase();
         if (n.value.length > maxChar){
             n.value = n.value.slice(0, 2);
         }
 
     });
+
 
     onKeyPress('backspace', () => {
         n.value = n.value.replace(n.value.charAt(n.value.length - 1), '');
