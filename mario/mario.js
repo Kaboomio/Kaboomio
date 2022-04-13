@@ -12,9 +12,6 @@ kaboom({
 });
 
 
-window.canvas.focus();
-
-
 //mario level sprites
 loadSprite('coin', '../assets/coin.png');
 loadSprite('brick', '../assets/brick.png');
@@ -43,6 +40,9 @@ loadSound('powerUp', 'powerUp.mp3');
 loadSound('pipeSound', 'pipe.mp3');
 loadSound('silence', 'silence.mp3');
 
+//global variables
+
+window.canvas.focus();
 const fallToDeath = 500;
 let music = play('theme'); 
 music.pause();
@@ -149,13 +149,6 @@ scene('game', ({ score, count }) => {
         }
 
     });
-
-    // mario.onUpdate(() => {
-    //     camPos(mario.pos);
-    //     if (mario.pos.y >= fallToDeath) {
-    //         go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
-    //     }
-    // });
 
 
     let fireballDirection = 'down';
@@ -363,6 +356,9 @@ scene('game', ({ score, count }) => {
         if ((timeLeft / 60) % 1 === 0) {
             timer[0].text = timeLeft / 60;
         }
+        if (timeLeft < 1) {
+            go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
+        }
     });
 
     //CAMERA POSITIONING
@@ -411,22 +407,12 @@ scene('lose', ({ score, time, level }) => {
     ]);
     add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)]);
 
-    // add([renderAndAppendForm(), origin('center'), pos(800, 800), fixed()]);
-
     let txt = add([
         text('Enter your initials and press Enter:'),
         scale(0.25),
         origin('center'),
         pos(center().x, center().y + 85)
     ]);
-
-
-    // let rec = add([
-    //     rect(500,75),
-    //     outline(4),
-    //     origin('center'),
-    //     pos(center().x, center().y+150),
-    // ])
 
     let n = add([
         text(''),
@@ -435,11 +421,6 @@ scene('lose', ({ score, time, level }) => {
         { value: '' }
     ]);
 
-    // let initials = add([
-    //     text(" "),
-    //     origin("center"),
-    //     pos(center().x, center().y+150)
-    // ])
     let maxChar = 3;
     onCharInput((ch) => {
         n.value += ch;
@@ -464,18 +445,13 @@ scene('lose', ({ score, time, level }) => {
         location.replace('../home-page');
     });
 });
-    
-   
-
-
-    
-
-// });
 
 
 //NEEDED - END GAMEScene
 
 go('start', { score: 0, count: 0 });
+
+// Local Functions
 
 function patrol(distance = 150, speed = 50, dir = 1) {
     return {
