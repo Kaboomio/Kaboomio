@@ -42,7 +42,18 @@
         "height": false,
         "txt": false,
         "center": false,
-        "onCharInput": false
+        "onCharInput": false,
+        "loadRoot": false,
+        "loadSound": false,
+        "play": false,
+        "onCollide": false,
+        "wait": false,
+        "get": false,
+        "time": false,
+        "toWorld": false,
+        "color": false
+
+        
 
 
 

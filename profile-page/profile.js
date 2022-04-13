@@ -1,4 +1,4 @@
-import { checkAuth, logout, getMyProfile, getProfile, getProfileScores, getUser, updateProfile } from '../fetch-utils.js';
+import { checkAuth, logout, getMyProfile, getProfile, getProfileScores, getUser, updateProfile, deleteScore } from '../fetch-utils.js';
 import { renderHeader } from '../render-utils.js';
 
 const title = document.querySelector('title');
@@ -92,26 +92,41 @@ async function setUserInfo() {
 async function displayScoreTable() {
     const scores = await getProfileScores(profileId);
 
+    previousScoresContainer.textContent = '';
+
+    const scoreboardHeader = document.createElement('p');
+    const scoresList = document.createElement('ol');
+
+    scoreboardHeader.textContent = `Initials.............Score............Level..............Date..................Elapsed Time`;
+    scoreboardHeader.classList.add('header');
+
     for (let score of scores) {
-        const scoreRow = document.createElement('tr');
-        const initials = document.createElement('td');
-        const scoreEl = document.createElement('td');
-        const level = document.createElement('td');
-        const date = document.createElement('td');
-        const time = document.createElement('td');
-
         const playDate = new Date(score.created_at);
+        const scoreRow = document.createElement('li');
+        scoreRow.classList.add('mini');
+        scoreRow.textContent = `${score.initials}................${score.score}................${score.level}................${playDate.toLocaleDateString('en-US')}................${(100 - score.time)} sec`;
 
-        initials.textContent = score.initials;
-        scoreEl.textContent = score.score;
-        level.textContent = score.level;
-        date.textContent = playDate.toLocaleDateString('en-US');
-        time.textContent = (100 - score.time) + ' sec';
+        const removeScoreEl = document.createElement('span');
+        removeScoreEl.classList.add('removeItem');
+        removeScoreEl.textContent = '\u00D7';
+        removeScoreEl.id = score.id;
 
-        scoreRow.append(initials, scoreEl, level, date, time);
+        const userProfileId = await getMyProfile();
 
-        previousScoresContainer.append(scoreRow);
+        removeScoreEl.addEventListener('click', async () => {
+            await deleteScore(removeScoreEl.id);
+            displayScoreTable();
+        });
+
+        if (userProfileId.id.toString() !== profileId) {
+            removeScoreEl.classList.add('hidden');
+        }
+
+        scoreRow.append(removeScoreEl);
+        scoresList.append(scoreRow);
     }
+
+    previousScoresContainer.append(scoreboardHeader, scoresList);
 }
 
 
