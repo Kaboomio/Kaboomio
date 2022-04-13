@@ -1,11 +1,12 @@
 import kaboom from '../kaboom/dist/kaboom.mjs';
 import { createScore } from '../fetch-utils.js';
 
-kaboom({
+
+const canvas = kaboom({
     global: true,
-    // width: 600,
-    // height: 300,
-    fullscreen: true,
+    width: 600,
+    height: 300,
+    // fullscreen: true,
     scale: 2, 
     debug: true,
     background: [0, 0, 0, 1],
@@ -82,7 +83,7 @@ scene('start', () => {
 scene('game', ({ score, count }) => {
     layers(['bg', 'obj', 'ui'], 'obj'); 
     music.play();
-    music.volume(0.25); 
+    music.volume(0.0); 
     
     add([
         sprite('castle'),

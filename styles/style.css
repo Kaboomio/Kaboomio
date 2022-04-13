@@ -407,6 +407,12 @@ tr:nth-child(even) {
     height: 40px;
 }
 
+#profilePage #editButton {
+    margin-right: 10px;
+    width: 120px;
+    height: 40px;
+}
+
 #profilePage .profileEditForm h3 {
     margin: 15px 0;
     text-align: center;
@@ -822,4 +828,13 @@ input[type=radio]:checked + figure {
 .icons:hover .tooltip {
     visibility: visible;
     opacity: 1;
+}
+
+
+#gameboyContainer {
+    position: fixed;
+    width: 600px;
+    height: 100vh;
+    top: 120px;
+    left: 30%;
 }
