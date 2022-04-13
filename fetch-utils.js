@@ -135,3 +135,12 @@ export async function createScore(score, level, initials, time) {
 
     return checkError(response);
 }
+
+export async function deleteScore(id) {
+    const response = await client
+        .from('scores')
+        .delete()
+        .match({ id: id });
+    
+    return response.body;
+}

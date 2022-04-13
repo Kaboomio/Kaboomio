@@ -424,6 +424,12 @@ tr:nth-child(even) {
     width: 10vw;
 }
 
+#profilePage #bio {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+}
+
 #profilePage #avatar {
     height: 80px;
     width: 80px;
@@ -444,6 +450,16 @@ tr:nth-child(even) {
     margin-top: 2px;
 }
 
+#profilePage .removeItem {
+    margin-left: 10px;
+    width: 30px;
+}
+
+#profilePage .removeItem:hover {
+    background-color: var(--color4);
+    color: white;
+}
+
 #profilePage .avatar-imgs {
     height: 100px;
     width: 100px;
@@ -454,7 +470,7 @@ tr:nth-child(even) {
     display: none;
 }
 
-#previousScoresContainer {
+#profilePage .scoreDiv {
     background-color: black;
     width: 80vw;
     color: white;
@@ -462,7 +478,16 @@ tr:nth-child(even) {
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    text-align: center;
+    align-items: center;
+}
+
+#profilePage .header {
+    padding-bottom: 5px;
+}
+
+#profilePage #previousScoresContainer {
+    padding-bottom: 30px;
+    width: 70%;
 }
 
 /* Homepage styling */
