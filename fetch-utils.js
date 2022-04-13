@@ -78,7 +78,7 @@ export async function updateProfile(username, avatar, bio) {
         .from('profiles')
         .update({ 
             username, 
-            img_url: `../assets/avatars/${avatar}.png`,
+            img_url: `https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/${avatar}.png`,
             bio
         })
         .match({ user_id: user.id });
