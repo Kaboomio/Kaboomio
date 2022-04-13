@@ -69,7 +69,7 @@ async function setUserInfo() {
     joinedDateEl.textContent = 'Joined Date: ' + joinedDate.toLocaleDateString('en-US');
     bioEl.textContent = profile.bio;
 
-    let imageId = profile.img_url.slice(18);
+    let imageId = profile.img_url.slice(74);
 
     imageId = imageId.slice(0, imageId.length - 4);
 
