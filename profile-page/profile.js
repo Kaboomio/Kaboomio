@@ -36,6 +36,7 @@ window.addEventListener('load', async () => {
 
 editProfileForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    loadingScreen.classList.toggle('invisible');
 
     const data = new FormData(editProfileForm);
 
@@ -50,6 +51,7 @@ editProfileForm.addEventListener('submit', async (e) => {
     setUserInfo();
 
     toggleEditing();
+    loadingScreen.classList.toggle('invisible');
 });
 
 function toggleEditing() {
