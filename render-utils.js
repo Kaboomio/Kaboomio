@@ -37,15 +37,19 @@ export function renderHeader(profile, userId) {
     const homeDiv = document.createElement('div');
     const homeAnchor = document.createElement('a');
     const homeImg = document.createElement('img');
+    const homeTooltip = document.createElement('span');
     const leaderboardDiv = document.createElement('div');
     const leaderboardAnchor = document.createElement('a');
     const leaderboardImg = document.createElement('img');
+    const leaderboardTooltip = document.createElement('span');
     const settingsDiv = document.createElement('div');
     const settingsAnchor = document.createElement('a');
     const settingsImg = document.createElement('img');
+    const settingsTooltip = document.createElement('span');
     const logoutDiv = document.createElement('div');
     const logoutAnchor = document.createElement('a');
     const logoutImg = document.createElement('img');
+    const logoutTooltip = document.createElement('span');
 
     headerLeft.classList.add('header-left');
     avatarImg.id = 'avatar-icon';
@@ -55,22 +59,31 @@ export function renderHeader(profile, userId) {
     homeImg.id = 'home-icon';
     homeImg.src = '../assets/home-icon.png';
     homeAnchor.href = '../home-page';
+    homeTooltip.textContent = 'Home';
+    homeTooltip.classList.add('tooltip');
     leaderboardDiv.classList.add('icons');
     leaderboardImg.id = 'trophy-icon';
     leaderboardImg.src = '../assets/trophy-icon.png';
     leaderboardAnchor.href = '../leaderboard';
+    leaderboardTooltip.textContent = 'Leaderboard';
+    leaderboardTooltip.classList.add('tooltip');
     settingsDiv.classList.add('icons');
     settingsImg.id = 'settings-icon';
     settingsImg.src = '../assets/settings-icon.png';
+    settingsTooltip.classList.add('tooltip');
     logoutDiv.classList.add('icons');
     logoutImg.id = 'logout-icon';
     logoutImg.src = '../assets/logout-icon.png';
     logoutAnchor.id = 'logout';
+    logoutTooltip.textContent = 'Logout';
+    logoutTooltip.classList.add('tooltip');
     
     if (!profile.username) {
         settingsAnchor.href = '../profile-setup';
+        settingsTooltip.textContent = 'Profile Setup';
     } else {
         settingsAnchor.href = `../profile-page/?id=${profile.id}`;
+        settingsTooltip.textContent = 'Edit Profile';
     }
     if (!profile.img_url) {
         avatarImg.src = '../assets/avatars/mario.png';
@@ -105,21 +118,21 @@ export function renderHeader(profile, userId) {
     homeAnchor.append(homeImg);
     leaderboardAnchor.append(leaderboardImg);
     if (userId === 'about') {
-        leaderboardDiv.append(leaderboardAnchor);
+        leaderboardDiv.append(leaderboardAnchor, leaderboardTooltip);
         if (profile) {
-            homeDiv.append(homeAnchor);
+            homeDiv.append(homeAnchor, homeTooltip);
         }
     } else if (!profile.username) {
         homeDiv.append();
         leaderboardDiv.append();
     } else {
-        homeDiv.append(homeAnchor);
-        leaderboardDiv.append(leaderboardAnchor);
+        homeDiv.append(homeAnchor, homeTooltip);
+        leaderboardDiv.append(leaderboardAnchor, leaderboardTooltip);
     }
     settingsAnchor.append(settingsImg);
-    settingsDiv.append(settingsAnchor);
+    settingsDiv.append(settingsAnchor, settingsTooltip);
     logoutAnchor.append(logoutImg);
-    logoutDiv.append(logoutAnchor);
+    logoutDiv.append(logoutAnchor, logoutTooltip);
     headerRight.append(homeDiv, leaderboardDiv, settingsDiv, logoutDiv);
     header.append(headerLeft, headerRight);
 
