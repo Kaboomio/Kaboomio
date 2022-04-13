@@ -38,9 +38,6 @@ async function getLeaderboard(type, trueFalse){
         .order(type, { ascending: trueFalse })
         .range(0, 4);
 
-
-
-
     return response.body;
 
 }
@@ -59,7 +56,6 @@ async function fetchandDisplayLeaderboard() {
         const scoreInitials = document.createElement('h3');
         const scoreScores = document.createElement('h3');
         const scoreTime = document.createElement('p');
-        const linkEl = document.createElement('a');
         scoreEl.classList.add('score');
 
 
@@ -67,9 +63,12 @@ async function fetchandDisplayLeaderboard() {
         scoreScores.textContent = `${score.score}............`;
         scoreTime.textContent = `${score.time}`;
 
-        linkEl.href = `../profile/?id=${score.profile_id}`;
-
         scoreEl.append(scoreInitials, scoreScores, scoreTime);
+
+        scoreEl.addEventListener('click', () => {
+            window.location.replace(`../profile-page/?id=${score.profile_id}`);
+        });
+        
         scoreContainerEl.append(scoreEl);
 
     }

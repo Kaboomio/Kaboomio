@@ -209,25 +209,39 @@ footer {
     margin: 10px;
 }
 
+
+/* leaderboard CSS */
+
+#leaderboard-body{
+    overflow: hidden;
+}
+
 .leaderboard{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* height: 100%; */
+    margin: 50px;
+    flex-wrap: wrap;
 }
 
 .leaderboard-left{
-    border: 1px solid black;
     height: 100%;
-    display: grid;
-    align-content: center;
+    border: none;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .leaderboard-right{
-    border: 1px solid black;
-    /* height: 100%; */
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: black;
+    color: white;
+    overflow: hidden;
+    height: 100%;
+    border-radius: 10px;
+    min-width: 270px;
 }
 
 select{
@@ -239,14 +253,59 @@ select{
 }
 
 h1{
-    margin: 0;
+    margin: 15px;
     padding: 0;
 }
 
 .score-container{
     display: flex;
-    width: 100%;
+    width: 90%;
+    height: 300px;
     flex-direction: column;
+    animation: scrolling 5s linear forwards;
+    position: relative;
+}
+
+.table{
+    display: flex;
+    width: 100%;
+    flex-direction: row; 
+    align-items: center;
+    justify-content: center;
+}
+
+.score{
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+font: 3vw;
+color: goldenrod;
+margin: 0px;
+padding: 0px;
+}
+
+.score:hover{
+    cursor: pointer;
+    color: white;
+}
+
+.score h3{
+    margin-right: 0px;
+}
+
+.table h3{
+    margin-right: 15px;
+}
+
+.score p {
+    margin: 0;
+}
+
+@keyframes scrolling {
+    0% {top: 400px;}
+    100% {top: 0px; }
+    
 }
 
 /* table css across all pages */
@@ -280,30 +339,6 @@ th {
 tr:nth-child(even) {
     background-color: #F8F8F8;
 }
-
-.score{
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: center;
-
-}
-
-.score h3{
-    margin-right: 15px;
-}
-
-.table h3{
-    margin-right: 15px;
-}
-
-.score P {
-    margin: 0;
-}
-
-
-
-
 
 /* profile page styling */
 
@@ -629,6 +664,7 @@ input[type=radio]:checked + figure {
     width: 60%;
 }
 
+/* homepage media queries */
 @media (max-width: 780px){
     header{
         font-size: .5rem;
@@ -647,6 +683,25 @@ input[type=radio]:checked + figure {
     }
 }
 
+/* leaderboard page media queries */
+@media (max-width: 950px){
+    .leaderboard-left{
+        width: 200px;
+    }
+    .leaderboard-left img{
+        width: 200px;
+        animation: shrink 1s ease-in;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+}
+@keyframes shrink {
+    0%{width: 535px }
+    50%{width: 350}
+    100%{width: 200px}
+}
+/* all page media queries */
 @media (max-width: 640px) {
     .footer-right {
         font-size: .5rem
