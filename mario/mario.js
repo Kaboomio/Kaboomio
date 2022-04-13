@@ -4,7 +4,7 @@ import { createScore } from '../fetch-utils.js';
 
 const canvas = kaboom({
     global: true,
-    width: 600,
+    width: 525,
     height: 300,
     // fullscreen: true,
     scale: 2, 
@@ -48,7 +48,19 @@ const fallToDeath = 500;
 let music = play('theme'); 
 music.pause();
 
+const canvas1 = document.querySelector('canvas');
+// const header = document.querySelector('header');
+const gameboy = document.getElementById('gameboyContainer');
 
+window.addEventListener('click', () => {
+    canvas1.style.width = '100%';
+    canvas1.style.height = 'calc(100% - 105px)';
+    canvas1.style.position = 'static';
+    canvas1.style.top = '80px';
+    canvas1.style.bottom = '25px';
+    canvas1.style.left = '0';
+    gameboy.classList.add('hidden');
+});
 
 
 //START SCENE

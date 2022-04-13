@@ -5,14 +5,60 @@
     <link rel="icon" href="../assets/kaboomio-logo-small.png">
     <link rel="stylesheet" href="../styles/style.css">
     <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <style>
+        canvas {
+            position: fixed;
+            top: 183px;
+            height: 41vh;
+            width: 540px;
+            left: 31%;
+        }
+    </style>
     <title>Kaboomio</title>
 </head>
 
 <body>
     <header>
-        <div></div>
+        <div class="header-left">
+            <div>
+                <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/mario.png" alt="" id="avatar-icon">
+            </div>
+            <h1>It's a me, rileyjhoff</h1>
+        </div>
+        <div class="header-right">
+            <div class="icons">
+                <a href="../home-page/">
+                    <img src="../assets/home-icon.png" id="home-icon" />
+                </a>
+            </div>
+            <div class="icons">
+                <a href="../leaderboard/">
+                    <img src="../assets/trophy-icon.png" id="trophy-icon" />
+                </a>
+            </div>
+            <div class="icons">
+                <a href="../profile-page/">
+                    <img src="../assets/settings-icon.png" id="settings-icon" />
+                </a>
+            </div>
+            <div class="icons">
+                <a>
+                    <img src="../assets/logout-icon.png" id="logout-icon" />
+                </a>
+            </div>
+        </div>
     </header>
     <img src="../assets/gameboyContainer.png" alt="" id="gameboyContainer">
+    <footer>
+        <div class="footer-left">
+            <a href="../about-page" id="about-link" draggable="false">
+                <div>
+                    Meet the Team
+                </div>
+            </a>
+        </div>
+        <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
+    </footer>
     <script type="module" src="./mario.js"></script>
 </body>
 

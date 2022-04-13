@@ -158,6 +158,7 @@ footer {
     justify-content: flex-end;
     background-color: var(--color1);
     box-shadow: var(--shadow);
+    z-index: 2;
 }
 
 .footer-left {
@@ -837,4 +838,5 @@ input[type=radio]:checked + figure {
     height: 100vh;
     top: 120px;
     left: 30%;
+    z-index: 1;
 }
