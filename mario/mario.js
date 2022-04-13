@@ -439,6 +439,7 @@ scene('lose', ({ score, time, level }) => {
     let maxChar = 3;
     onCharInput((ch) => {
         n.value += ch;
+        n.value = n.value.toUpperCase();
         if (n.value.length > maxChar){
             n.value = n.value.slice(0, 2);
         }

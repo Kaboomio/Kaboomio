@@ -419,6 +419,17 @@ justify-content: center;
     display: none;
 }
 
+#previousScoresContainer {
+    background-color: black;
+    width: 80vw;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+
 /* Homepage styling */
 
 #leaderboard-container{

@@ -103,6 +103,15 @@ async function displayScoreTable() {
         scoreRow.classList.add('mini');
         scoreRow.textContent = `${score.initials}.............${score.score}.............${score.level}.............${playDate.toLocaleDateString('en-US')}.............${(100 - score.time)} sec`;
 
+        const removeScoreEl = document.createElement('span');
+        removeScoreEl.classList.add('removeItem');
+        removeScoreEl.textContent = '\u00D7';
+        removeScoreEl.id = score.id;
+
+        if (userProfileId.id.toString() === profileId) {
+            editButtonEl.classList.remove('hidden');
+        }
+
         scoresList.append(scoreRow);
     }
 
