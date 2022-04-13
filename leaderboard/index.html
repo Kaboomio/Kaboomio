@@ -13,73 +13,7 @@
     <link rel="stylesheet" href="../styles/home.css">
     <title>Leaderboard | Kaboomio</title>
     <style>
-        .leaderboard{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    /* height: 100%; */
-}
 
-.leaderboard-left{
-    border: 1px solid black;
-    height: 100%;
-    display: grid;
-    align-content: center;
-}
-
-.leaderboard-right{
-    border: 1px solid black;
-    /* height: 100%; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-select{
-    width: 25%;
-}
-
-.trophy{
-    display: grid;
-}
-
-h1{
-    margin: 0;
-    padding: 0;
-}
-
-.score-container{
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-}
-
-.table{
-    display: flex;
-    width: 100%;
-    flex-direction: row; 
-    align-items: center;
-justify-content: center;
-}
-
-.score{
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: center;
-
-}
-
-.score h3{
-    margin-right: 15px;
-}
-
-.table h3{
-    margin-right: 15px;
-}
-
-.score P {
-    margin: 0;
-}
     </style>
     <!-- Keep below in this html file -->
     <style>
@@ -90,7 +24,7 @@ justify-content: center;
         }
     </style>
 </head>
-<body>
+<body id="leaderboard-body">
     <div class="loading-screen invisible">
         <div class="loading-img-container">
             <img src="../assets/mario-running.gif" class="loading-img" />
@@ -113,7 +47,7 @@ justify-content: center;
     <div class="leaderboard">
 <div class="leaderboard-left">
 
-    <img class="trophy" src="../assets/leaderboard-trophy.png" alt="">
+    <a href="/about-page/index.html"><img class="trophy" src="../assets/leaderboard-trophy.png" alt=""></a>
 
 </div>
 
@@ -125,8 +59,8 @@ justify-content: center;
      <option value="time">Sort by Time</option>
     </select>
     <select name="sort-asc-desc" id="sort-asc-desc">
-        <option value="asc">Lowest</option>
         <option value="desc">Highest</option>
+        <option value="asc">Lowest</option>
       </select>
 <div class="table">
         <h3>Initials</h3>  <h3>Score</h3> <p>Time</p> </div>
