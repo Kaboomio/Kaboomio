@@ -17,6 +17,41 @@
                 font-size: 1rem;
             }
         }
+        .icons {
+            position: relative;
+        }
+
+        .tooltip {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            top: 90%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip::after {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border: 5px solid;
+            border-color:  transparent transparent #555 transparent;
+        }
+
+        .icons:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
     <title>Sign In | Kaboomio</title>
 </head>
@@ -24,7 +59,7 @@
 <body>
     <header>
         <div class="header-left">
-            <img src="assets/Kaboomio.gif" class="logo" />
+            <img src="assets/kaboomio-logo-small.png" class="logo" />
             <h1 id="sign-in-header">Kaboomio</h1>
         </div>
         <div class="header-right">
@@ -32,7 +67,7 @@
                 <a href="../leaderboard/">
                     <img src="../assets/trophy-icon.png" id="trophy-icon" />
                 </a>
-                <span class="tooltiptext">Leaderboard</span>
+                <span class="tooltip">Leaderboard</span>
             </div>
         </div>
     </header>

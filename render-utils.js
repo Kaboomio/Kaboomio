@@ -105,8 +105,10 @@ export function renderHeader(profile, userId) {
     homeAnchor.append(homeImg);
     leaderboardAnchor.append(leaderboardImg);
     if (userId === 'about') {
-        homeDiv.append();
         leaderboardDiv.append(leaderboardAnchor);
+        if (profile) {
+            homeDiv.append(homeAnchor);
+        }
     } else if (!profile.username) {
         homeDiv.append();
         leaderboardDiv.append();

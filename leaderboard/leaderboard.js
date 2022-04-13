@@ -1,4 +1,4 @@
-import { checkAuth, logout, client, getMyProfile, getUser } from '../fetch-utils.js';
+import { logout, client, getMyProfile, getUser } from '../fetch-utils.js';
 import { renderHeader } from '../render-utils.js';
 
 // checkAuth();

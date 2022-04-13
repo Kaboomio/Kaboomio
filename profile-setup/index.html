@@ -12,7 +12,41 @@
     <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/home.css">
     <style>
+        .icons {
+            position: relative;
+        }
 
+        .tooltip {
+            visibility: hidden;
+            width: fit-content;
+            background-color: rgb(45, 0, 93);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 7px;
+            position: absolute;
+            z-index: 1;
+            top: 85%;
+            /* left: 50%; */
+            /* margin-left: -60px; */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip::after {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border: 5px solid;
+            border-color:  transparent transparent rgb(45, 0, 93) transparent;
+        }
+
+        .icons:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
     <title>Profile Setup | Kaboomio</title>
 </head>
@@ -32,11 +66,13 @@
                 <a href="../leaderboard/">
                     <img src="../assets/trophy-icon.png" id="trophy-icon" />
                 </a>
+                <span class="tooltip">Leaderboard</span>
             </div>
             <div class="icons">
                 <a>
                     <img src="../assets/logout-icon.png" id="logout-icon" />
                 </a>
+                <span class="tooltip">Logout</span>
             </div>
         </div>
     </header>
