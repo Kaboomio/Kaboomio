@@ -51,7 +51,8 @@
         "get": false,
         "time": false,
         "toWorld": false,
-        "color": false
+        "color": false,
+        "loadAseprite": false
 
         
 
