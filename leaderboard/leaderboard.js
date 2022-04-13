@@ -35,7 +35,8 @@ async function getLeaderboard(type, trueFalse){
     const response = await client
         .from('scores')
         .select('*')
-        .order(type, { ascending: trueFalse });
+        .order(type, { ascending: trueFalse })
+        .range(0, 4);
 
 
 
@@ -60,11 +61,11 @@ async function fetchandDisplayLeaderboard() {
         const scoreTime = document.createElement('p');
         const linkEl = document.createElement('a');
         scoreEl.classList.add('score');
-      
 
-        scoreInitials.textContent = score.initials;
-        scoreScores.textContent = score.score;
-        scoreTime.textContent = score.time;
+
+        scoreInitials.textContent = `${score.initials}...........`;
+        scoreScores.textContent = `${score.score}............`;
+        scoreTime.textContent = `${score.time}`;
 
         linkEl.href = `../profile/?id=${score.profile_id}`;
 
