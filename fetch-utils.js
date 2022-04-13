@@ -125,8 +125,6 @@ export async function createScore(score, level, initials, time) {
         profile_id: myProfile.id
     };
 
-    console.log(myProfile, timeInSeconds, scoreObject);
-
 
     const response = await client
         .from('scores')

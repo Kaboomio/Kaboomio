@@ -1,6 +1,6 @@
 {/* <div class="header-left">
     <div>
-        <img src="../assets/avatars/mario.png" alt="" id="avatar-icon">
+        <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/mario.png" alt="" id="avatar-icon">
     </div>
     <h1>It's a me, rileyjhoff</h1>
 </div>
@@ -86,7 +86,7 @@ export function renderHeader(profile, userId) {
         settingsTooltip.textContent = 'Edit Profile';
     }
     if (!profile.img_url) {
-        avatarImg.src = '../assets/avatars/mario.png';
+        avatarImg.src = 'https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/mario.png';
     } else {
         avatarImg.src = `${profile.img_url}`;
     }
