@@ -792,7 +792,7 @@ input[type=radio]:checked + figure {
 }
 
 .tooltip {
-    visibility: hidden;
+    visibility: collapse;
     width: fit-content;
     background-color: rgb(45, 0, 93);
     color: #fff;
@@ -801,11 +801,12 @@ input[type=radio]:checked + figure {
     padding: 5px 7px;
     position: absolute;
     z-index: 1;
-    top: 85%;
+    top: 86%;
     /* left: 50%; */
     /* margin-left: -60px; */
     opacity: 0;
     transition: opacity 0.3s;
+    white-space: nowrap;
 }
 
 .tooltip::after {
