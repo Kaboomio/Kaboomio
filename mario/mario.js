@@ -1,14 +1,10 @@
 import kaboom from '../kaboom/dist/kaboom.mjs';
 import { createScore } from '../fetch-utils.js';
 
-<<<<<<< HEAD
 //initialize kaboom
 
-kaboom({
-=======
 
-const canvas = kaboom({
->>>>>>> 90e0337d9279f4603d7d1ef68066bfb3ff88a124
+kaboom({
     global: true,
     width: 525,
     height: 300,
