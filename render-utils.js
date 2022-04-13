@@ -53,28 +53,37 @@ export function renderHeader(profile, userId) {
 
     headerLeft.classList.add('header-left');
     avatarImg.id = 'avatar-icon';
+    avatarImg.draggable = false;
     avatarDiv.id = 'avatar-div';
     headerRight.classList.add('header-right');
     homeDiv.classList.add('icons');
     homeImg.id = 'home-icon';
     homeImg.src = '../assets/home-icon.png';
+    homeImg.draggable = false;
+    homeAnchor.draggable = false;
     homeAnchor.href = '../home-page';
     homeTooltip.textContent = 'Home';
     homeTooltip.classList.add('tooltip');
     leaderboardDiv.classList.add('icons');
     leaderboardImg.id = 'trophy-icon';
     leaderboardImg.src = '../assets/trophy-icon.png';
+    leaderboardImg.draggable = false;
+    leaderboardAnchor.draggable = false;
     leaderboardAnchor.href = '../leaderboard';
     leaderboardTooltip.textContent = 'Leaderboard';
     leaderboardTooltip.classList.add('tooltip');
     settingsDiv.classList.add('icons');
     settingsImg.id = 'settings-icon';
     settingsImg.src = '../assets/settings-icon.png';
+    settingsImg.draggable = false;
+    settingsAnchor.draggable = false;
     settingsTooltip.classList.add('tooltip');
     logoutDiv.classList.add('icons');
     logoutImg.id = 'logout-icon';
     logoutImg.src = '../assets/logout-icon.png';
+    logoutImg.draggable = false;
     logoutAnchor.id = 'logout';
+    logoutAnchor.draggable = false;
     logoutTooltip.textContent = 'Logout';
     logoutTooltip.classList.add('tooltip');
     
