@@ -40,105 +40,108 @@
             </div>
         </div>
     </header>
-    <!-- <button id="logout">Logout</button> -->
-    <main>
+    <main id="profile-setup-main">
         <form id="profile-setup-form">
-            <h3>Create a Username:</h3>
-            <input type="text" name="username" placeholder="Username (6-15 characters)" minlength="6" maxlength="15" id="username" required>
-            <h3>Select an Avatar:</h3>
-            <div class="avatar-select">
-                <label for="mario">
-                    <input type="radio" name="avatar" id="mario" checked>
-                    <figure>
-                        <img src="../assets/avatars/mario.png" alt="" class="avatar-imgs">
-                        <figcaption>Mario</figcaption>
-                    </figure>
-                </label>
-                <label for="luigi">
-                    <input type="radio" name="avatar" id="luigi">
-                    <figure>
-                        <img src="../assets/avatars/luigi.png" alt="" class="avatar-imgs">
-                        <figcaption>Luigi</figcaption>
-                    </figure>
-                </label>
-                <label for="yoshi">
-                    <input type="radio" name="avatar" id="yoshi">
-                    <figure>
-                        <img src="../assets/avatars/yoshi.png" alt="" class="avatar-imgs">
-                        <figcaption>Yoshi</figcaption>
-                    </figure>
-                </label>
-                <label for="toad">
-                    <input type="radio" name="avatar" id="toad">
-                    <figure>
-                        <img src="../assets/avatars/toad.png" alt="" class="avatar-imgs">
-                        <figcaption>Toad</figcaption>
-                    </figure>
-                </label>
+            <div class="username-bio">
+                <div>
+                    <h3>Create a Username:</h3>
+                    <input type="text" name="username" placeholder="Username (6-15 characters)" minlength="6" maxlength="15" id="username" required>
+                </div>
+                <div>
+                    <h3>Write a Bio (Optional):</h3>
+                    <textarea name="bio" placeholder="Write a brief bio to be displayed on your profile page" id="bio"></textarea>
+                </div>
+                <button>Submit</button>
             </div>
             <div class="avatar-select">
-                <label for="peach">
-                    <input type="radio" name="avatar" id="peach">
-                    <figure>
-                        <img src="../assets/avatars/peach.png" alt="" class="avatar-imgs">
-                        <figcaption>Peach</figcaption>
-                    </figure>
-                </label>
-                <label for="daisy">
-                    <input type="radio" name="avatar" id="daisy">
-                    <figure>
-                        <img src="../assets/avatars/daisy.png" alt="" class="avatar-imgs">
-                        <figcaption>Daisy</figcaption>
-                    </figure>
-                </label>
-                <label for="donkey-kong">
-                    <input type="radio" name="avatar" id="donkey-kong">
-                    <figure>
-                        <img src="../assets/avatars/donkey-kong.png" alt="" class="avatar-imgs">
-                        <figcaption>Donkey Kong</figcaption>
-                    </figure>
-                </label>
-                <label for="toadette">
-                    <input type="radio" name="avatar" id="toadette">
-                    <figure>
-                        <img src="../assets/avatars/toadette.png" alt="" class="avatar-imgs">
-                        <figcaption>Toadette</figcaption>
-                    </figure>
-                </label>
+                <h3>Select an Avatar:</h3>
+                <div class="flex-row">
+                    <label for="mario">
+                        <input type="radio" name="avatar" id="mario" checked>
+                        <figure>
+                            <img src="../assets/avatars/mario.png" alt="" class="avatar-imgs" draggable="false">
+                            <figcaption>Mario</figcaption>
+                        </figure>
+                    </label>
+                    <label for="luigi">
+                        <input type="radio" name="avatar" id="luigi">
+                        <figure>
+                            <img src="../assets/avatars/luigi.png" alt="" class="avatar-imgs" draggable="false">
+                            <figcaption>Luigi</figcaption>
+                        </figure>
+                    </label>
+                    <label for="yoshi">
+                        <input type="radio" name="avatar" id="yoshi">
+                        <figure>
+                            <img src="../assets/avatars/yoshi.png" alt="" class="avatar-imgs" draggable="false">
+                            <figcaption>Yoshi</figcaption>
+                        </figure>
+                    </label>
+                    <label for="toad">
+                        <input type="radio" name="avatar" id="toad">
+                        <figure>
+                            <img src="../assets/avatars/toad.png" alt="" class="avatar-imgs" draggable="false">
+                            <figcaption>Toad</figcaption>
+                        </figure>
+                    </label>
+                    <label for="peach">
+                        <input type="radio" name="avatar" id="peach">
+                        <figure>
+                            <img src="../assets/avatars/peach.png" alt="" class="avatar-imgs" draggable="false">
+                            <figcaption>Peach</figcaption>
+                        </figure>
+                    </label>
+                    <label for="daisy">
+                        <input type="radio" name="avatar" id="daisy">
+                        <figure>
+                            <img src="../assets/avatars/daisy.png" alt="" class="avatar-imgs" draggable="false">
+                            <figcaption>Daisy</figcaption>
+                        </figure>
+                    </label>
+                    <label for="donkey-kong">
+                        <input type="radio" name="avatar" id="donkey-kong">
+                        <figure>
+                            <img src="../assets/avatars/donkey-kong.png" alt="" class="avatar-imgs" draggable="false">
+                            <figcaption>Donkey Kong</figcaption>
+                        </figure>
+                    </label>
+                    <label for="toadette">
+                        <input type="radio" name="avatar" id="toadette">
+                        <figure>
+                            <img src="../assets/avatars/toadette.png" alt="" class="avatar-imgs" draggable="false">
+                            <figcaption>Toadette</figcaption>
+                        </figure>
+                    </label>
+                    <label for="bowser">
+                        <input type="radio" name="avatar" id="bowser">
+                        <figure>
+                            <img src="../assets/avatars/bowser.png" alt="" class="avatar-imgs" draggable="false">
+                            <figcaption>Bowser</figcaption>
+                        </figure>
+                    </label>
+                    <label for="wario">
+                        <input type="radio" name="avatar" id="wario">
+                        <figure>
+                            <img src="../assets/avatars/wario.png" alt="" class="avatar-imgs" draggable="false">
+                            <figcaption>Wario</figcaption>
+                        </figure>
+                    </label>
+                    <label for="boo">
+                        <input type="radio" name="avatar" id="boo">
+                        <figure>
+                            <img src="../assets/avatars/boo.png" alt="" class="avatar-imgs" draggable="false">
+                            <figcaption>Boo</figcaption>
+                        </figure>
+                    </label>
+                    <label for="koopa-troopa">
+                        <input type="radio" name="avatar" id="koopa-troopa">
+                        <figure>
+                            <img src="../assets/avatars/koopa-troopa.png" alt="" class="avatar-imgs" draggable="false">
+                            <figcaption>Koopa Troopa</figcaption>
+                        </figure>
+                    </label>
             </div>
-            <div class="avatar-select">
-                <label for="bowser">
-                    <input type="radio" name="avatar" id="bowser">
-                    <figure>
-                        <img src="../assets/avatars/bowser.png" alt="" class="avatar-imgs">
-                        <figcaption>Bowser</figcaption>
-                    </figure>
-                </label>
-                <label for="wario">
-                    <input type="radio" name="avatar" id="wario">
-                    <figure>
-                        <img src="../assets/avatars/wario.png" alt="" class="avatar-imgs">
-                        <figcaption>Wario</figcaption>
-                    </figure>
-                </label>
-                <label for="boo">
-                    <input type="radio" name="avatar" id="boo">
-                    <figure>
-                        <img src="../assets/avatars/boo.png" alt="" class="avatar-imgs">
-                        <figcaption>Boo</figcaption>
-                    </figure>
-                </label>
-                <label for="koopa-troopa">
-                    <input type="radio" name="avatar" id="koopa-troopa">
-                    <figure>
-                        <img src="../assets/avatars/koopa-troopa.png" alt="" class="avatar-imgs">
-                        <figcaption>Koopa Troopa</figcaption>
-                    </figure>
-                </label>
             </div>
-            <h3>Write a Bio (Optional):</h3>
-            <textarea name="bio" placeholder="Write a brief bio to be displayed on your profile page" id="bio"></textarea>
-            <button>Submit</button>
         </form>
     </main>
     <footer>
