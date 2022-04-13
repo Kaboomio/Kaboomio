@@ -43,8 +43,7 @@ loadSound('powerUp', 'powerUp.mp3');
 loadSound('pipeSound', 'pipe.mp3');
 
 const fallToDeath = 500;
-
-const music = play('theme'); 
+let music = play('theme'); 
 
 
 
@@ -56,7 +55,7 @@ scene('start', () => {
         sprite('start-screen'),
         origin('center'), 
         pos(0, 0), 
-        scale(0.65)
+        scale(0.65),
     ]);
     add([
         text('Press Spacebar To Start'),
@@ -68,6 +67,7 @@ scene('start', () => {
     onKeyDown('space', () => {
         go('game', { score: 0, count: 0 });
         
+        
     });
     
     onUpdate(() => {
@@ -78,10 +78,10 @@ scene('start', () => {
 //GAME SCENE
 scene('game', ({ score, count }) => {
     layers(['bg', 'obj', 'ui'], 'obj');
+    music.play();
+    music.volume(0.25);  
 
     
-    
-
     add([
         sprite('castle'),
         pos(1560, 188),
@@ -139,16 +139,19 @@ scene('game', ({ score, count }) => {
         } else {
             isJumping = true;
         }
-        music.play();
-
-    });
-
-    mario.onUpdate(() => {
         camPos(mario.pos);
         if (mario.pos.y >= fallToDeath) {
             go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
         }
+
     });
+
+    // mario.onUpdate(() => {
+    //     camPos(mario.pos);
+    //     if (mario.pos.y >= fallToDeath) {
+    //         go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
+    //     }
+    // });
 
 
     let fireballDirection = 'down';
@@ -389,8 +392,9 @@ scene('game', ({ score, count }) => {
 
 
 scene('lose', ({ score, time, level }) => {
+    music.pause();
     const gameOverMusic = play('gameOver');
-
+    
     add([
         text('Game Over', {
             size: 226,
@@ -398,7 +402,7 @@ scene('lose', ({ score, time, level }) => {
         origin('center'), 
         pos(480, 125),
         scale(0.25),
-        music.pause(),
+        
         gameOverMusic.play()
     ]);
     add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)]);
