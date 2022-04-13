@@ -22,47 +22,10 @@
                 font-size: .8rem
             }
         }
-        .footer-right {
-            margin-left: 0;
-        }
-        #about-main {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #about-container {
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            height: 70%;
-            margin: 50px 20%;
-        }
-        .about-team {
-            display: flex;
-            flex-direction: column;
-            border: 1px black solid;
-            margin: 5px 0;
-            width: 80%;
-        }
-        .about-name {
-            text-align: center;
-            padding: 10px;
-        }
-        .about-bio {
-            margin: 10px;
-        }
-        .about-img-bio-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-        }
     </style>
     <title>Meet The Team | Kaboomio</title>
 </head>
-<body>
+<body class="about-body">
     <div class="loading-screen invisible">
         <div class="loading-img-container">
             <img src="../assets/mario-running.gif" class="loading-img" />
@@ -91,54 +54,61 @@
     <main id="about-main">
         <h1></h1>
         <div id="about-container">
-            <div class="about-team">
-                <h3 class="about-name">Riley Hoffman</h3>
-                <div class="about-img-bio-container">
-                    <div class="about-img">
-                        <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/mario.png" alt="" class="about-imgs" draggable="false">
-                    </div>
-                    <div class="about-bio">
-                        <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
-                        <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
-                        <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
-                        <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
-                    </div>
-                </div>
-            </div>
-            <div class="about-team">
+            <div class="about-team flex-row">
                 <div class="about-name-img-container">
-                    <h3 class="about-name">Riley Hoffman</h3>
-                    <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/mario.png" alt="" class="about-imgs" draggable="false">
+                    <h3 class="about-name">Beau Elliott</h3>
+                    <img src="../assets/Beau-headshot copy.png" alt="" class="about-imgs" draggable="false">
                 </div>
                 <div class="about-bio-container">
-                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                    <ul>
+                        <li class="about-bio">.....Avid circus monkey 🎪 and full stack software developer (in training).</li>
+                        <li class="about-bio">.....Beau currently resides in Seattle, WA and loves eating ramen, teaching pole dance, and rock climbing.</li>
+                        <li class="about-bio">.....Favorite Mario Character: Yoshi!</li>
+                        <li class="about-bio">.....Favorite Retro Game: Mortal Kombat.</li>
+                    </ul>
                 </div>
             </div>
-            <div class="about-team">
+            <div class="about-team flex-row">
                 <div class="about-name-img-container">
-                    <h3 class="about-name">Riley Hoffman</h3>
-                    <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/mario.png" alt="" class="about-imgs"draggable="false">
+                    <h3 class="about-name">Will Gunderson</h3>
+                    <img src="../assets/willHeadshot.png" alt="" class="about-imgs" draggable="false">
                 </div>
                 <div class="about-bio-container">
-                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                    <ul>
+                        <li class="about-bio">.....Will is a software develoer in training, currently living in Bend, OR.</li>
+                        <li class="about-bio">.....When not coding, you can find Will swimming, hiking, and drinking a beer outside.</li>
+                        <li class="about-bio">.....Favorite Mario Character: Kooola Trooola.</li>
+                        <li class="about-bio">.....Favorite Retro Game: Street Fighter II.</li>
+                    </ul>
                 </div>
             </div>
-            <div class="about-team">
+            <div class="about-team flex-row">
                 <div class="about-name-img-container">
                     <h3 class="about-name">Riley Hoffman</h3>
-                    <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/mario.png" alt="" class="about-imgs" draggable="false">
+                    <img src="../assets/riley-headshot.jpeg" alt="" class="about-imgs" draggable="false">
                 </div>
                 <div class="about-bio-container">
-                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
-                    <p class="about-bio">blah blah blah blah blah blah blah blah blah blah</p>
+                    <ul>
+                        <li class="about-bio">.....Riley is a full stack software developer in training, hailing from Portland, OR</li>
+                        <li class="about-bio">.....Outside of coding, he enjoys skiing, running, eating gyros, and watching any sport under the sun.</li>
+                        <li class="about-bio">.....Favorite Mario Character: Toad</li>
+                        <li class="about-bio">.....Favorite Retro Game: Galaga</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="about-team flex-row">
+                <div class="about-name-img-container">
+                    <h3 class="about-name">Cody Wise</h3>
+                    <img src="../assets/about-cody.jpg" alt="" class="about-imgs" draggable="false">
+                </div>
+                <div class="about-bio-container">
+                    <ul>
+                        <li class="about-bio">.....Cody is a full stack software developer in training living in Portland, Oregon</li>
+                        <li class="about-bio">.....Cody enjoys using his skills to solve problems in innovative ways.</li>
+                        <li class="about-bio">.....When he is not coding, you can find him spending time with family, cooking, hiking, and playing videogames.</li>
+                        <li class="about-bio">.....Favorite Mario Character: Bowser</li>
+                        <li class="about-bio">.....Favorite Retro Game: Super Mario Bros 3</li>
+                    </ul>
                 </div>
             </div>
         </div>

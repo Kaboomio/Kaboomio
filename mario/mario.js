@@ -1,8 +1,10 @@
 import kaboom from '../kaboom/dist/kaboom.mjs';
 import { createScore } from '../fetch-utils.js';
 
+//initialize kaboom
 
-const canvas = kaboom({
+
+kaboom({
     global: true,
     width: 525,
     height: 300,
@@ -19,33 +21,36 @@ loadSprite('brick', '../assets/brick.png');
 loadSprite('block', '../assets/box.png');
 loadSprite('mario', '../assets/mario.png');
 loadSprite('mushroom', '../assets/mushroom.png');
-loadSprite('evil-mushroom', '../assets/evil-mushroom.png');
+loadAseprite('enemies', '../assets/enemies.png', '../assets/enemies.json');
 loadSprite('surprise-box', '../assets/surprise-box.png');
 loadSprite('pipe', '../assets/pipe.png');
 loadSprite('castle', '../assets/castle.png');
 loadSprite('fireball', '../assets/fireball.png');
 loadSprite('invisible', '../assets/invisible-image.png');
+loadSprite('flower', '../assets/fire_flower.gif');
+loadAseprite('over-world', '../assets/over-world.png', '../assets/over-world.json');
+
 
 
 //start screen sprites
 loadSprite('start-screen', '../assets/start-screen.png');
 
 //sounds to play during gameplay
-// loadRoot('https://dazzling-vacherin-8cb912.netlify.app/assets/');
-loadRoot('../assets/sounds/');
-loadSound('jump', 'marioJump.mp3');
-loadSound('theme', 'mainTheme.mp3');
-loadSound('fireballSound', 'fireball.mp3');
-loadSound('gameOver', 'gameOver.mp3');
-loadSound('powerUp', 'powerUp.mp3');
-loadSound('pipeSound', 'pipe.mp3');
-loadSound('silence', 'silence.mp3');
+loadRoot('../assets/');
+loadSound('jump', 'sounds/marioJump.mp3');
+loadSound('theme', 'sounds/mainTheme.mp3');
+loadSound('fireballSound', 'sounds/fireball.mp3');
+loadSound('gameOver', 'sounds/gameOver.mp3');
+loadSound('powerUp', 'sounds/powerUp.mp3');
+loadSound('pipeSound', 'sounds/pipe.mp3');
+loadSound('silence', 'sounds/silence.mp3');
 
 //global variables
 
 window.canvas.focus();
 const fallToDeath = 500;
 let music = play('theme'); 
+music.volume(0.25);
 music.pause();
 
 const canvas1 = document.querySelector('canvas');
@@ -289,10 +294,10 @@ scene('game', ({ score, count }) => {
         '%': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise', 'brick'],
         // '$': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise'],
         '#': () => [sprite('surprise-box'), solid(), area(), 'mushroom-surprise', 'brick'],
-        '^': () => [sprite('evil-mushroom'), solid(), area(), 'evil-mushroom', 'dangerous', body(), patrol(150)],
+        '^': () => [sprite('enemies', { anim: 'Walking' }), solid(), area(), 'enemies', 'dangerous', body(), patrol(150)],
         '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
         '+': () => [sprite('block'), solid(), area()],
-        '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body()],
+        '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body(), patrol(150)],
         '>': () => [sprite('fireball'), solid(), area(), 'mario-fireball', body()],
     };
 
@@ -380,6 +385,8 @@ scene('game', ({ score, count }) => {
         camPos(mario.pos);
     });
 
+    //end of levels win condition
+
     mario.onCollide('invisible', () => {
         add([
             text('You Beat The Level!', { size: 24 }),
@@ -404,6 +411,8 @@ scene('game', ({ score, count }) => {
 });
 
 
+//gameover scene
+
 scene('lose', ({ score, time, level }) => {
     music.pause();
     const gameOverMusic = play('gameOver');
@@ -416,7 +425,8 @@ scene('lose', ({ score, time, level }) => {
         pos(480, 125),
         scale(0.25),
         
-        gameOverMusic.play()
+        gameOverMusic.play(),
+        gameOverMusic.volume(0.25)
     ]);
     add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)]);
 
@@ -459,10 +469,11 @@ scene('lose', ({ score, time, level }) => {
     });
 });
 
-
-//NEEDED - END GAMEScene
+//initialize start scene - must be at end of game configs
 
 go('start', { score: 0, count: 0 });
+
+
 
 // Local Functions
 
