@@ -6,9 +6,8 @@ import { createScore } from '../fetch-utils.js';
 
 kaboom({
     global: true,
-    width: 525,
-    height: 300,
-    // fullscreen: true,
+    width: 608,
+    height: 342,
     scale: 2, 
     debug: true,
     background: [0, 0, 0, 1],
@@ -50,20 +49,56 @@ let music = play('theme');
 music.volume(0.25);
 music.pause();
 
-const canvas1 = document.querySelector('canvas');
-// const header = document.querySelector('header');
+const canvas = document.querySelector('canvas');
 const gameboy = document.getElementById('gameboyContainer');
+const button = document.querySelector('button');
 
 window.addEventListener('click', () => {
-    canvas1.style.width = '100%';
-    canvas1.style.height = 'calc(100% - 105px)';
-    canvas1.style.position = 'static';
-    canvas1.style.top = '80px';
-    canvas1.style.bottom = '25px';
-    canvas1.style.left = '0';
-    gameboy.classList.add('hidden');
+    window.canvas.focus();
 });
 
+button.addEventListener('click', async (e) => {
+    const buttonId = e.path[0].id;
+    await goFullscreen(e, buttonId);
+    await goGameboy(e, buttonId);
+});
+
+async function goFullscreen(e, buttonId) {
+    if (buttonId === 'fullscreen') {
+        let aspectRatio = 16 / 9;
+        let vh = window.innerHeight - 115;
+        let vw = window.innerWidth;
+        if ((vw / vh) < aspectRatio) {
+            canvas.style.width = `${vw}px`;
+            canvas.style.height = `${vw / aspectRatio}px`;
+            canvas.style.padding = '57.5px 0 0';
+            canvas.style.top = '50%';
+            canvas.style.transform = 'translate(-50%, -50%)';
+            gameboy.classList.add('hidden');
+        } else {
+            canvas.style.width = `${vh * aspectRatio}px`;
+            canvas.style.height = `${vh}px`;
+            canvas.style.padding = '0';
+            canvas.style.top = '90px';
+            gameboy.classList.add('hidden');
+        }
+        e.path[0].id = 'gameboy';
+        e.path[0].textContent = 'Gameboy';
+    }
+}
+
+async function goGameboy(e, buttonId) {
+    if (buttonId === 'gameboy') {
+        canvas.style.width = `608px`;
+        canvas.style.height = `342px`;
+        canvas.style.padding = '70px 54px 440px 42px';
+        canvas.style.top = '120px';
+        canvas.style.transform = 'translateX(-50%)';
+        gameboy.classList.remove('hidden');
+        e.path[0].id = 'fullscreen';
+        e.path[0].textContent = 'Fullscreen';
+    }
+}
 
 //START SCENE
 scene('start', () => {

@@ -8,10 +8,27 @@
     <style>
         canvas {
             position: fixed;
-            top: 183px;
-            height: 41vh;
-            width: 540px;
-            left: 31%;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 342px;
+            width: 608px;
+            padding-top: 70px;
+            padding-bottom: 440px;
+            padding-left: 42px;
+            padding-right: 54px;
+        }
+        #gameboyContainer {
+            position: fixed;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 852px;
+            width: 704px;
+            z-index: 1;
+        }
+        #toggle-fullscreen {
+            align-self: center;
         }
     </style>
     <title>Kaboomio</title>
@@ -24,6 +41,9 @@
                 <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/mario.png" alt="" id="avatar-icon">
             </div>
             <h1>It's a me, rileyjhoff</h1>
+        </div>
+        <div id="toggle-fullscreen">
+            <button id="fullscreen">Fullscreen</button>
         </div>
         <div class="header-right">
             <div class="icons">
