@@ -488,6 +488,11 @@ tr:nth-child(even) {
 #profilePage #previousScoresContainer {
     padding-bottom: 30px;
     width: 70%;
+    align-items: justify;
+}
+
+#profilePage .mini {
+    align-items: justify;
 }
 
 /* Homepage styling */
