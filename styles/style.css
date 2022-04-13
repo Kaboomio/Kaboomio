@@ -158,6 +158,7 @@ footer {
     justify-content: flex-end;
     background-color: var(--color1);
     box-shadow: var(--shadow);
+    z-index: 2;
 }
 
 .footer-left {
@@ -403,6 +404,12 @@ tr:nth-child(even) {
 
 #profilePage .profileEditForm button {
     margin: 30px 0;
+    width: 120px;
+    height: 40px;
+}
+
+#profilePage #editButton {
+    margin-right: 10px;
     width: 120px;
     height: 40px;
 }
@@ -822,4 +829,14 @@ input[type=radio]:checked + figure {
 .icons:hover .tooltip {
     visibility: visible;
     opacity: 1;
+}
+
+
+#gameboyContainer {
+    position: fixed;
+    width: 600px;
+    height: 100vh;
+    top: 120px;
+    left: 30%;
+    z-index: 1;
 }

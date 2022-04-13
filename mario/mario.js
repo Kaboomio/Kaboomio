@@ -1,11 +1,12 @@
 import kaboom from '../kaboom/dist/kaboom.mjs';
 import { createScore } from '../fetch-utils.js';
 
-kaboom({
+
+const canvas = kaboom({
     global: true,
-    // width: 600,
-    // height: 300,
-    fullscreen: true,
+    width: 525,
+    height: 300,
+    // fullscreen: true,
     scale: 2, 
     debug: true,
     background: [0, 0, 0, 1],
@@ -47,7 +48,19 @@ const fallToDeath = 500;
 let music = play('theme'); 
 music.pause();
 
+const canvas1 = document.querySelector('canvas');
+// const header = document.querySelector('header');
+const gameboy = document.getElementById('gameboyContainer');
 
+window.addEventListener('click', () => {
+    canvas1.style.width = '100%';
+    canvas1.style.height = 'calc(100% - 105px)';
+    canvas1.style.position = 'static';
+    canvas1.style.top = '80px';
+    canvas1.style.bottom = '25px';
+    canvas1.style.left = '0';
+    gameboy.classList.add('hidden');
+});
 
 
 //START SCENE
@@ -82,7 +95,7 @@ scene('start', () => {
 scene('game', ({ score, count }) => {
     layers(['bg', 'obj', 'ui'], 'obj'); 
     music.play();
-    music.volume(0.25); 
+    music.volume(0.0); 
     
     add([
         sprite('castle'),
