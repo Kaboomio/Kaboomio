@@ -842,3 +842,65 @@ input[type=radio]:checked + figure {
     left: 30%;
     z-index: 1;
 }
+
+/* about page CSS */
+#about-main{
+    background-color: rgb(25, 25, 25);
+    overflow: hidden;
+}
+
+.about-imgs{
+    height: 200px;
+    border-radius: 50%;
+    border: var(--color1) inset 5px;
+}
+
+.about-team{
+    background-color: rgb(25, 25, 25);
+    color: white;
+    padding: 10px;
+    margin: 20px;
+    width: 80%;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+.footer-right {
+    margin-left: 0;
+}
+#about-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#about-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 70%;
+    margin: 50px 20%;
+    animation: credits 15s linear forwards;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-name {
+    text-align: center;
+    padding: 10px;
+}
+.about-bio {
+    margin: 10px;
+}
+.about-img-bio-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+@keyframes credits {
+    0%{top: -1500px;}
+    100%{top: 0px;}
+    
+}
