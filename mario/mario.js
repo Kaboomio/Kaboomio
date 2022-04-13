@@ -239,7 +239,7 @@ scene('game', ({ score, count }) => {
     });
 
     function addScoreText(obj, score) {
-        const scoreText = add([
+        add([
             text(score, {
                 size: 8,
                 width: 20, 
@@ -289,7 +289,7 @@ scene('game', ({ score, count }) => {
 
 
     //GAMEPLAY HEADER TEXT
-    const usernameLabel = add([
+    add([
         text('MARIO', {
             size: 18,
             width: 320, 
@@ -407,7 +407,7 @@ scene('lose', ({ score, time, level }) => {
     ]);
     add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)]);
 
-    let txt = add([
+    add([
         text('Enter your initials and press Enter:'),
         scale(0.25),
         origin('center'),

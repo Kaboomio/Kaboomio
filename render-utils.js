@@ -1,6 +1,6 @@
 {/* <div class="header-left">
     <div>
-        <img src="../assets/avatars/mario.png" alt="" id="avatar-icon">
+        <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/mario.png" alt="" id="avatar-icon">
     </div>
     <h1>It's a me, rileyjhoff</h1>
 </div>
