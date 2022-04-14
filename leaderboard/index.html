@@ -44,36 +44,31 @@
             </div>
         </div>
     </header>    
-    <!-- <button id="logout">Logout</button -->
-    <div class="leaderboard">
-<div class="leaderboard-left">
+<div class="leaderboard">
 
-    <a href="/about-page/index.html" draggable="false"><img class="trophy" src="../assets/leaderboard-trophy.png" alt="" draggable="false"></a>
+    <div class="leaderboard-left">
+        <a href="/about-page/index.html" draggable="false"><img class="trophy" src="../assets/leaderboard-trophy.png" alt="" draggable="false"></a>
+    </div>
 
-</div>
+    <div class="leaderboard-right">
+        <h1>Top Scores</h1>
+        <select name="sort-param" id="sort-param">
+            <option value="score">Sort by Score</option>
+            <option value="time">Sort by Time</option>
+        </select>
+        <select name="sort-asc-desc" id="sort-asc-desc">
+            <option value="desc">Highest</option>
+            <option value="asc">Lowest</option>
+        </select>
+        <div class="table">
+            <h3>Initials</h3>  <h3>Score</h3> <p>Time</p> 
+        </div>
+            <div class="score-container">
 
-<div class="leaderboard-right">
-
-    <h1>Top Scores</h1>
-    <select name="sort-param" id="sort-param">
-     <option value="score">Sort by Score</option>
-     <option value="time">Sort by Time</option>
-    </select>
-    <select name="sort-asc-desc" id="sort-asc-desc">
-        <option value="desc">Highest</option>
-        <option value="asc">Lowest</option>
-      </select>
-<div class="table">
-        <h3>Initials</h3>  <h3>Score</h3> <p>Time</p> </div>
-    <div class="score-container">
-
-
+            </div>
     </div>
 
 </div>
-
-    
-    </div>
     <footer>
         <div class="footer-left">
             <a href="../about-page" id="about-link" draggable="false">
