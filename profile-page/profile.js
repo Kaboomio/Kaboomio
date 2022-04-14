@@ -8,7 +8,7 @@ const avatarEl = document.getElementById('avatar');
 const usernameEl = document.getElementById('username');
 const joinedDateEl = document.getElementById('joinedDate');
 const bioEl = document.getElementById('bio');
-const editButtonEl = document.getElementById('editButton');
+const editIconEl = document.getElementById('editIcon');
 const previousScoresContainer = document.getElementById('previousScoresContainer');
 const editProfileForm = document.getElementById('editProfile');
 const formContainer = document.querySelector('.profileEditForm');
@@ -86,7 +86,7 @@ async function setUserInfo() {
     const userProfileId = await getMyProfile();
 
     if (userProfileId.id.toString() === profileId) {
-        editButtonEl.classList.remove('hidden');
+        editIconEl.classList.remove('hidden');
     }
 
     editUsernameEl.value = profile.username;
@@ -100,43 +100,46 @@ async function displayScoreTable() {
 
     previousScoresContainer.textContent = '';
 
-    const scoreboardHeader = document.createElement('p');
-    const scoresList = document.createElement('ol');
-
-    scoreboardHeader.textContent = `Initials.............Score............Level..............Date..................Elapsed Time`;
-    scoreboardHeader.classList.add('header');
-
     for (let score of scores) {
         const playDate = new Date(score.created_at);
-        const scoreRow = document.createElement('li');
-        scoreRow.classList.add('mini');
-        scoreRow.textContent = `${score.initials}................${score.score}................${score.level}................${playDate.toLocaleDateString('en-US')}................${(100 - score.time)} sec`;
+        const scoreRow = document.createElement('tr');
+
+        const initialsEl = document.createElement('td');
+        const scoreEl = document.createElement('td');
+        const levelEl = document.createElement('td');
+        const dateEl = document.createElement('td');
+        const timeEl = document.createElement('td');
+
+        initialsEl.textContent = score.initials;
+        scoreEl.textContent = score.score;
+        levelEl.textContent = score.level;
+        dateEl.textContent = `${playDate.getMonth()}/${playDate.getDate()}`;
+        timeEl.textContent = score.time + ' sec';
 
         const removeScoreEl = document.createElement('span');
         removeScoreEl.classList.add('removeItem');
         removeScoreEl.textContent = '\u00D7';
         removeScoreEl.id = score.id;
-
+    
         const userProfileId = await getMyProfile();
-
+    
         removeScoreEl.addEventListener('click', async () => {
             await deleteScore(removeScoreEl.id);
-            displayScoreTable();
+            await displayScoreTable();
         });
-
+    
         if (userProfileId.id.toString() !== profileId) {
             removeScoreEl.classList.add('hidden');
         }
 
-        scoreRow.append(removeScoreEl);
-        scoresList.append(scoreRow);
-    }
+        scoreRow.append(initialsEl, scoreEl, levelEl, dateEl, timeEl, removeScoreEl);
 
-    previousScoresContainer.append(scoreboardHeader, scoresList);
+        previousScoresContainer.append(scoreRow);
+    }
 }
 
 
-editButtonEl.addEventListener('click', toggleEditing);
+editIconEl.addEventListener('click', toggleEditing);
 
 async function fetchandDisplayHeader() {
     const profile = await getProfile(profileId);

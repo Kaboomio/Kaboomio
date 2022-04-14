@@ -312,38 +312,6 @@ color: goldenrod;
     
 }
 
-/* table css across all pages */
-
-table {
-    margin: 10px 70px 70px;
-    box-shadow: 0px 5px 5px grey;
-    border-radius: 5px;
-    font-size: 12px;
-    font-weight: normal;
-    border: none;
-    border-collapse: collapse;
-    width: 100%;
-    max-width: 100%;
-    white-space: nowrap;
-    background-color: white;
-    max-width: 60vw;
-}
-
-td, th {
-    text-align: center;
-    padding: 8px;
-}
-
-th {
-    color: #ffffff;
-    background-color: var(--color5);
-    text-transform: uppercase;
-}
-
-tr:nth-child(even) {
-    background-color: #F8F8F8;
-}
-
 /* profile page styling */
 
 .flex-row {
@@ -370,9 +338,11 @@ tr:nth-child(even) {
 
 #profilePage .infoSection {
     margin: 10px;
-    background-color: var(--color1);
+    background-color: var(--color5);
     border: none;
     width: 80vw;
+    color: white;
+    border: 2px solid var(--color1);
 }
 
 #profilePage .profileEditForm {
@@ -438,6 +408,7 @@ tr:nth-child(even) {
     width: 100%;
     text-align: center;
     padding: 10px;
+    font-style: italic;
 }
 
 #profilePage #avatar {
@@ -461,8 +432,7 @@ tr:nth-child(even) {
 }
 
 #profilePage .removeItem {
-    margin-left: 10px;
-    width: 30px;
+    width: 5vw;
 }
 
 #profilePage .removeItem:hover {
@@ -497,8 +467,6 @@ tr:nth-child(even) {
 
 #profilePage #previousScoresContainer {
     padding-bottom: 30px;
-    width: 70%;
-    align-items: justify;
 }
 
 #profilePage .mini {
