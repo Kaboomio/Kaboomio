@@ -228,11 +228,12 @@ footer {
 
 .leaderboard-left{
     height: 100%;
+    min-width: 100%;
     border: none;
     padding: 30px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .leaderboard-right{
@@ -253,8 +254,15 @@ select{
     width: 25%;
 }
 
-.trophy{
-    display: grid;
+.trophy {
+    display: flex;
+
+}
+
+#leaderboard-trophy-container {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 h1{
@@ -278,15 +286,20 @@ h1{
     flex-direction: row; 
     align-items: center;
     justify-content: center;
+    font-size: 2.5vw;
+}
+
+.table h3 {
+    margin: 25px 10px;
 }
 
 .score{
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: center;
-font-size: 2vw;
-color: goldenrod;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 2vw;
+    color: goldenrod;
 }
 
 .score:hover{
@@ -709,7 +722,7 @@ input[type=radio]:checked + figure {
 }
 
 /* leaderboard page media queries */
-@media (max-width: 950px){
+@media (max-width: 1200px){
     .leaderboard-left{
         width: 200px;
     }
