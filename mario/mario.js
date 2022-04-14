@@ -69,6 +69,8 @@ loadSprite('hill', '../assets/hill.png');
 loadSprite('shrub', '../assets/shrubbery.png');
 loadSprite('hard-block', '../assets/hard-block.png');
 loadSprite('pipe-bottom', '../assets/pipeBottom.png');
+loadSprite('spiny', '../assets/spiny.gif');
+loadSprite('beatle', '../assets/beatle.gif');
 
 
 
@@ -457,7 +459,8 @@ scene('game', ({ score, count }) => {
         'f': () => [sprite('flower'), solid(), area(), 'fire', 'powerup', body()],
         '#': () => [sprite('surprise-box'), solid(), area(), bump(), 'mushroom-surprise', 'brick'],
         '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
-        'k': () => [sprite('enemies', { frame: 3 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
+        'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
+        's': () => [sprite('spiny'), solid(), area(), 'bullet', 'dangerous', body(), patrol(150)],
         'b': () => [sprite('bullet'), solid(), area(), 'bullet', 'dangerous'],
         '-': () => [sprite('pipe-top'), solid(), area(), 'pipe', pos(0, 2), scale(1.2)],
         '+': () => [sprite('block'), solid(), area(), bump()],
