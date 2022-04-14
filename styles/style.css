@@ -221,7 +221,7 @@ footer {
 .leaderboard{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin: 40px;
+    margin: 40px 0;
     width: 90%;
     flex-wrap: wrap;
 }
@@ -350,7 +350,7 @@ h1{
 }
 
 #profilePage .infoSection {
-    margin: 20px 0px 60px 0px;
+    margin: 40px 0px 60px 0px;
     background-color: var(--color5);
     border: none;
     width: 80%;
@@ -623,7 +623,7 @@ h1{
 /* profile setup page styling */
 #profile-setup-main {
     height: 90%;
-    padding-top: 3%;
+    margin-top: 25px;
 }
 #profile-setup-form {
     display: flex;
@@ -631,7 +631,7 @@ h1{
     justify-content: center;
     padding-bottom: 50px;
     height: 100%;
-    width: 80vw;
+    width: 80%;
 }
 input[type=radio] {
     visibility: collapse;
