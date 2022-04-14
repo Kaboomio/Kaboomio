@@ -221,7 +221,8 @@ footer {
 .leaderboard{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin: 50px;
+    margin: 40px;
+    width: 90%;
     flex-wrap: wrap;
 }
 
@@ -245,6 +246,7 @@ footer {
     border-radius: 10px;
     min-width: 270px;
     margin-bottom: 40px;
+    border: 2px solid var(--color1);
 }
 
 select{
@@ -475,9 +477,10 @@ color: goldenrod;
 
 #leaderboard-container{
     width: 100%;
-    height: 250px;
+    aspect-ratio: 16 / 9;
     margin-right: 20px;
     background-color: black;
+    position: relative;
 }
 
 .mini-leaderboard{
@@ -502,11 +505,11 @@ color: goldenrod;
 #display-games{
     width: 100%;
     margin: 20px;
+    aspect-ratio: 16 / 9;
 }
 
 #display-games img{
     width: 100%;
-    height: 250px;
 }
 
 #label{
@@ -549,7 +552,7 @@ color: goldenrod;
     padding: 20px;
     width: 90%;
     height: 200px;
-    margin: 20px 0px 60px 0px;
+    margin: 40px 0px;
     flex-wrap: wrap;
 }
 
@@ -574,6 +577,8 @@ color: goldenrod;
     animation-iteration-count: infinite;
     margin: 0px 50px;
     width: 100%;
+    position: absolute;
+    bottom: 14px;
 }
 
 #yoshi-egg img{
@@ -588,6 +593,7 @@ color: goldenrod;
     background-color: transparent;
     border: none;
     margin-top: 20px;
+    padding-bottom: 40px;
 }
 
 @keyframes bounce {
@@ -847,7 +853,7 @@ input[type=radio]:checked + figure {
     align-items: center;
     width: 100%;
     height: 70%;
-    margin: 50px 20%;
+    margin: 20px 20%;
     animation: credits 15s linear forwards;
     position: relative;
     overflow: hidden;
