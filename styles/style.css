@@ -193,7 +193,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    background: linear-gradient(70deg, #4292a7 30%, rgba(0, 0, 0, 0) 50%), url(/assets/kaboomio\ zoom\ background.png) -20% fixed;
+    background: linear-gradient(70deg, #4292a7 30%, rgba(0, 0, 0, 0) 50%), url(/assets/kaboomio\ zoom\ background.png) -10% fixed;
     height: calc(100% - var(--header-height) - var(--footer-height));
     width: 100%;
 }
@@ -243,7 +243,7 @@ footer {
     background-color: black;
     color: white;
     overflow: hidden;
-    height: 80%;
+    height: 90%;
     border-radius: 10px;
     min-width: 270px;
     margin-bottom: 40px;
@@ -265,13 +265,13 @@ select{
 }
 
 h1{
-    margin: 15px;
+    margin: 10px;
     padding: 0;
 }
 
 .score-container{
     display: flex;
-    width: 90%;
+    width: 100%;
     height: 100%;
     flex-direction: column;
     animation: scrolling 5s linear forwards;
@@ -495,6 +495,7 @@ h1{
     margin-right: 20px;
     background-color: black;
     position: relative;
+    border-radius: 10px;
 }
 
 .mini-leaderboard{
@@ -520,10 +521,12 @@ h1{
     width: 100%;
     margin: 20px;
     aspect-ratio: 16 / 9;
+    border-radius: 10px;
 }
 
 #display-games img{
     width: 100%;
+    border-radius: 10px;
 }
 
 #label{
@@ -568,10 +571,11 @@ h1{
     height: 200px;
     margin: 40px 0px;
     flex-wrap: wrap;
+    border-radius: 10px;
 }
 
 #kaboomio img{
-    height: 200px;
+    height: 320px;
     padding: 10px;
 }
 
@@ -590,9 +594,9 @@ h1{
     animation-direction: alternate;
     animation-iteration-count: infinite;
     margin: 0px 50px;
-    width: 100%;
     position: absolute;
     bottom: 14px;
+    right: -50px;
 }
 
 #yoshi-egg img{
@@ -710,11 +714,11 @@ input[type=radio]:checked + figure {
     }
 
     .mini-leaderboard{
-        font-size: .5rem;
+        font-size: .7rem;
     }
 
     .leaders{
-        font-size: .5rem;
+        font-size: .7rem;
     }
 
     #kaboomio img{
@@ -892,4 +896,8 @@ input[type=radio]:checked + figure {
     0%{top: -1500px;}
     100%{top: 0px;}
     
+}
+
+#toggle-fullscreen {
+    align-self: center;
 }
