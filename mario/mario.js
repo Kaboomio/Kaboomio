@@ -34,6 +34,7 @@ loadAseprite('over-world', '../assets/over-world.png', '../assets/over-world.jso
 loadSprite('cloud', '../assets/cloud.png');
 loadSprite('hill', '../assets/hill.png');
 loadSprite('shrub', '../assets/shrubbery.png');
+loadSprite('hard-block', '../assets/hard-block.png');
 
 
 
