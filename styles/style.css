@@ -327,18 +327,19 @@ color: goldenrod;
 
 .space-between {
     justify-content: space-between;
-    align-content: space-between;
+    align-content: space-around;
 }
 
 #profilePage .profileMargins {
-    margin: 10px;
+    margin: 0px 20px;
 }
 
 #profilePage .infoSection {
-    margin: 10px;
+    margin: 20px 0px 60px 0px;
     background-color: var(--color5);
     border: none;
-    width: 80vw;
+    width: 80%;
+    height: 200px;
     color: white;
     border: 2px solid var(--color1);
     border-radius: 10px;
