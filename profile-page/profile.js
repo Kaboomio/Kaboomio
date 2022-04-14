@@ -22,9 +22,13 @@ checkAuth();
 
 // EVENT LISTENERS
 window.addEventListener('load', async () => {
+    const profile = await getProfile(profileId);
+    if (!profile.username) {
+        location.replace('../profile-setup');
+    }
     await setUserInfo();
     await displayScoreTable();
-    await fetchAndDisplayHeader();
+    await fetchAndDisplayHeader(profile);
     loadingScreen.classList.add('invisible');
 });
 
@@ -142,8 +146,7 @@ async function displayScoreTable() {
     }
 }
 
-async function fetchAndDisplayHeader() {
-    const profile = await getProfile(profileId);
+async function fetchAndDisplayHeader(profile) {
     const user = getUser();
     const hardHeader = document.querySelector('header');
     body.removeChild(hardHeader);
