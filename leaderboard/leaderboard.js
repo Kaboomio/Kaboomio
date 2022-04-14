@@ -23,6 +23,18 @@ document.addEventListener('click', (e) => {
     }
 });
 
+window.addEventListener('load', async () => {
+    loadingScreen.classList.toggle('invisible');
+    await fetchandDisplayLeaderboard();
+    if (getUser()) {
+        await fetchandDisplayHeader();
+    }
+    loadingScreen.classList.toggle('invisible');
+});
+
+sortParameter.addEventListener('change', fetchandDisplayLeaderboard);
+
+ascdescSelect.addEventListener('change', fetchandDisplayLeaderboard);
 scoreContainerEl.addEventListener('scroll', () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
     if (clientHeight + scrollTop >= scrollHeight){
@@ -40,7 +52,7 @@ async function getLeaderboard(type, trueFalse){
         .from('scores')
         .select('*')
         .order(type, { ascending: trueFalse })
-        .range(0, 20);
+        .range(0, 10);
 
     return response.body;
 }
