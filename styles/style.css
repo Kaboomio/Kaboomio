@@ -879,8 +879,8 @@ input[type=radio]:checked + figure {
     align-items: center;
     width: 100%;
     height: 70%;
-    margin: 50px 20%;
-    animation: credits 15s linear forwards;
+    margin: 20px 20%;
+    /* animation: credits 15s linear forwards; */
     position: relative;
     overflow: hidden;
 }
