@@ -11,8 +11,16 @@ let usernames = [];
 
 checkAuth();
 
+// EVENT LISTENERS
 window.addEventListener('load', async () => {
     usernames = await getAllUsernames();
+});
+
+document.addEventListener('click', (e) => {
+    // LOGOUT BUTTON FUNCTIONALITY
+    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
+        logout();
+    }
 });
 
 form.addEventListener('submit', async (e) => {
@@ -30,12 +38,7 @@ form.addEventListener('submit', async (e) => {
     }
 });
 
-document.addEventListener('click', (e) => {
-    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
-        logout();
-    }
-});
-
+// FUNCTIONS
 async function checkUsername(check) {
     let test = true;
     for (let username of usernames) {

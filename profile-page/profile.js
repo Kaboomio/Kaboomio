@@ -1,5 +1,5 @@
 import { checkAuth, logout, getMyProfile, getProfile, getProfileScores, getUser, updateProfile, deleteScore } from '../fetch-utils.js';
-import { renderHeader } from '../render-utils.js';
+import { renderProfileHeader } from '../render-utils.js';
 
 const title = document.querySelector('title');
 const body = document.querySelector('body');
@@ -20,19 +20,22 @@ const profileId = params.get('id');
 
 checkAuth();
 
+// EVENT LISTENERS
+window.addEventListener('load', async () => {
+    await setUserInfo();
+    await displayScoreTable();
+    await fetchAndDisplayHeader();
+    loadingScreen.classList.add('invisible');
+});
+
 document.addEventListener('click', (e) => {
+    // LOGOUT BUTTON FUNCTIONALITY
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
         logout();
     }
 });
 
-window.addEventListener('load', async () => {
-    loadingScreen.classList.toggle('invisible');
-    await setUserInfo();
-    await displayScoreTable();
-    await fetchandDisplayHeader();
-    loadingScreen.classList.toggle('invisible');
-});
+editIconEl.addEventListener('click', toggleEditing);
 
 editProfileForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -54,6 +57,7 @@ editProfileForm.addEventListener('submit', async (e) => {
     loadingScreen.classList.toggle('invisible');
 });
 
+// FUNCTIONS
 function toggleEditing() {
     formContainer.classList.toggle('hidden');
     bioEl.classList.toggle('hidden');
@@ -120,32 +124,29 @@ async function displayScoreTable() {
         removeScoreEl.classList.add('removeItem');
         removeScoreEl.textContent = '\u00D7';
         removeScoreEl.id = score.id;
-    
+        
         const userProfileId = await getMyProfile();
-    
+        
         removeScoreEl.addEventListener('click', async () => {
             await deleteScore(removeScoreEl.id);
             await displayScoreTable();
         });
-    
+        
         if (userProfileId.id.toString() !== profileId) {
             removeScoreEl.classList.add('hidden');
         }
-
+        
         scoreRow.append(initialsEl, scoreEl, levelEl, dateEl, timeEl, removeScoreEl);
-
+        
         previousScoresContainer.append(scoreRow);
     }
 }
 
-
-editIconEl.addEventListener('click', toggleEditing);
-
-async function fetchandDisplayHeader() {
+async function fetchAndDisplayHeader() {
     const profile = await getProfile(profileId);
     const user = getUser();
     const hardHeader = document.querySelector('header');
     body.removeChild(hardHeader);
-    const header = renderHeader(profile, user.id);
+    const header = renderProfileHeader(profile, user.id);
     body.prepend(header);
 }
