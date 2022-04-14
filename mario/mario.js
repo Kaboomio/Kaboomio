@@ -310,6 +310,13 @@ scene('game', ({ score, count }) => {
                 d.unuse('patrol');
                 d.unuse('dangerous');
                 d.unuse('solid');
+                
+            } else if (bigMario) {
+                bigMario = false;
+                mario.unuse('solid');
+                wait(3, mario.use('solid'));
+    
+               
             }
         } else {
             go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
