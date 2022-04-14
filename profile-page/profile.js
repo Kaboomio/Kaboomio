@@ -29,7 +29,7 @@ document.addEventListener('click', (e) => {
 window.addEventListener('load', async () => {
     await setUserInfo();
     await displayScoreTable();
-    await fetchandDisplayHeader();
+    await fetchAndDisplayHeader();
     loadingScreen.classList.add('invisible');
 });
 
@@ -140,7 +140,7 @@ async function displayScoreTable() {
 
 editIconEl.addEventListener('click', toggleEditing);
 
-async function fetchandDisplayHeader() {
+async function fetchAndDisplayHeader() {
     const profile = await getProfile(profileId);
     const user = getUser();
     const hardHeader = document.querySelector('header');

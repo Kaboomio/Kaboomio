@@ -18,7 +18,7 @@ document.addEventListener('click', (e) => {
 
 window.addEventListener('load', async () => {
     await fetchAndDisplayLeaderboard();
-    await fetchandDisplayHeader();
+    await fetchAndDisplayHeader();
     loadingScreen.classList.add('invisible');
 });
 
@@ -72,7 +72,7 @@ async function getScoreboard(){
     return response.body;
 }
 
-async function fetchandDisplayHeader() {
+async function fetchAndDisplayHeader() {
     const profile = await getMyProfile();
     const hardHeader = document.querySelector('header');
     body.removeChild(hardHeader);

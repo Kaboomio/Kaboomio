@@ -1,8 +1,6 @@
 import { logout, client, getMyProfile, getUser } from '../fetch-utils.js';
 import { renderLeaderboardHeader } from '../render-utils.js';
 
-// checkAuth();
-
 const body = document.querySelector('body');
 const scoreContainerEl = document.querySelector('.score-container');
 const sortParameter = document.getElementById('sort-param');
@@ -19,7 +17,7 @@ document.addEventListener('click', (e) => {
 window.addEventListener('load', async () => {
     await fetchandDisplayLeaderboard();
     if (getUser()) {
-        await fetchandDisplayHeader();
+        await fetchAndDisplayHeader();
     }
     loadingScreen.classList.add('invisible');
 });
@@ -79,7 +77,7 @@ async function fetchandDisplayLeaderboard() {
     }
 }
 
-async function fetchandDisplayHeader() {
+async function fetchAndDisplayHeader() {
     const profile = await getMyProfile();
     const hardHeader = document.querySelector('header');
     body.removeChild(hardHeader);

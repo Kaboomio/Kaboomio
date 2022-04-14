@@ -1,8 +1,6 @@
 import { logout, getMyProfile, getUser } from '../fetch-utils.js';
 import { renderAboutHeader } from '../render-utils.js';
 
-// checkAuth();
-
 const body = document.querySelector('body');
 const loadingScreen = document.querySelector('.loading-screen');
 
@@ -14,12 +12,12 @@ document.addEventListener('click', (e) => {
 
 window.addEventListener('load', async () => {
     if (getUser()) {
-        await fetchandDisplayHeader();
+        await fetchAndDisplayHeader();
     }
     loadingScreen.classList.add('invisible');
 });
 
-async function fetchandDisplayHeader() {
+async function fetchAndDisplayHeader() {
     const profile = await getMyProfile();
     const hardHeader = document.querySelector('header');
     body.removeChild(hardHeader);

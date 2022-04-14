@@ -1,46 +1,32 @@
 import { checkAuth, logout, getMyProfile, createScore } from '../fetch-utils.js';
-import { renderHeader } from '../render-utils.js';
+import { renderMarioHeader } from '../render-utils.js';
 import kaboom from '../kaboom/dist/kaboom.mjs';
 
 const bodyDOM = document.querySelector('body');
-const canvas = document.querySelector('canvas');
+let canvas = null;
 const gameboy = document.getElementById('gameboyContainer');
-const button = document.querySelector('button');
 const loadingScreen = document.querySelector('.loading-screen');
 
 checkAuth();
 
 window.addEventListener('load', async ()=> {
+    await fetchAndDisplayHeader();
+    canvas = document.querySelector('canvas');
     window.canvas.focus();
-    await fetchandDisplayHeader();
     loadingScreen.classList.add('invisible');
+
 });
 
-async function fetchandDisplayHeader() {
-    const profile = await getMyProfile();
-    const hardHeader = document.querySelector('header');
-    const kaboomioPage = 'kaboomio';
-    bodyDOM.removeChild(hardHeader);
-    const header = renderHeader(profile, kaboomioPage);
-    bodyDOM.prepend(header);
-}
-
-// window.addEventListener('click', () => {
-//     window.canvas.focus();
-// });
-
-document.addEventListener('click', (e) => {
+document.addEventListener('click', async (e) => {
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
         logout();
     }
-    window.canvas.focus();
-});
-
-button.addEventListener('click', async (e) => {
     const buttonId = e.path[0].id;
     await goFullscreen(e, buttonId);
     await goGameboy(e, buttonId);
+    window.canvas.focus();
 });
+
 
 //initialize kaboom
 
@@ -814,6 +800,14 @@ function slowMarioLeftSpeed(marioLeftSpeed, lastMarioXPos, currMarioXPos) {
     if (marioLeftSpeed > 20 && lastMarioXPos < currMarioXPos) {
         return marioLeftSpeed = 0;
     }
+}
+
+async function fetchAndDisplayHeader() {
+    const profile = await getMyProfile();
+    const hardHeader = document.querySelector('header');
+    bodyDOM.removeChild(hardHeader);
+    const header = renderMarioHeader(profile);
+    bodyDOM.prepend(header);
 }
 
     //EVIL MUSHROOM MOVEMENT & COLLIDE
