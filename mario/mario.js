@@ -912,3 +912,4 @@ async function fetchAndDisplayHeader(profile) {
     //     mario.area.height = 20;
     //     mario.area.scale = 2;
     // }
+    
