@@ -96,6 +96,7 @@ music.pause();
 
 //START SCENE
 scene('start', () => {
+    // Start screen labels
     add([
         sprite('start-screen'),
         origin('center'), 
@@ -109,6 +110,7 @@ scene('start', () => {
         scale(0.25)
     ]);
 
+    // Press space to continue
     onKeyDown('space', () => {
         go('game', { score: 0, count: 0 });
     });
@@ -161,7 +163,7 @@ scene('game', ({ score, count }) => {
         'mario'
     ]);
 
-    // MARIO MOVEMENT STUFF BASED ON 60 FPS
+    // CAMERA & MARIO MOVEMENT STUFF BASED ON 60 FPS
     mario.onUpdate(() => {
         lastFrame = currFrame;
         currFrame = checkIfNewFrame(currTime, currFrame);
@@ -179,6 +181,11 @@ scene('game', ({ score, count }) => {
             if (!mario.isGrounded()) {
                 mario.move(marioAirGlideSpeed, 0);
             }
+        }
+        //CAMERA POSITIONING
+        let currCam = camPos();
+        if (currCam.x < mario.pos.x) {
+            camPos(mario.pos.x, currCam.y);
         }
     });
 
@@ -590,14 +597,6 @@ scene('game', ({ score, count }) => {
         }
         if (timeLeft < 1) {
             go('lose', { score: scoreLabel.value, timeLeft: 0, level: currentLevel });
-        }
-    });
-
-    //CAMERA POSITIONING
-    mario.onUpdate(() => {
-        let currCam = camPos();
-        if (currCam.x < mario.pos.x) {
-            camPos(mario.pos.x, currCam.y);
         }
     });
 
