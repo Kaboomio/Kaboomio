@@ -823,10 +823,10 @@ function checkIfNewFrame(currTime, currFrame) {
 function marioLeftGlide(marioLeftGlideSpeed, mario) {
     if (marioLeftGlideSpeed > 100) {
         mario.move(-marioLeftGlideSpeed, 0);
-        return marioLeftGlideSpeed = marioLeftGlideSpeed - 3;
-    } else if (marioLeftGlideSpeed > 60) {
+        return marioLeftGlideSpeed = marioLeftGlideSpeed - 6;
+    } else if (marioLeftGlideSpeed > 50) {
         mario.move(-marioLeftGlideSpeed, 0);
-        return marioLeftGlideSpeed = marioLeftGlideSpeed - 4;
+        return marioLeftGlideSpeed = marioLeftGlideSpeed - 5;
     } else if (marioLeftGlideSpeed > 20) {
         mario.move(-marioLeftGlideSpeed, 0);
         return marioLeftGlideSpeed = marioLeftGlideSpeed - 3;
@@ -843,10 +843,10 @@ function marioLeftGlide(marioLeftGlideSpeed, mario) {
 function marioRightGlide(marioRightGlideSpeed, mario) {
     if (marioRightGlideSpeed > 100) {
         mario.move(marioRightGlideSpeed, 0);
-        return marioRightGlideSpeed = marioRightGlideSpeed - 3;
-    } else if (marioRightGlideSpeed > 60) {
+        return marioRightGlideSpeed = marioRightGlideSpeed - 6;
+    } else if (marioRightGlideSpeed > 50) {
         mario.move(marioRightGlideSpeed, 0);
-        return marioRightGlideSpeed = marioRightGlideSpeed - 4;
+        return marioRightGlideSpeed = marioRightGlideSpeed - 5;
     } else if (marioRightGlideSpeed > 20) {
         mario.move(marioRightGlideSpeed, 0);
         return marioRightGlideSpeed = marioRightGlideSpeed - 3;
