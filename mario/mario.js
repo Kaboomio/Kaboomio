@@ -9,6 +9,7 @@ const loadingScreen = document.querySelector('.loading-screen');
 
 checkAuth();
 
+// EVENT LISTENERS (for page)
 window.addEventListener('load', async ()=> {
     const profile = await getMyProfile();
     if (!profile.username) {
@@ -21,14 +22,16 @@ window.addEventListener('load', async ()=> {
 
 });
 
-// LOGOUT & FULLSCREEN BUTTON FUNCTIONALITY
 document.addEventListener('click', async (e) => {
+    // LOGOUT BUTTON FUNCTIONALITY
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
         logout();
     }
+    // FULLSCREEN BUTTON FUNCTIONALITY
     const buttonId = e.path[0].id;
     await goFullscreen(e, buttonId);
     await goGameboy(e, buttonId);
+    // STAY FOCUSED TO CANVAS IF CLICKING ANYWHERE ELSE BUT BUTTONS
     window.canvas.focus();
 });
 
@@ -437,7 +440,6 @@ scene('game', ({ score, count }) => {
 
     let levelNumber = 1;
 
-
     //GAMEPLAY HEADER TEXT
     add([
         text('MARIO', {
@@ -520,8 +522,7 @@ scene('game', ({ score, count }) => {
         }
     });
 
-    //end of levels win condition
-
+    //End of level win condition
     mario.onCollide('invisible', () => {
         add([
             text('You Beat The Level!', { size: 24 }),
@@ -539,13 +540,11 @@ scene('game', ({ score, count }) => {
                 go('game', { score: 0, count: 0 }, nextLevel);
             }
         });
-
     });
-
 });
 
 
-//gameover scene
+// Game Over scene
 
 scene('lose', ({ score, time, level }) => {
     music.pause();
@@ -612,7 +611,6 @@ go('game', { score: 0, count: 0 });
 
 
 // Local Functions
-
 function patrol(distance = 150, speed = 50, dir = 1) {
     return {
         id: 'patrol',
@@ -697,7 +695,6 @@ function bump(offset = 8, speed = 2, stopAtOrigin = true, isY = true){
         }
     };
 }
-
 
 async function goFullscreen(e, buttonId) {
     if (buttonId === 'fullscreen') {

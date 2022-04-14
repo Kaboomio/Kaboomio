@@ -20,6 +20,7 @@ const profileId = params.get('id');
 
 checkAuth();
 
+// EVENT LISTENERS
 window.addEventListener('load', async () => {
     await setUserInfo();
     await displayScoreTable();
@@ -27,12 +28,14 @@ window.addEventListener('load', async () => {
     loadingScreen.classList.add('invisible');
 });
 
-// LOGOUT BUTTON FUNCTIONALITY
 document.addEventListener('click', (e) => {
+    // LOGOUT BUTTON FUNCTIONALITY
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
         logout();
     }
 });
+
+editIconEl.addEventListener('click', toggleEditing);
 
 editProfileForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -54,6 +57,7 @@ editProfileForm.addEventListener('submit', async (e) => {
     loadingScreen.classList.toggle('invisible');
 });
 
+// FUNCTIONS
 function toggleEditing() {
     formContainer.classList.toggle('hidden');
     bioEl.classList.toggle('hidden');
@@ -120,26 +124,23 @@ async function displayScoreTable() {
         removeScoreEl.classList.add('removeItem');
         removeScoreEl.textContent = '\u00D7';
         removeScoreEl.id = score.id;
-    
+        
         const userProfileId = await getMyProfile();
-    
+        
         removeScoreEl.addEventListener('click', async () => {
             await deleteScore(removeScoreEl.id);
             await displayScoreTable();
         });
-    
+        
         if (userProfileId.id.toString() !== profileId) {
             removeScoreEl.classList.add('hidden');
         }
-
+        
         scoreRow.append(initialsEl, scoreEl, levelEl, dateEl, timeEl, removeScoreEl);
-
+        
         previousScoresContainer.append(scoreRow);
     }
 }
-
-
-editIconEl.addEventListener('click', toggleEditing);
 
 async function fetchAndDisplayHeader() {
     const profile = await getProfile(profileId);

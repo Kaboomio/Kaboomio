@@ -9,7 +9,7 @@ const loadingScreen = document.querySelector('.loading-screen');
 
 checkAuth();
 
-
+// EVENT LISTENERS
 window.addEventListener('load', async () => {
     const profile = await getMyProfile();
     if (!profile.username) {
@@ -20,8 +20,8 @@ window.addEventListener('load', async () => {
     loadingScreen.classList.add('invisible');
 });
 
-// LOGOUT BUTTON FUNCTIONALITY
 document.addEventListener('click', (e) => {
+    // LOGOUT BUTTON FUNCTIONALITY
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
         logout();
     }
@@ -39,6 +39,7 @@ yoshiEgg.addEventListener('click', () =>{
     playYoshi();
 });
 
+// FUNCTIONS
 async function fetchAndDisplayLeaderboard(){
     leaderboardDisplay.textContent = '';
     

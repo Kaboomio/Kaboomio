@@ -7,7 +7,7 @@ const sortParameter = document.getElementById('sort-param');
 const ascdescSelect = document.getElementById('sort-asc-desc');
 const loadingScreen = document.querySelector('.loading-screen');
 
-
+// EVENT LISTENERS
 window.addEventListener('load', async () => {
     await fetchAndDisplayLeaderboard();
     if (getUser()) {
@@ -16,13 +16,12 @@ window.addEventListener('load', async () => {
     loadingScreen.classList.add('invisible');
 });
 
-// LOGOUT BUTTON FUNCTIONALITY
 document.addEventListener('click', (e) => {
+    // LOGOUT BUTTON FUNCTIONALITY
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
         logout();
     }
 });
-
 
 scoreContainerEl.addEventListener('scroll', () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
@@ -35,7 +34,7 @@ sortParameter.addEventListener('change', fetchAndDisplayLeaderboard);
 
 ascdescSelect.addEventListener('change', fetchAndDisplayLeaderboard);
 
-
+// FUNCTIONS
 async function getLeaderboard(type, trueFalse){
     const response = await client
         .from('scores')
@@ -44,17 +43,13 @@ async function getLeaderboard(type, trueFalse){
         .range(0, 20);
 
     return response.body;
-
 }
 
 async function fetchAndDisplayLeaderboard() {
-
     scoreContainerEl.textContent = '';
 
     const ascending = ascdescSelect.value === 'asc' ? true : false;
-
     const scores = await getLeaderboard(sortParameter.value, ascending);
-
 
     for (let score of scores) {
         const scoreEl = document.createElement('div');
@@ -62,7 +57,6 @@ async function fetchAndDisplayLeaderboard() {
         const scoreScores = document.createElement('h3');
         const scoreTime = document.createElement('p');
         scoreEl.classList.add('score');
-
 
         scoreInitials.textContent = `${score.initials}...........`;
         scoreScores.textContent = `${score.score}............`;
@@ -75,7 +69,6 @@ async function fetchAndDisplayLeaderboard() {
         });
         
         scoreContainerEl.append(scoreEl);
-
     }
 }
 

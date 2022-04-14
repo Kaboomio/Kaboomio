@@ -11,12 +11,13 @@ let usernames = [];
 
 checkAuth();
 
+// EVENT LISTENERS
 window.addEventListener('load', async () => {
     usernames = await getAllUsernames();
 });
 
-// LOGOUT BUTTON FUNCTIONALITY
 document.addEventListener('click', (e) => {
+    // LOGOUT BUTTON FUNCTIONALITY
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
         logout();
     }
@@ -37,6 +38,7 @@ form.addEventListener('submit', async (e) => {
     }
 });
 
+// FUNCTIONS
 async function checkUsername(check) {
     let test = true;
     for (let username of usernames) {
