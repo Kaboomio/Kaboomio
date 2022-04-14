@@ -131,6 +131,7 @@ scene('game', ({ score, count }) => {
 
     let lastMarioXPos = 0;
     let currMarioXPos = 0;
+    let currTime = 0;
 
     //HORIZONTAL MOMENTUM
     mario.onUpdate(() => {
@@ -480,8 +481,7 @@ scene('game', ({ score, count }) => {
     ]);
 
     //TIMER CODE
-    let framesLeft = 9600;
-    let timeLeft = 400
+    let timeLeft = 400;
     let currentLevel = 1;
 
     add([
@@ -502,8 +502,9 @@ scene('game', ({ score, count }) => {
     let timer = get('timer');
 
     onUpdate(() => {
-        framesLeft--; 
-        if ((framesLeft / 24) % 1 === 0) {
+        currTime = time();
+        const timeCheck = Math.floor(currTime / .4);
+        if ((401 - timeCheck) < timeLeft) {
             timeLeft--;
             timer[0].text = timeLeft;
         }
@@ -514,7 +515,7 @@ scene('game', ({ score, count }) => {
 
     //CAMERA POSITIONING
     mario.onUpdate(() => {
-        let currCam = camPos()
+        let currCam = camPos();
         if (currCam.x < mario.pos.x) {
             camPos(mario.pos.x, currCam.y);
         }
