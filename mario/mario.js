@@ -178,7 +178,7 @@ scene('game', ({ score, count }) => {
     mario.onUpdate(() => {
         if (marioLeftGlideSpeed > 100) {
             mario.move(-marioLeftGlideSpeed, 0);
-            marioLeftGlideSpeed = marioLeftGlideSpeed -1;
+            marioLeftGlideSpeed = marioLeftGlideSpeed - 1;
         } else if (marioLeftGlideSpeed > 30) {
             mario.move(-marioLeftGlideSpeed, 0);
             marioLeftGlideSpeed = marioLeftGlideSpeed - 2;
@@ -222,7 +222,7 @@ scene('game', ({ score, count }) => {
             marioRightGlideSpeed = marioRightGlideSpeed - 1;
         }
         if (!mario.isGrounded()) {
-            mario.move(marioAirGlideSpeed, 0)
+            mario.move(marioAirGlideSpeed, 0);
         }
     });
 
@@ -481,7 +481,7 @@ scene('game', ({ score, count }) => {
 
     //TIMER CODE
     let framesLeft = 9600;
-    let timeLeft = 400
+    let timeLeft = 400;
     let currentLevel = 1;
 
     add([
@@ -514,7 +514,7 @@ scene('game', ({ score, count }) => {
 
     //CAMERA POSITIONING
     mario.onUpdate(() => {
-        let currCam = camPos()
+        let currCam = camPos();
         if (currCam.x < mario.pos.x) {
             camPos(mario.pos.x, currCam.y);
         }
