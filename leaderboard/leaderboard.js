@@ -25,6 +25,12 @@ window.addEventListener('load', async () => {
     loadingScreen.classList.toggle('invisible');
 });
 
+scoreContainerEl.addEventListener('scroll', () => {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    if (clientHeight + scrollTop >= scrollHeight){
+        console.log(clientHeight);
+    }
+});
 
 sortParameter.addEventListener('change', fetchandDisplayLeaderboard);
 
@@ -36,7 +42,7 @@ async function getLeaderboard(type, trueFalse){
         .from('scores')
         .select('*')
         .order(type, { ascending: trueFalse })
-        .range(0, 9);
+        .range(0, 20);
 
     return response.body;
 

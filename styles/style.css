@@ -243,7 +243,7 @@ footer {
     background-color: black;
     color: white;
     overflow: hidden;
-    height: 90%;
+    height: 80%;
     border-radius: 10px;
     min-width: 270px;
     margin-bottom: 40px;
@@ -256,7 +256,6 @@ select{
 
 .trophy {
     display: flex;
-
 }
 
 #leaderboard-trophy-container {
@@ -729,17 +728,18 @@ input[type=radio]:checked + figure {
         width: 200px;
     }
     .leaderboard-left img{
-        width: 200px;
         animation: shrink 1s ease-in;
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
+        width: 200px;
     }
+
 }
 @keyframes shrink {
-    0%{width: 535px }
-    50%{width: 350}
-    100%{width: 200px}
+    0%{width: 100% }
+    100%{width: 35%}
+    100%{transform: translateX(157px);}
 }
 /* all page media queries */
 @media (max-width: 640px) {
