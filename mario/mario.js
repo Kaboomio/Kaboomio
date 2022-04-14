@@ -88,6 +88,7 @@ loadSound('gameOver', 'sounds/gameOver.mp3');
 loadSound('powerUp', 'sounds/powerUp.mp3');
 loadSound('pipeSound', 'sounds/pipe.mp3');
 loadSound('silence', 'sounds/silence.mp3');
+loadSound('superstar', 'sounds/superstar.mp3');
 
 //global variables
 
@@ -115,12 +116,12 @@ scene('start', () => {
 
     // Press space to continue
     onKeyDown('space', () => {
-        go('game', { score: 0, count: 0 });
+        go('game', { score: 0, count: 0, levelNumber: 1 });
     });
 });
 
 //GAME SCENE
-scene('game', ({ score, count }) => {
+scene('game', ({ score, count, levelNumber }) => {
     layers(['bg', 'obj', 'ui'], 'obj'); 
     music.play();
     music.volume(0.0);
@@ -129,7 +130,7 @@ scene('game', ({ score, count }) => {
     // CASTLE BACKGROUND
     add([
         sprite('castle'),
-        pos(2000, 200),
+        pos(3600, 300),
         layer('bg'),
         origin('bot'),
         scale(0.25)
@@ -150,7 +151,7 @@ scene('game', ({ score, count }) => {
     const enemyScore = 100;
 
     let timeLeft = 400;
-    let currentLevel = 1;
+    let currentLevel = Number(levelNumber);
     let lastMarioXPos = 0;
     let currMarioXPos = 0;
     let currTime = 0;
@@ -162,7 +163,7 @@ scene('game', ({ score, count }) => {
         sprite('mario', { frame: 0, anim: 0 }), 
         solid(), 
         area({ width: 20, height: 20 }),
-        pos(20, 240),        
+        pos(2800, 240),        
         body(),
         origin('bot'),
         'mario'
@@ -440,26 +441,6 @@ scene('game', ({ score, count }) => {
     //GAME LEVEL CONFIG
     const mapWidth = 3000;
 
-    const map = [
-        '                                                                                                                                                                                        ',
-        '                                                                                                    !                                                                   !               ',
-        '                               !                                                                                                     !                    !                             ',
-        '         !                                                     !                                                    !                                                                   ',
-        '                                            !                                                              !                           !                !                               ',
-        '                    !                                                           !                                                                                     /                 ',
-        '                %                                           =====   ===%              #          ===    =%%=                                                         //                 ',
-        '                                                                                                                                                                    ///                 ',
-        '                                                                                                                                                                   ////                 ',
-        '                                                                                                                                                                  /////                 ',
-        '          %   =%=%=                 -       -            =#=           =    ==     %  %  %    =          ==        /  /          //  /              ==%=         //////                 ',
-        '                             -      |       |                                                                     //  //        ///  //      -               -  ///////                 ',
-        '                       -     |      |       |                                                                    ///  ///      ////  ///     |               | ////////                 ',
-        '     ) (   ^           |     |     ^|   ^   |    (          (          )         k     )        )               ////  ////    /////  ////    |      ^   ^    |/////////      (  (     i ',
-        '====================================================  ==========   ================================================================  ===================================================',
-        '====================================================  ==========   ================================================================  ===================================================',
-        '====================================================  ==========   ================================================================  ===================================================',
-    ];
-
     //configuring the map to display
     const levelConfig = {
         width: 20,
@@ -486,9 +467,7 @@ scene('game', ({ score, count }) => {
         '|': () => [sprite('pipe-bottom'), solid(), area(), scale(1.2), 'brick']
     };
 
-    const gameLevel = addLevel(map, levelConfig);
-
-    let levelNumber = 1;
+    const gameLevel = addLevel(Levels[currentLevel - 1], levelConfig);
 
     //GAMEPLAY HEADER TEXT
     // TOP ROW LABELS
@@ -622,25 +601,28 @@ scene('game', ({ score, count }) => {
             go('lose', { score: scoreLabel.value, timeLeft: 0, level: currentLevel });
         }
     });
-
+    let levelComplete = false;
     //End of level win condition
     mario.onCollide('invisible', () => {
-        add([
-            text('You Beat The Level!', { size: 24 }),
-            pos(toWorld(vec2(160, 120))),
-            color(255, 255, 255),
-            origin('center'),
-            layer('ui'),
-            music.pause(),
-        ]);
-        wait(1, () => {
-            let nextLevel = levelNumber + 1;
-            if (nextLevel > map.length) {
-                go('start');
-            } else {
-                go('game', { score: 0, count: 0 }, nextLevel);
-            }
-        });
+        if (!levelComplete) {
+            add([
+                text('You Beat The Level!', { size: 24 }),
+                pos(toWorld(vec2(160, 120))),
+                color(255, 255, 255),
+                origin('center'),
+                layer('ui'),
+                music.pause(),
+            ]);
+            wait(1, () => {
+                if (currentLevel >= Levels.length) {
+                    go('winner', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
+                } else {
+                    currentLevel++;
+                    go('game', { score: scoreLabel.value, count: coinCountLabel.value, levelNumber: currentLevel }, currentLevel);
+                }
+            });
+        }
+        levelComplete = true;
     });
 });
 
@@ -704,8 +686,67 @@ scene('lose', ({ score, time, level }) => {
     });
 });
 
+// GAME OVER SCENE
+scene('winner', ({ score, time, level }) => {
+    // music
+    music.pause();
+    const youWinMusic = play('superstar');
+
+    // You Win! text
+    add([
+        text('You Win!', {
+            size: 226,
+        }),
+        origin('center'), 
+        pos(center().x, center().y - 100),
+        scale(0.25),
+        
+        youWinMusic.play(),
+        youWinMusic.volume(0.25)
+    ]);
+    add([
+        text(score, 32), 
+        origin('center'), 
+        pos(center().x, center().y - 20)
+    ]);
+
+    // entering initials to be uploaded to supabase along with score
+    add([
+        text('Enter your initials and press Enter:'),
+        scale(0.25),
+        origin('center'),
+        pos(center().x, center().y + 60)
+    ]);
+    let n = add([
+        text(''),
+        origin('center'),
+        pos(center().x, center().y + 125),
+        { value: '' }
+    ]);
+    let maxChar = 3;
+    onCharInput((ch) => {
+        n.value += ch;
+        n.value = n.value.toUpperCase();
+        if (n.value.length > maxChar){
+            n.value = n.value.slice(0, 2);
+        }
+    });
+    onKeyPress('backspace', () => {
+        n.value = n.value.replace(n.value.charAt(n.value.length - 1), '');
+    });
+    onUpdate(() => {
+        n.text = n.value;
+    });
+
+    // press enter to upload to supabase and go back to home page
+    onKeyPress('enter', async () => {
+        await createScore(score, level, n.value, time);
+        location.replace('../home-page');
+    });
+});
+
 //initialize start scene - must be at end of game configs
-go('game', { score: 0, count: 0 });
+go('game', { score: 0, count: 0, levelNumber: 1 });
 
 
 
@@ -912,22 +953,44 @@ async function fetchAndDisplayHeader(profile) {
     bodyDOM.prepend(header);
 }
 
-    //EVIL MUSHROOM MOVEMENT & COLLIDE
-    // const evilMushroomMove = 20;
+//setting global variable for all level maps to be used in gameplay
 
-    // onUpdate('evil-mushroom', (obj) => {
-    //     obj.move(-evilMushroomMove, 0);
-    // });
 
-    // mario.onCollide('evil-mushroom', (obj) => {
-    //     if (mario.pos.y === obj.pos.y) {
-    //         destroy(obj);
-    //     }
-    // });
-
-    // function makeBig() {
-    //     mario.isBig = true;
-    //     mario.area.width = 20;
-    //     mario.area.height = 20;
-    //     mario.area.scale = 2;
-    // }
+const Levels = [[
+    '                                                                                                                                                                                         ',
+    '                                                                                                    !                                                                    !               ',
+    '                               !                                                                                                     !                    !                              ',
+    '         !                                                     !                                                    !                                                                    ',
+    '                                            !                                                              !                           !                !                          i     ',
+    '                    !                                                           !                                                                                      /           i     ',
+    '                %                                           =====   ===%              #          ===    =%%=                                                          //           i     ',
+    '                                                                                                                                                                     ///           i     ',
+    '                                                                                                                                                                    ////           i     ',
+    '                                                                                                                                                                   /////           i     ',
+    '          %   =%=%=                 -       -            =#=           =    ==     %  %  %    =          ==        /  /          //  /              ==%=          //////           i     ',
+    '                             -      |       |                                                                     //  //        ///  //      -               -   ///////           i     ',
+    '                       -     |      |       |                                                                    ///  ///      ////  ///     |               |  ////////           i     ',
+    '     ) (   ^           |     |     ^|   ^   |    (          (          )         k     )        )               ////  ////    /////  ////    |      ^   ^    | /////////           i     ',
+    '====================================================  ==========   ================================================================  ====================================================',
+    '====================================================  ==========   ================================================================  ====================================================',
+    '====================================================  ==========   ================================================================  ====================================================',
+], 
+[
+    '                                                                                          !                           !                             !                                     ',
+    '                                                                       !                                %                                   !                                             ',
+    '          !                                                                                       !                              !                          !                             ',
+    '                                                   !                           !                      ======   !                                                                          ',
+    '                                    !                                                                                        !                 !                                          ',
+    '               %%         !                                                           !                                                                                 /                 ',
+    '   !                                                       !                           ======                     !                !                    !              //                 ',
+    '              ====                                                 !                               !                                          !                       ///                 ',
+    '                     !                  !                                    ====                       =======                                              !       ////                 ',
+    '                                                                ==                         !                          =====           !                             /////                 ',
+    '           ====  ====                         !                           ======                  ======                                         _                 //////                 ',
+    '                                                           -                                                        !            //    -         |                ///////                 ',
+    '               ==                                     -    |                                                                   ////    |         |               ////////                 ',
+    '   ( (          )           ^         )  s            |   )|           ^  (   ^ )    ^ )    ^               )        (        /////    |  s    s |           s  /////////  )   )   )    i ',
+    '===================================================   ==========   =================================     ==========================   ====================================================',
+    '===================================================   ==========   =================================     ==========================   ====================================================',
+    '===================================================   ==========   =================================     ==========================   ====================================================',
+]];
