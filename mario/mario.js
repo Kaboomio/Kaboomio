@@ -18,7 +18,7 @@ kaboom({
 loadSprite('coin', '../assets/coin.png');
 loadSprite('brick', '../assets/brick.png');
 loadSprite('block', '../assets/box.png');
-loadSprite('mario', '../assets/mario.png');
+await loadAseprite('mario', '../assets/all-mario.png', '../assets/enemies.json');
 loadSprite('mushroom', '../assets/mushroom.png');
 loadAseprite('enemies', '../assets/enemies.png', '../assets/enemies.json');
 loadSprite('surprise-box', '../assets/surprise-box.png');
@@ -145,8 +145,6 @@ scene('game', ({ score, count }) => {
         scale(0.25)
     ]);
 
-
-
     //MARIO & HIS MOVEMENT
     const mario = add([
         sprite('mario'), 
@@ -161,19 +159,19 @@ scene('game', ({ score, count }) => {
     const marioSpeed = 120;
     const marioJumpHeight = 600;
     const coinScore = 200;
-    let marioDirection = 'right';
     let isJumping = true;
+    let marioDirection = 'right';
 
 
     //MARIO ACTIONS
     onKeyDown('left', () => {
         mario.move(-marioSpeed, 0);
-        marioDirection = 'left';
+        mario.flipX(true);
     });
 
     onKeyDown('right', () => {
         mario.move(marioSpeed, 0);
-        marioDirection = 'right';
+        mario.flipX(false);
         play('silence');
 
     });
@@ -248,6 +246,7 @@ scene('game', ({ score, count }) => {
             music.pause();
         }
     });
+
 
     mario.onCollide('powerup', (obj) => {
         if (obj.is('mushroom')) {
@@ -334,6 +333,7 @@ scene('game', ({ score, count }) => {
         '+': () => [sprite('block'), solid(), area()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body(), patrol(150)],
         '>': () => [sprite('fireball'), solid(), area(), 'mario-fireball', body()],
+        'm': () => [sprite('mario', { frame: 0}), area({ width: 20, height: 20 }), body(), marioActions(), origin('bot'), 'player1']
     };
 
     const gameLevel = addLevel(map, levelConfig);
@@ -393,7 +393,7 @@ scene('game', ({ score, count }) => {
             width: 320, 
             font: 'sinko', 
         }),
-        pos(500, 30),
+        pos(300, 30),
         layer('ui'),
         fixed(),
         {
@@ -552,7 +552,6 @@ function spawnFireball(marioPos, marioDirection) {
         { speed: marioDirection === 'right' ? 180 : -180 }
     ]);
 }
-
 
 
     //EVIL MUSHROOM MOVEMENT & COLLIDE
