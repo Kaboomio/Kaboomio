@@ -1,8 +1,42 @@
+import { checkAuth, logout, getMyProfile, createScore } from '../fetch-utils.js';
+import { renderMarioHeader } from '../render-utils.js';
 import kaboom from '../kaboom/dist/kaboom.mjs';
-import { createScore } from '../fetch-utils.js';
+
+const bodyDOM = document.querySelector('body');
+let canvas = null;
+const gameboy = document.getElementById('gameboyContainer');
+const loadingScreen = document.querySelector('.loading-screen');
+
+checkAuth();
+
+// EVENT LISTENERS (for page)
+window.addEventListener('load', async ()=> {
+    const profile = await getMyProfile();
+    if (!profile.username) {
+        location.replace('../profile-setup');
+    }
+    await fetchAndDisplayHeader(profile);
+    canvas = document.querySelector('canvas');
+    window.canvas.focus();
+    loadingScreen.classList.add('invisible');
+
+});
+
+document.addEventListener('click', async (e) => {
+    // LOGOUT BUTTON FUNCTIONALITY
+    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
+        logout();
+    }
+    // FULLSCREEN BUTTON FUNCTIONALITY
+    const buttonId = e.path[0].id;
+    await goFullscreen(e, buttonId);
+    await goGameboy(e, buttonId);
+    // STAY FOCUSED TO CANVAS IF CLICKING ANYWHERE ELSE BUT BUTTONS
+    window.canvas.focus();
+});
+
 
 //initialize kaboom
-
 
 kaboom({
     global: true,
@@ -52,25 +86,11 @@ loadSound('silence', 'sounds/silence.mp3');
 
 //global variables
 
-window.canvas.focus();
 const fallToDeath = 500;
 let music = play('theme'); 
 music.volume(0.25);
 music.pause();
 
-const canvas = document.querySelector('canvas');
-const gameboy = document.getElementById('gameboyContainer');
-const button = document.querySelector('button');
-
-window.addEventListener('click', () => {
-    window.canvas.focus();
-});
-
-button.addEventListener('click', async (e) => {
-    const buttonId = e.path[0].id;
-    await goFullscreen(e, buttonId);
-    await goGameboy(e, buttonId);
-});
 
 //START SCENE
 scene('start', () => {
@@ -466,7 +486,6 @@ scene('game', ({ score, count }) => {
 
     let levelNumber = 1;
 
-
     //GAMEPLAY HEADER TEXT
     add([
         text('MARIO', {
@@ -549,8 +568,7 @@ scene('game', ({ score, count }) => {
         }
     });
 
-    //end of levels win condition
-
+    //End of level win condition
     mario.onCollide('invisible', () => {
         add([
             text('You Beat The Level!', { size: 24 }),
@@ -568,13 +586,11 @@ scene('game', ({ score, count }) => {
                 go('game', { score: 0, count: 0 }, nextLevel);
             }
         });
-
     });
-
 });
 
 
-//gameover scene
+// Game Over scene
 
 scene('lose', ({ score, time, level }) => {
     music.pause();
@@ -641,7 +657,6 @@ go('game', { score: 0, count: 0 });
 
 
 // Local Functions
-
 function patrol(distance = 150, speed = 50, dir = 1) {
     return {
         id: 'patrol',
@@ -727,7 +742,6 @@ function bump(offset = 8, speed = 2, stopAtOrigin = true, isY = true){
     };
 }
 
-
 async function goFullscreen(e, buttonId) {
     if (buttonId === 'fullscreen') {
         let aspectRatio = 16 / 9;
@@ -765,6 +779,13 @@ async function goGameboy(e, buttonId) {
     }
 }
 
+
+async function fetchAndDisplayHeader(profile) {
+    const hardHeader = document.querySelector('header');
+    bodyDOM.removeChild(hardHeader);
+    const header = renderMarioHeader(profile);
+    bodyDOM.prepend(header);
+}
 
     //EVIL MUSHROOM MOVEMENT & COLLIDE
     // const evilMushroomMove = 20;
