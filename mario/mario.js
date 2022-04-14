@@ -151,7 +151,7 @@ scene('game', ({ score, count }) => {
     let isJumping = true; 
     let marioDirection = 'right';
     let bigMario = true;
-    let fireMario = false;
+    let fireMario = true;
 
     let lastMarioXPos = 0;
     let currMarioXPos = 0;
@@ -235,8 +235,10 @@ scene('game', ({ score, count }) => {
     });
 
     onKeyPress('down', () => {
-        spawnFireball(mario.pos, marioDirection);
-        play('fireballSound');
+        if (fireMario) {
+            spawnFireball(mario.pos, marioDirection);
+            play('fireballSound');
+        }
     });
 
     mario.onUpdate(() => {
@@ -270,12 +272,11 @@ scene('game', ({ score, count }) => {
     let fireballDirection = 'down';
 
     onUpdate('fireball', (e) => {
-
-        if (e.pos.y >= 174) {
+        if (e.pos.y >= 273) {
             fireballDirection = 'up';
         }
 
-        if (e.pos.y <= 166) {
+        if (e.pos.y <= 260) {
             fireballDirection = 'down';
         }
 
@@ -288,7 +289,7 @@ scene('game', ({ score, count }) => {
             e.move(e.speed, -40);
         }
 
-        if (e.pos.y < 159) {
+        if (e.pos.y < 255) {
             e.move(10, 220);
         }
     });
@@ -410,7 +411,7 @@ scene('game', ({ score, count }) => {
     }
 
     //GAME LEVEL CONFIG
-    const mapWidth = 1700;
+    const mapWidth = 3000;
 
     const map = [
         '                                                                                                                                                                                        ',
@@ -446,15 +447,15 @@ scene('game', ({ score, count }) => {
         '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
         'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
         'b': () => [sprite('bullet'), solid(), area(), 'bullet', 'dangerous'],
-        '-': () => [sprite('pipe-top'), solid(), area(), 'pipe', pos(0, 2), scale(1.2)],
+        '-': () => [sprite('pipe-top'), solid(), area(), 'pipe', pos(0, 2), scale(1.2), 'brick'],
         '+': () => [sprite('block'), solid(), area(), bump()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body(), patrol(150)],
         '>': () => [sprite('fireball'), solid(), area(), 'mario-fireball', body()],
         '!': () => [sprite('cloud'), pos(20, 50), layer('bg')],
         '(': () => [sprite('hill'), pos(0, -15), layer('bg')],
         ')': () => [sprite('shrub'), pos(0, 3), layer('bg')],
-        '/': () => [sprite('hard-block'), solid(), area(), scale(1.2)],
-        '|': () => [sprite('pipe-bottom'), solid(), area(), scale(1.2)]
+        '/': () => [sprite('hard-block'), solid(), area(), scale(1.2), 'brick'],
+        '|': () => [sprite('pipe-bottom'), solid(), area(), scale(1.2), 'brick']
     };
 
     const gameLevel = addLevel(map, levelConfig);
@@ -632,7 +633,7 @@ go('game', { score: 0, count: 0 });
 
 
 // Local Functions
-function patrol(distance = 150, speed = 50, dir = 1) {
+function patrol(distance = 150, speed = 30, dir = 1) {
     return {
         id: 'patrol',
         require: ['pos', 'area'],
