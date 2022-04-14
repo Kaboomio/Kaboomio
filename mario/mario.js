@@ -150,8 +150,9 @@ scene('game', ({ score, count }) => {
     const coinScore = 200;
     let isJumping = true; 
     let marioDirection = 'right';
-    let bigMario = true;
+    let bigMario = false;
     let fireMario = false;
+    const enemyScore = 100;
 
     let lastMarioXPos = 0;
     let currMarioXPos = 0;
@@ -312,6 +313,9 @@ scene('game', ({ score, count }) => {
                 d.unuse('dangerous');
                 d.unuse('solid');
                 d.area.height = 10;
+                scoreLabel.value += enemyScore;
+                scoreLabel.text = scoreLabel.value;
+                addScoreText(d, enemyScore);
             } 
         } else {
             if (bigMario) {
@@ -444,7 +448,7 @@ scene('game', ({ score, count }) => {
         'f': () => [sprite('flower'), solid(), area(), 'fire', 'powerup', body()],
         '#': () => [sprite('surprise-box'), solid(), area(), bump(), 'mushroom-surprise', 'brick'],
         '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
-        'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
+        'k': () => [sprite('enemies', { frame: 3 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
         'b': () => [sprite('bullet'), solid(), area(), 'bullet', 'dangerous'],
         '-': () => [sprite('pipe-top'), solid(), area(), 'pipe', pos(0, 2), scale(1.2)],
         '+': () => [sprite('block'), solid(), area(), bump()],
