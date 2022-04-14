@@ -6,7 +6,6 @@ const bodyDOM = document.querySelector('body');
 const gameboy = document.getElementById('gameboyContainer');
 const loadingScreen = document.querySelector('.loading-screen');
 let canvas = null;
-let username = '';
 
 checkAuth();
 
@@ -17,7 +16,6 @@ window.addEventListener('load', async ()=> {
         location.replace('../profile-setup');
     }
     await fetchAndDisplayHeader(profile);
-    username = profile.username;
     canvas = document.querySelector('canvas');
     window.canvas.focus();
     loadingScreen.classList.add('invisible');
@@ -912,4 +910,3 @@ async function fetchAndDisplayHeader(profile) {
     //     mario.area.height = 20;
     //     mario.area.scale = 2;
     // }
-    
