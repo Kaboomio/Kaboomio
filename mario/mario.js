@@ -3,9 +3,9 @@ import { renderMarioHeader } from '../render-utils.js';
 import kaboom from '../kaboom/dist/kaboom.mjs';
 
 const bodyDOM = document.querySelector('body');
-let canvas = null;
 const gameboy = document.getElementById('gameboyContainer');
 const loadingScreen = document.querySelector('.loading-screen');
+let canvas = null;
 
 checkAuth();
 
@@ -42,7 +42,6 @@ kaboom({
     global: true,
     width: 608,
     height: 342,
-    // fullscreen: true,
     scale: 3, 
     debug: true,
     frameRate: 60,
@@ -96,6 +95,7 @@ music.pause();
 
 //START SCENE
 scene('start', () => {
+    // Start screen labels
     add([
         sprite('start-screen'),
         origin('center'), 
@@ -109,6 +109,7 @@ scene('start', () => {
         scale(0.25)
     ]);
 
+    // Press space to continue
     onKeyDown('space', () => {
         go('game', { score: 0, count: 0 });
     });
@@ -129,18 +130,8 @@ scene('game', ({ score, count }) => {
         origin('bot'),
         scale(0.25)
     ]);
-
-    //MARIO & HIS MOVEMENT
-    const mario = add([
-        sprite('mario', { frame: 0, anim: 0 }), 
-        solid(), 
-        area({ width: 20, height: 20 }),
-        pos(20, 240),        
-        body(),
-        origin('bot'),
-        'mario'
-    ]);
-
+    
+    // GAMEPLAY VARIABLES
     let marioRightSpeed = 20;
     let marioLeftSpeed = 20;
     let marioLeftGlideSpeed = 0;
@@ -154,13 +145,26 @@ scene('game', ({ score, count }) => {
     let fireMario = false;
     const enemyScore = 100;
 
+    let timeLeft = 400;
+    let currentLevel = 1;
     let lastMarioXPos = 0;
     let currMarioXPos = 0;
     let currTime = 0;
     let lastFrame = 0;
     let currFrame = 0;
 
-    // MARIO MOVEMENT STUFF BASED ON 60 FPS
+    //MARIO & HIS MOVEMENT
+    const mario = add([
+        sprite('mario', { frame: 0, anim: 0 }), 
+        solid(), 
+        area({ width: 20, height: 20 }),
+        pos(20, 240),        
+        body(),
+        origin('bot'),
+        'mario'
+    ]);
+
+    // CAMERA & MARIO MOVEMENT STUFF BASED ON 60 FPS
     mario.onUpdate(() => {
         lastFrame = currFrame;
         currFrame = checkIfNewFrame(currTime, currFrame);
@@ -178,6 +182,11 @@ scene('game', ({ score, count }) => {
             if (!mario.isGrounded()) {
                 mario.move(marioAirGlideSpeed, 0);
             }
+        }
+        //CAMERA POSITIONING
+        let currCam = camPos();
+        if (currCam.x < mario.pos.x) {
+            camPos(mario.pos.x, currCam.y);
         }
     });
 
@@ -466,16 +475,54 @@ scene('game', ({ score, count }) => {
     let levelNumber = 1;
 
     //GAMEPLAY HEADER TEXT
+    // TOP ROW LABELS
     add([
-        text('MARIO', {
+        text('Score', {
             size: 18,
             width: 320, 
             font: 'sinko', 
         }),
-        pos(60, 6),
+        pos(31, 6),
         fixed()
     ]);
-
+    add([
+        text('Coins', {
+            size: 18,
+            width: 320, 
+            font: 'sinko', 
+        }),
+        pos(150, 6),
+        fixed()
+    ]);
+    add([
+        text('World', {
+            size: 18,
+            width: 320, 
+            font: 'sinko', 
+        }),
+        pos(270, 6),
+        fixed()
+    ]);
+    add([
+        text('Time', {
+            size: 18,
+            width: 320, 
+            font: 'sinko', 
+        }),
+        pos(390, 6),
+        fixed()
+    ]);
+    add([
+        text('Lives', {
+            size: 18,
+            width: 320, 
+            font: 'sinko', 
+        }),
+        pos(500, 6),
+        fixed()
+    ]);
+    // BOTTOM ROW LABELS
+    // SCORE COUNT
     const scoreLabel = add([
         text(score, {
             size: 18,
@@ -489,34 +536,44 @@ scene('game', ({ score, count }) => {
             value: score
         }
     ]);
-
-    add([sprite('coin'), pos(200, 32), layer('ui'), fixed()]);
-    
+    // COIN IMAGE & COUNT
+    add([
+        sprite('coin'), 
+        pos(155, 32), 
+        layer('ui'), 
+        fixed()
+    ]);
     const coinCountLabel = add([
         text('x' + count, {
             size: 18,
             width: 320, 
             font: 'sinko', 
         }),
-        pos(220, 30),
+        pos(180, 30),
         fixed(),
         layer('ui'),
         {
             value: count
         }
     ]);
-
-    //TIMER CODE
-    let timeLeft = 400;
-    let currentLevel = 1;
-
+    // CURRENT LEVEL
+    add([
+        text('1-' + currentLevel, {
+            size: 18,
+            width: 320, 
+            font: 'sinko', 
+        }),
+        pos(285, 30),
+        fixed()
+    ]);
+    // TIME LEFT
     add([
         text(timeLeft, {
             size: 18,
             width: 320, 
             font: 'sinko', 
         }),
-        pos(300, 30),
+        pos(397, 30),
         layer('ui'),
         fixed(),
         {
@@ -524,7 +581,18 @@ scene('game', ({ score, count }) => {
         },
         'timer'        
     ]);
+    // LIVES LEFT
+    add([
+        text('1', {
+            size: 18,
+            width: 320, 
+            font: 'sinko', 
+        }),
+        pos(530, 30),
+        fixed()
+    ]);
 
+    //TIMER CODE
     let timer = get('timer');
 
     onUpdate(() => {
@@ -536,14 +604,6 @@ scene('game', ({ score, count }) => {
         }
         if (timeLeft < 1) {
             go('lose', { score: scoreLabel.value, timeLeft: 0, level: currentLevel });
-        }
-    });
-
-    //CAMERA POSITIONING
-    mario.onUpdate(() => {
-        let currCam = camPos();
-        if (currCam.x < mario.pos.x) {
-            camPos(mario.pos.x, currCam.y);
         }
     });
 
@@ -569,12 +629,13 @@ scene('game', ({ score, count }) => {
 });
 
 
-// Game Over scene
-
+// GAME OVER SCENE
 scene('lose', ({ score, time, level }) => {
+    // music
     music.pause();
     const gameOverMusic = play('gameOver');
-    
+
+    // game over text
     add([
         text('Game Over', {
             size: 226,
@@ -592,20 +653,19 @@ scene('lose', ({ score, time, level }) => {
         pos(center().x, center().y - 20)
     ]);
 
+    // entering initials to be uploaded to supabase along with score
     add([
         text('Enter your initials and press Enter:'),
         scale(0.25),
         origin('center'),
         pos(center().x, center().y + 60)
     ]);
-
     let n = add([
         text(''),
         origin('center'),
         pos(center().x, center().y + 125),
         { value: '' }
     ]);
-
     let maxChar = 3;
     onCharInput((ch) => {
         n.value += ch;
@@ -614,15 +674,14 @@ scene('lose', ({ score, time, level }) => {
             n.value = n.value.slice(0, 2);
         }
     });
-
     onKeyPress('backspace', () => {
         n.value = n.value.replace(n.value.charAt(n.value.length - 1), '');
     });
-
     onUpdate(() => {
         n.text = n.value;
     });
 
+    // press enter to upload to supabase and go back to home page
     onKeyPress('enter', async () => {
         await createScore(score, level, n.value, time);
         location.replace('../home-page');
@@ -630,7 +689,6 @@ scene('lose', ({ score, time, level }) => {
 });
 
 //initialize start scene - must be at end of game configs
-
 go('game', { score: 0, count: 0 });
 
 
@@ -721,6 +779,7 @@ function bump(offset = 8, speed = 2, stopAtOrigin = true, isY = true){
     };
 }
 
+// Gameboy -> Fullscreen -> Gameboy Functions
 async function goFullscreen(e, buttonId) {
     if (buttonId === 'fullscreen') {
         let aspectRatio = 16 / 9;
@@ -744,7 +803,6 @@ async function goFullscreen(e, buttonId) {
         e.path[0].textContent = 'Gameboy';
     }
 }
-
 async function goGameboy(e, buttonId) {
     if (buttonId === 'gameboy') {
         canvas.style.width = `608px`;
@@ -758,6 +816,7 @@ async function goGameboy(e, buttonId) {
     }
 }
 
+// fixes FPS at 60
 function checkIfNewFrame(currTime, currFrame) {
     if (Math.floor(currTime / (1 / 60)) > currFrame) {
         currFrame++;
@@ -765,17 +824,18 @@ function checkIfNewFrame(currTime, currFrame) {
     return currFrame;
 }
 
+// GLIDE FUNCTIONS - moves mario according to glide speed & decreases glide speed each time function is called
 function marioLeftGlide(marioLeftGlideSpeed, mario) {
     if (marioLeftGlideSpeed > 100) {
         mario.move(-marioLeftGlideSpeed, 0);
-        return marioLeftGlideSpeed = marioLeftGlideSpeed - 1;
-    } else if (marioLeftGlideSpeed > 60) {
+        return marioLeftGlideSpeed = marioLeftGlideSpeed - 6;
+    } else if (marioLeftGlideSpeed > 50) {
         mario.move(-marioLeftGlideSpeed, 0);
-        return marioLeftGlideSpeed = marioLeftGlideSpeed - 4;
-    } else if (marioLeftGlideSpeed > 30) {
+        return marioLeftGlideSpeed = marioLeftGlideSpeed - 5;
+    } else if (marioLeftGlideSpeed > 20) {
         mario.move(-marioLeftGlideSpeed, 0);
         return marioLeftGlideSpeed = marioLeftGlideSpeed - 3;
-    } else if (marioLeftGlideSpeed > 10) {
+    } else if (marioLeftGlideSpeed > 4) {
         mario.move(-marioLeftGlideSpeed, 0);
         return marioLeftGlideSpeed = marioLeftGlideSpeed - 2;
     } else if (marioLeftGlideSpeed > 0) {
@@ -785,18 +845,17 @@ function marioLeftGlide(marioLeftGlideSpeed, mario) {
         return marioLeftGlideSpeed = 0;
     }
 }
-
 function marioRightGlide(marioRightGlideSpeed, mario) {
     if (marioRightGlideSpeed > 100) {
         mario.move(marioRightGlideSpeed, 0);
-        return marioRightGlideSpeed = marioRightGlideSpeed - 1;
-    } else if (marioRightGlideSpeed > 60) {
+        return marioRightGlideSpeed = marioRightGlideSpeed - 6;
+    } else if (marioRightGlideSpeed > 50) {
         mario.move(marioRightGlideSpeed, 0);
-        return marioRightGlideSpeed = marioRightGlideSpeed - 4;
-    } else if (marioRightGlideSpeed > 30) {
+        return marioRightGlideSpeed = marioRightGlideSpeed - 5;
+    } else if (marioRightGlideSpeed > 20) {
         mario.move(marioRightGlideSpeed, 0);
         return marioRightGlideSpeed = marioRightGlideSpeed - 3;
-    } else if (marioRightGlideSpeed > 10) {
+    } else if (marioRightGlideSpeed > 4) {
         mario.move(marioRightGlideSpeed, 0);
         return marioRightGlideSpeed = marioRightGlideSpeed - 2;
     } else if (marioRightGlideSpeed > 0) {
@@ -807,6 +866,8 @@ function marioRightGlide(marioRightGlideSpeed, mario) {
     }
 }
 
+
+// SLOWING DOWN MARIO FUNCTIONS - slows down mario if he's idle or moving in the opposite direction
 function slowMarioRightSpeed(marioRightSpeed, lastMarioXPos, currMarioXPos) {
     // SLOWING DOWN SPEED BECAUSE MARIO IS IDLE
     if (marioRightSpeed > 20 && lastMarioXPos === currMarioXPos) {
@@ -817,7 +878,6 @@ function slowMarioRightSpeed(marioRightSpeed, lastMarioXPos, currMarioXPos) {
         marioRightSpeed = 0;
     }
 }
-
 function slowMarioLeftSpeed(marioLeftSpeed, lastMarioXPos, currMarioXPos) {
     // SLOWING DOWN SPEED BECAUSE MARIO IS IDLE
     if (marioLeftSpeed > 20 && lastMarioXPos === currMarioXPos) {
