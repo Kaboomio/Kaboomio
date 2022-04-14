@@ -262,7 +262,9 @@ scene('game', ({ score, count }) => {
         } else {
             if (isKeyDown('left') || isKeyDown('right')) {
                 const anim = fireMario ? 'FlameRun' : bigMario ? 'RunningBig' : 'Running';
-                mario.play(anim);
+                if (mario.curAnim() !== anim) {
+                    mario.play(anim);
+                }
             } else {
                 mario.frame = fireMario ? 17 : bigMario ? 8 : 0;
             }
@@ -376,6 +378,7 @@ scene('game', ({ score, count }) => {
                 }
             }
         }
+        bump();
     });
 
     function addScoreText(obj, score) {
@@ -420,10 +423,10 @@ scene('game', ({ score, count }) => {
         'i': () => [sprite('invisible'), area(), solid(), 'invisible'],
         '=': () => [sprite('brick'), area(), solid(), 'brick'],
         '*': () => [sprite('coin'), area(), 'coin'],
-        '%': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise', 'brick'],
-        '&': () => [sprite('surprise-box'), solid(), area(), 'fire-surprise', 'brick'],
+        '%': () => [sprite('surprise-box'), solid(), area(), bump(), 'coin-surprise', 'brick'],
+        '&': () => [sprite('surprise-box'), solid(), area(), bump(), 'fire-surprise', 'brick'],
         'f': () => [sprite('flower'), solid(), area(), 'fire', 'powerup', body()],
-        '#': () => [sprite('surprise-box'), solid(), area(), 'mushroom-surprise', 'brick'],
+        '#': () => [sprite('surprise-box'), solid(), area(), bump(), 'mushroom-surprise', 'brick'],
         '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
         'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
         '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
@@ -652,6 +655,47 @@ function spawnFireball(marioPos, marioDirection) {
         'fireball',
         { speed: marioDirection === 'right' ? 180 : -180 }
     ]);
+}
+
+function bump(offset = 8, speed = 2, stopAtOrigin = true, isY = true){
+    return {
+        id: 'bump', 
+        require: ['pos'],
+        bumpOffset: offset,
+        speed: speed,
+        bumped: false,
+        origPos: 0,
+        direction: -1, 
+        isY: isY,
+        update() {
+            if (this.bumped) {
+                if (isY){
+                    this.pos.y = this.pos.y + this.direction * this.speed;
+                    if (this.pos.y < this.origPos - this.bumpOffset) {
+                        this.direction = 1;
+                    }
+                    if (stopAtOrigin && this.pos.y >= this.origPos) {
+                        this.bumped = false;
+                        this.pos.y = this.origPos;
+                        this.direction = -1;
+                    }
+                } else {this.pos.x = this.pos.x + this.direction * this.speed;
+                    if (this.pos.x < this.origPos - this.bumpOffset) {
+                        this.direction = 1;
+                    }
+                    if (stopAtOrigin && this.pos.x >= this.origPos) {
+                        this.bumped = false;
+                        this.pos.x = this.origPos;
+                        this.direction = -1;
+                    }}
+            }
+        },
+        bump(){
+            this.bumped = true;
+            this.origPos = this.pos.y;
+            this.origPos = this.pos.x;
+        }
+    };
 }
 
 
