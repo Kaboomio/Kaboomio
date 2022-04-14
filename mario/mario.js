@@ -350,23 +350,13 @@ scene('game', ({ score, count }) => {
             const mushroomSurprises = get('mushroom-surprise');
             const coinSurprises = get('coin-surprise');
             const fireSurprises = get('fire-surprise');
-            for (let mushroomSurprise of mushroomSurprises) {
-                const marioDistance = mushroomSurprise.pos.x - mario.pos.x;
-                if (mario.pos.y === mushroomSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
-                    destroy(mushroomSurprise);
-                    gameLevel.spawn('@', mushroomSurprise.gridPos.sub(0, 1));
-                    gameLevel.spawn('+', mushroomSurprise.gridPos.sub(0, 0));
-                    // onUpdate('mushroom', (obj) => {
-                    //     obj.move(mushroomMove, 0);
-                    // });
-                }
-            }
             for (let coinSurprise of coinSurprises) {
                 const marioDistance = coinSurprise.pos.x - mario.pos.x;
                 if (mario.pos.y === coinSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
                     destroy(coinSurprise);
                     gameLevel.spawn('*', coinSurprise.gridPos.sub(0, 1));
-                    gameLevel.spawn('+', coinSurprise.gridPos.sub(0, 0));
+                    const box = gameLevel.spawn('+', coinSurprise.gridPos.sub(0, 0));
+                    box.bump(8, 2, true, true);
                 }
             }
             for (let fireSurprise of fireSurprises) {
@@ -374,11 +364,20 @@ scene('game', ({ score, count }) => {
                 if (mario.pos.y === fireSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
                     destroy(fireSurprise);
                     gameLevel.spawn('f', fireSurprise.gridPos.sub(0, 1));
-                    gameLevel.spawn('+', fireSurprise.gridPos.sub(0, 0));
+                    const box = gameLevel.spawn('+', fireSurprise.gridPos.sub(0, 0));
+                    box.bump(8, 2, true, true);
+                }
+            }
+            for (let mushroomSurprise of mushroomSurprises) {
+                const marioDistance = mushroomSurprise.pos.x - mario.pos.x;
+                if (mario.pos.y === mushroomSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
+                    destroy(mushroomSurprise);
+                    gameLevel.spawn('@', mushroomSurprise.gridPos.sub(0, 1));
+                    const box = gameLevel.spawn('+', mushroomSurprise.gridPos.sub(0, 0));
+                    box.bump(8, 2, true, true);
                 }
             }
         }
-        bump();
     });
 
     function addScoreText(obj, score) {
@@ -407,7 +406,7 @@ scene('game', ({ score, count }) => {
         '                                                                                  ',
         '                                                          ===                     ',
         '                                                                                  ',
-        '     *   =&=%=      =====               %===#%==*=             %%%                ',
+        '     *   =%=%=      =====               %===#%==*=             %%%                ',
         '                                                                                  ',
         '                                                                                  ',
         '        *                                                                   i     ',
@@ -430,10 +429,9 @@ scene('game', ({ score, count }) => {
         '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
         'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
         '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
-        '+': () => [sprite('block'), solid(), area()],
+        '+': () => [sprite('block'), solid(), area(), bump()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body(), patrol(150)],
         '>': () => [sprite('fireball'), solid(), area(), 'mario-fireball', body()],
-        'm': () => [sprite('mario', { frame: 0 }), area({ width: 20, height: 20 }), body(), origin('bot'), 'player1']
     };
 
     const gameLevel = addLevel(map, levelConfig);
@@ -692,8 +690,11 @@ function bump(offset = 8, speed = 2, stopAtOrigin = true, isY = true){
         },
         bump(){
             this.bumped = true;
-            this.origPos = this.pos.y;
-            this.origPos = this.pos.x;
+            if (isY) {
+                this.origPos = this.pos.y;
+            } else {
+                this.origPos = this.pos.x;
+            }
         }
     };
 }
