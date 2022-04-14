@@ -60,7 +60,7 @@ loadSprite('mushroom', '../assets/mushroom.png');
 loadAseprite('enemies', '../assets/enemies.png', '../assets/enemies.json');
 loadSprite('surprise-box', '../assets/surprise-box.png');
 loadSprite('bullet', '../assets/bullet.png');
-loadSprite('pipe', '../assets/pipe.png');
+loadSprite('pipe-top', '../assets/pipeTop.png');
 loadSprite('castle', '../assets/castle.png');
 loadSprite('fireball', '../assets/fireball.png');
 loadSprite('invisible', '../assets/invisible-image.png');
@@ -70,6 +70,7 @@ loadSprite('cloud', '../assets/cloud.png');
 loadSprite('hill', '../assets/hill.png');
 loadSprite('shrub', '../assets/shrubbery.png');
 loadSprite('hard-block', '../assets/hard-block.png');
+loadSprite('pipe-bottom', '../assets/pipeBottom.png');
 
 
 
@@ -126,7 +127,7 @@ scene('game', ({ score, count }) => {
     // CASTLE BACKGROUND
     add([
         sprite('castle'),
-        pos(1560, 287),
+        pos(2000, 200),
         layer('bg'),
         origin('bot'),
         scale(0.25)
@@ -157,7 +158,7 @@ scene('game', ({ score, count }) => {
         sprite('mario', { frame: 0, anim: 0 }), 
         solid(), 
         area({ width: 20, height: 20 }),
-        pos(1500, 240),        
+        pos(20, 240),        
         body(),
         origin('bot'),
         'mario'
@@ -320,15 +321,17 @@ scene('game', ({ score, count }) => {
                 d.unuse('patrol');
                 d.unuse('dangerous');
                 d.unuse('solid');
-                
-            } else if (bigMario) {
+                d.area.height = 10;
+            } 
+        } else {
+            if (bigMario) {
                 bigMario = false;
                 mario.unuse('solid');
                 wait(3, mario.use('solid'));
+            } else {
+                go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
+                music.pause();
             }
-        } else {
-            go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
-            music.pause();
         }
     });
 
@@ -357,7 +360,7 @@ scene('game', ({ score, count }) => {
     });
 
     mario.onCollide('brick', (obj) => {
-        const marioPlusBlockHeight = bigMario ? 54 : 40;
+        const marioPlusBlockHeight = bigMario || fireMario ? 54 : 40;
 
         if (mario.pos.y === obj.pos.y + marioPlusBlockHeight) {
             const mushroomSurprises = get('mushroom-surprise');
@@ -420,23 +423,23 @@ scene('game', ({ score, count }) => {
     const mapWidth = 1700;
 
     const map = [
-        '                                                                                  ',
-        '                                                                                  ',
-        '                          !                                                       ',
-        '    !                                                     !                       ',
-        '                                       !                               !          ',
-        '               !                                                                  ',
-        '                                           %%%%                    !         i    ',
-        '                                                                             i    ',
-        '                                                          ===                i    ',
-        '                                                                             i    ',
-        '     *   =%=%=      =====               %===#%==*=             %%%           i    ',
-        '                                                                             i    ',
-        '                                            b                                i    ',
-        '   (    *)            )        b  )      )     (      )       )         b    i    ',
-        '==============================   ========================    =====================',
-        '==============================   ========================    =====================',
-        '==============================   ========================    =====================',
+        '                                                                                                                                                                                        ',
+        '                                                                                                    !                                                                   !               ',
+        '                               !                                                                                                     !                    !                             ',
+        '         !                                                     !                                                    !                                                                   ',
+        '                                            !                                                              !                           !                !                               ',
+        '                    !                                                           !                                                                                     /                 ',
+        '                %                                           =====   ===%              #          ===    =%%=                                                         //                 ',
+        '                                                                                                                                                                    ///                 ',
+        '                                                                                                                                                                   ////                 ',
+        '                                                                                                                                                                  /////                 ',
+        '          %   =%=%=                 -       -            =#=           =    ==     %  %  %    =          ==        /  /          //  /              ==%=         //////                 ',
+        '                             -      |       |                                                                     //  //        ///  //      -               -  ///////                 ',
+        '                       -     |      |       |                                                                    ///  ///      ////  ///     |               | ////////                 ',
+        '     ) (   ^           |     |     ^|   ^   |    (          (          )         k     )        )               ////  ////    /////  ////    |      ^   ^    |/////////      (  (     i ',
+        '====================================================  ==========   ================================================================  ===================================================',
+        '====================================================  ==========   ================================================================  ===================================================',
+        '====================================================  ==========   ================================================================  ===================================================',
     ];
 
     //configuring the map to display
@@ -453,14 +456,15 @@ scene('game', ({ score, count }) => {
         '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
         'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
         'b': () => [sprite('bullet'), solid(), area(), 'bullet', 'dangerous'],
-        '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
+        '-': () => [sprite('pipe-top'), solid(), area(), 'pipe', pos(0, 2), scale(1.2)],
         '+': () => [sprite('block'), solid(), area(), bump()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body(), patrol(150)],
         '>': () => [sprite('fireball'), solid(), area(), 'mario-fireball', body()],
         '!': () => [sprite('cloud'), pos(20, 50), layer('bg')],
         '(': () => [sprite('hill'), pos(0, -15), layer('bg')],
         ')': () => [sprite('shrub'), pos(0, 3), layer('bg')],
-        '/': () => [sprite('hard-block'), solid(), area()],
+        '/': () => [sprite('hard-block'), solid(), area(), scale(1.2)],
+        '|': () => [sprite('pipe-bottom'), solid(), area(), scale(1.2)]
     };
 
     const gameLevel = addLevel(map, levelConfig);
@@ -695,7 +699,7 @@ function patrol(distance = 150, speed = 50, dir = 1) {
         add() {
             this.startingPos = this.pos;
             this.on('collide', (obj, side) => {
-                if (side === 'left' || side === 'right') {
+                if (side.isLeft() || side.isRight()) {
                     dir = -dir;
                 }
             });
