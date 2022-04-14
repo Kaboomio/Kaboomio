@@ -604,9 +604,8 @@ scene('game', ({ score, count }) => {
         }
     });
 
+    // destroy enemies who are off screen left
     let enemies = get('dangerous');
-
-    // destroy objects off screen
     onUpdate(() => {
         for (let enemy of enemies) {
             if (toScreen(enemy.pos).x < -20) {
