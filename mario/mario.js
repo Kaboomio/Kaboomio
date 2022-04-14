@@ -25,7 +25,7 @@ loadSprite('mushroom', '../assets/mushroom.png');
 loadAseprite('enemies', '../assets/enemies.png', '../assets/enemies.json');
 loadSprite('surprise-box', '../assets/surprise-box.png');
 loadSprite('bullet', '../assets/bullet.png');
-loadSprite('pipe', '../assets/pipe.png');
+loadSprite('pipe-top', '../assets/pipeTop.png');
 loadSprite('castle', '../assets/castle.png');
 loadSprite('fireball', '../assets/fireball.png');
 loadSprite('invisible', '../assets/invisible-image.png');
@@ -35,6 +35,7 @@ loadSprite('cloud', '../assets/cloud.png');
 loadSprite('hill', '../assets/hill.png');
 loadSprite('shrub', '../assets/shrubbery.png');
 loadSprite('hard-block', '../assets/hard-block.png');
+loadSprite('pipe-bottom', '../assets/pipeBottom.png');
 
 
 
@@ -129,8 +130,8 @@ scene('game', ({ score, count }) => {
     const coinScore = 200;
     let isJumping = true; 
     let marioDirection = 'right';
-    let bigMario = false;
-    let fireMario = false;
+    let bigMario = true;
+    let fireMario = true;
 
     let lastMarioXPos = 0;
     let currMarioXPos = 0;
@@ -290,6 +291,7 @@ scene('game', ({ score, count }) => {
                 d.unuse('patrol');
                 d.unuse('dangerous');
                 d.unuse('solid');
+                d.area.height = 20;
             }
         } else {
             go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
@@ -377,23 +379,23 @@ scene('game', ({ score, count }) => {
     const mapWidth = 1700;
 
     const map = [
-        '                                                                                  ',
-        '                                                                                  ',
-        '                          !                                                       ',
-        '    !                                                     !                       ',
-        '                                       !                                          ',
-        '               !                                                                 ',
-        '                                           %%%%                                   ',
-        '                                                                                  ',
-        '                                                          ===                     ',
-        '                                                                                  ',
-        '     *   =%=%=      =====               %===#%==*=             %%%                ',
-        '                                                                                  ',
-        '                                            b                                     ',
-        '        *                    b                                   b           i    ',
-        '==============================   ========================    =====================',
-        '==============================   ========================    =====================',
-        '==============================   ========================    =====================',
+        '                                                                                       ',
+        '                                                                                       ',
+        '                               !                                                       ',
+        '         !                                                     !                       ',
+        '                                            !                                          ',
+        '                    !                                                                  ',
+        '                %                               %%%%                                   ',
+        '                                                                                       ',
+        '                                                               ===                     ',
+        '                                                                                       ',
+        '          %   =%=%=                 -         %===#%==*=             %%%                ',
+        '                             -      |                                                   ',
+        '                       -     |      |                                                   ',
+        '     ) (   ^           |     |     ^|                                              i    ',
+        '===============================================================    =====================',
+        '===============================================================    =====================',
+        '===============================================================    =====================',
     ];
 
     //configuring the map to display
@@ -410,7 +412,7 @@ scene('game', ({ score, count }) => {
         '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
         'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
         'b': () => [sprite('bullet'), solid(), area(), 'bullet', 'dangerous'],
-        '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
+        '-': () => [sprite('pipe-top'), solid(), area(), 'pipe', pos(0, 2), scale(1.2)],
         '+': () => [sprite('block'), solid(), area(), bump()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body(), patrol(150)],
         '>': () => [sprite('fireball'), solid(), area(), 'mario-fireball', body()],
@@ -418,6 +420,7 @@ scene('game', ({ score, count }) => {
         '(': () => [sprite('hill'), pos(0, -15), layer('bg')],
         ')': () => [sprite('shrub'), pos(0, 3), layer('bg')],
         '/': () => [sprite('hard-block'), solid(), area()],
+        '|': () => [sprite('pipe-bottom'), solid(), area(), scale(1.2)]
     };
 
     const gameLevel = addLevel(map, levelConfig);
@@ -608,6 +611,7 @@ function patrol(distance = 150, speed = 50, dir = 1) {
         add() {
             this.startingPos = this.pos;
             this.on('collide', (obj, side) => {
+                console.log(side);
                 if (side === 'left' || side === 'right') {
                     dir = -dir;
                 }
