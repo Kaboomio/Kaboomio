@@ -72,7 +72,7 @@ button.addEventListener('click', async (e) => {
 scene('start', () => {
 
     
-    const startScreen = add([
+    add([
         sprite('start-screen'),
         origin('center'), 
         pos(center().x, center().y - 30), 
@@ -95,7 +95,7 @@ scene('game', ({ score, count }) => {
     layers(['bg', 'obj', 'ui'], 'obj'); 
     music.play();
     music.volume(0.0);
-    camPos(310, 160)
+    camPos(310, 160);
     
     // CASTLE BACKGROUND
     add([
@@ -108,7 +108,7 @@ scene('game', ({ score, count }) => {
 
     //MARIO & HIS MOVEMENT
     const mario = add([
-        sprite('mario', { anim: 'Running' }), 
+        sprite('mario', { frame: 0, anim: 0 }), 
         solid(), 
         area({ width: 20, height: 20 }),
         pos(50, 240),        
@@ -126,18 +126,20 @@ scene('game', ({ score, count }) => {
     const coinScore = 200;
     let isJumping = true; 
     let marioDirection = 'right';
+    let bigMario = false;
+    let fireMario = false;
 
     let lastMarioXPos = 0;
     let currMarioXPos = 0;
 
     //HORIZONTAL MOMENTUM
     mario.onUpdate(() => {
-        currMarioXPos = mario.pos.x
+        currMarioXPos = mario.pos.x;
         // SLOWING DOWN SPEED BECAUSE MARIO IS IDLE
-        if (marioRightSpeed > 20 && lastMarioXPos == currMarioXPos) {
+        if (marioRightSpeed > 20 && lastMarioXPos === currMarioXPos) {
             marioRightSpeed = marioRightSpeed - 2;
         }
-        if (marioLeftSpeed > 20 && lastMarioXPos == currMarioXPos) {
+        if (marioLeftSpeed > 20 && lastMarioXPos === currMarioXPos) {
             marioLeftSpeed = marioLeftSpeed - 2;
         }
         // IF MARIO IS MOVING RIGHT, SLOW DOWN LEFT SPEED
@@ -149,7 +151,7 @@ scene('game', ({ score, count }) => {
             marioRightSpeed = 0;
         }
         lastMarioXPos = currMarioXPos;
-    })
+    });
 
     //MARIO ACTIONS
     onKeyDown('left', () => {
@@ -171,7 +173,7 @@ scene('game', ({ score, count }) => {
         marioRightGlideSpeed = 0;
         marioLeftGlideSpeed = marioLeftSpeed;
         marioLeftSpeed = 20;
-    })
+    });
     
     mario.onUpdate(() => {
         if (marioLeftGlideSpeed > 100) {
@@ -184,7 +186,7 @@ scene('game', ({ score, count }) => {
             mario.move(-marioLeftGlideSpeed, 0);
             marioLeftGlideSpeed = marioLeftGlideSpeed - 1;
         }
-    })
+    });
     
     onKeyDown('right', () => {
         marioRightGlideSpeed = 0;
@@ -206,7 +208,7 @@ scene('game', ({ score, count }) => {
         marioLeftGlideSpeed = 0;
         marioRightGlideSpeed = marioRightSpeed;
         marioRightSpeed = 20;
-    })
+    });
     
     mario.onUpdate(() => {
         if (marioRightGlideSpeed > 100) {
@@ -222,7 +224,7 @@ scene('game', ({ score, count }) => {
         if (!mario.isGrounded()) {
             mario.move(marioAirGlideSpeed, 0)
         }
-    })
+    });
 
     onKeyPress('space', () => {
         if (mario.isGrounded()) {
@@ -251,8 +253,21 @@ scene('game', ({ score, count }) => {
         if (mario.pos.y >= fallToDeath) {
             go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
         }
-
+        updateMarioSprite();
     });
+
+    function updateMarioSprite() {
+        if (isJumping) {
+            mario.frame = fireMario ? 22 : bigMario ? 13 : 5;
+        } else {
+            if (isKeyDown('left') || isKeyDown('right')) {
+                const anim = fireMario ? 'FlameRun' : bigMario ? 'RunningBig' : 'Running';
+                mario.play(anim);
+            } else {
+                mario.frame = fireMario ? 17 : bigMario ? 8 : 0;
+            }
+        }
+    }
 
 
     let fireballDirection = 'down';
@@ -293,7 +308,13 @@ scene('game', ({ score, count }) => {
 
     mario.onCollide('dangerous', (d) => {
         if (isJumping) {
-            destroy(d);
+            if (d.is('goomba')) {
+                d.frame = 2;
+                d.anim = '';
+                d.unuse('patrol');
+                d.unuse('dangerous');
+                d.unuse('solid');
+            }
         } else {
             go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
             music.pause();
@@ -303,6 +324,11 @@ scene('game', ({ score, count }) => {
 
     mario.onCollide('powerup', (obj) => {
         if (obj.is('mushroom')) {
+            bigMario = true;
+            destroy(obj);
+        }
+        if (obj.is('fire')) {
+            fireMario = true;
             destroy(obj);
         }
     });
@@ -321,6 +347,7 @@ scene('game', ({ score, count }) => {
         if (mario.pos.y === obj.pos.y + 40) {
             const mushroomSurprises = get('mushroom-surprise');
             const coinSurprises = get('coin-surprise');
+            const fireSurprises = get('fire-surprise');
             for (let mushroomSurprise of mushroomSurprises) {
                 const marioDistance = mushroomSurprise.pos.x - mario.pos.x;
                 if (mario.pos.y === mushroomSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
@@ -338,6 +365,14 @@ scene('game', ({ score, count }) => {
                     destroy(coinSurprise);
                     gameLevel.spawn('*', coinSurprise.gridPos.sub(0, 1));
                     gameLevel.spawn('+', coinSurprise.gridPos.sub(0, 0));
+                }
+            }
+            for (let fireSurprise of fireSurprises) {
+                const marioDistance = fireSurprise.pos.x - mario.pos.x;
+                if (mario.pos.y === fireSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
+                    destroy(fireSurprise);
+                    gameLevel.spawn('f', fireSurprise.gridPos.sub(0, 1));
+                    gameLevel.spawn('+', fireSurprise.gridPos.sub(0, 0));
                 }
             }
         }
@@ -369,7 +404,7 @@ scene('game', ({ score, count }) => {
         '                                                                                  ',
         '                                                          ===                     ',
         '                                                                                  ',
-        '     *   =#=%=      =====               %===#%==*=             %%%                ',
+        '     *   =&=%=      =====               %===#%==*=             %%%                ',
         '                                                                                  ',
         '                                                                                  ',
         '        *                                                                   i     ',
@@ -386,9 +421,11 @@ scene('game', ({ score, count }) => {
         '=': () => [sprite('brick'), area(), solid(), 'brick'],
         '*': () => [sprite('coin'), area(), 'coin'],
         '%': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise', 'brick'],
-        // '$': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise'],
+        '&': () => [sprite('surprise-box'), solid(), area(), 'fire-surprise', 'brick'],
+        'f': () => [sprite('flower'), solid(), area(), 'fire', 'powerup', body()],
         '#': () => [sprite('surprise-box'), solid(), area(), 'mushroom-surprise', 'brick'],
-        '^': () => [sprite('enemies', { anim: 'Walking' }), solid(), area(), 'enemies', 'dangerous', body(), patrol(150)],
+        '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
+        'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
         '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
         '+': () => [sprite('block'), solid(), area()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body(), patrol(150)],

@@ -246,7 +246,7 @@
    { "name": "BigMario", "from": 8, "to": 16, "direction": "forward" },
    { "name": "RunningBig", "from": 9, "to": 11, "direction": "forward" },
    { "name": "FlamingMario", "from": 17, "to": 25, "direction": "forward" },
-   { "name": "Loop", "from": 18, "to": 20, "direction": "forward" }
+   { "name": "FlameRun", "from": 18, "to": 20, "direction": "forward" }
   ],
   "layers": [
    { "name": "Layer 2", "opacity": 255, "blendMode": "normal" },
