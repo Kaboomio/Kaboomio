@@ -256,7 +256,13 @@ scene('game', ({ score, count }) => {
 
     mario.onCollide('dangerous', (d) => {
         if (isJumping) {
-            destroy(d);
+            if (d.is('goomba')) {
+                d.frame = 2;
+                d.anim = '';
+                d.unuse('patrol');
+                d.unuse('dangerous');
+                d.unuse('solid');
+            }
         } else {
             go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
             music.pause();
@@ -267,6 +273,10 @@ scene('game', ({ score, count }) => {
     mario.onCollide('powerup', (obj) => {
         if (obj.is('mushroom')) {
             bigMario = true;
+            destroy(obj);
+        }
+        if (obj.is('fire')) {
+            fireMario = true;
             destroy(obj);
         }
     });
@@ -285,6 +295,7 @@ scene('game', ({ score, count }) => {
         if (mario.pos.y === obj.pos.y + 40) {
             const mushroomSurprises = get('mushroom-surprise');
             const coinSurprises = get('coin-surprise');
+            const fireSurprises = get('fire-surprise');
             for (let mushroomSurprise of mushroomSurprises) {
                 const marioDistance = mushroomSurprise.pos.x - mario.pos.x;
                 if (mario.pos.y === mushroomSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
@@ -302,6 +313,14 @@ scene('game', ({ score, count }) => {
                     destroy(coinSurprise);
                     gameLevel.spawn('*', coinSurprise.gridPos.sub(0, 1));
                     gameLevel.spawn('+', coinSurprise.gridPos.sub(0, 0));
+                }
+            }
+            for (let fireSurprise of fireSurprises) {
+                const marioDistance = fireSurprise.pos.x - mario.pos.x;
+                if (mario.pos.y === fireSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
+                    destroy(fireSurprise);
+                    gameLevel.spawn('f', fireSurprise.gridPos.sub(0, 1));
+                    gameLevel.spawn('+', fireSurprise.gridPos.sub(0, 0));
                 }
             }
         }
@@ -328,7 +347,7 @@ scene('game', ({ score, count }) => {
         '                                                                                  ',
         '                                                          ===                     ',
         '                                                                                  ',
-        '     *   =#=%=                          %===#%==*=             %%%                ',
+        '     *   =&=%=                          %===#%==*=             %%%                ',
         '                                  ===                   =                         ',
         '                                                        =                         ',
         '        *           ^   ^                             ^ =                    i    ',
@@ -343,9 +362,11 @@ scene('game', ({ score, count }) => {
         '=': () => [sprite('brick'), area(), solid(), 'brick'],
         '*': () => [sprite('coin'), area(), 'coin'],
         '%': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise', 'brick'],
-        // '$': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise'],
+        '&': () => [sprite('surprise-box'), solid(), area(), 'fire-surprise', 'brick'],
+        'f': () => [sprite('flower'), solid(), area(), 'fire', 'powerup', body()],
         '#': () => [sprite('surprise-box'), solid(), area(), 'mushroom-surprise', 'brick'],
-        '^': () => [sprite('enemies', { anim: 'Walking' }), solid(), area(), 'enemies', 'dangerous', body(), patrol(150)],
+        '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
+        'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
         '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
         '+': () => [sprite('block'), solid(), area()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body(), patrol(150)],

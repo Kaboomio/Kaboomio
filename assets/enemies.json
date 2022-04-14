@@ -197,9 +197,9 @@
   "scale": "1",
   "frameTags": [
    { "name": "Goomba", "from": 0, "to": 2, "direction": "forward" },
-   { "name": "Walking", "from": 0, "to": 1, "direction": "forward" },
+   { "name": "GoombaWalk", "from": 0, "to": 1, "direction": "forward" },
    { "name": "Koopa", "from": 3, "to": 6, "direction": "forward" },
-   { "name": "Walk", "from": 3, "to": 4, "direction": "forward" },
+   { "name": "KoopaWalk", "from": 3, "to": 4, "direction": "forward" },
    { "name": "Piranha", "from": 7, "to": 8, "direction": "forward" },
    { "name": "HamerBro", "from": 9, "to": 12, "direction": "forward" },
    { "name": "WalkHB", "from": 9, "to": 10, "direction": "forward" },
