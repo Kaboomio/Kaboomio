@@ -17,6 +17,57 @@
                 font-size: 1rem;
             }
         }
+
+        #editIcon {
+            height: 30px;
+            width: 30px;
+            cursor: pointer;
+        }
+
+        #profilePage .tooltip {
+            background-color: white;
+            color: var(--color5);
+        }
+
+        #profilePage .tooltip:after {
+            border-color:  transparent transparent white transparent;
+        }
+
+        table {
+            font-weight: normal;
+            width: 60vw;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-items: center;
+        }
+
+        th, td {
+            margin: 0px;
+            padding: 0px;
+            float: left;
+            width: 11vw;
+            overflow: hidden;
+            white-space: nowrap;
+            background-color: black;
+        }
+
+        th {
+            margin-bottom: 15px;
+        }
+
+        td {
+            margin-bottom: 5px;
+        }
+
+        th:after, td:after {
+            content: "....................................................";
+        }
+
+        .placeholder {
+            width: 30px;
+            margin-left: 10px;
+        }
     </style>
     <title>Profile | Kaboomio</title>
 </head>
@@ -31,7 +82,7 @@
         
     </header>
     <main id="profilePage">
-        <section class="flex-row space-between infoSection">
+        <div class="flex-row space-between infoSection">
             <div class="profileMargins">
                 <div class="flex-row">
                     <img src="" alt="No Avatar" id="avatar" draggable="false">
@@ -39,9 +90,12 @@
                 </div>
                 <span id="joinedDate">Joined Date: </span>
             </div>
-            <button id="editButton" class="hidden">Edit Profile</button>
+            <div class="icons">
+                <img src="../assets/edit-icon2.png" alt="" id="editIcon">
+                <span class="tooltip">Edit</span>
+            </div>
             <p id="bio"></p>
-        </section>
+        </div>
         <div class="profileEditForm hidden">
             <form id="editProfile">
                 <div class="username-bio">
@@ -148,8 +202,21 @@
         </div>
         <div class="scoreDiv">
             <h3>User Scores</h3>
-            <div id="previousScoresContainer">
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Initials</th>
+                            <th>Score</th>
+                            <th>Level</th>
+                            <th>Date</th>
+                            <th>Elapsed Time</th>
+                        </tr>
+                    </thead>
+                    <tbody  id="previousScoresContainer">
 
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>
