@@ -1,5 +1,5 @@
 import { checkAuth, logout, getMyProfile, getProfile, getProfileScores, getUser, updateProfile, deleteScore } from '../fetch-utils.js';
-import { renderHeader } from '../render-utils.js';
+import { renderProfileHeader } from '../render-utils.js';
 
 const title = document.querySelector('title');
 const body = document.querySelector('body');
@@ -145,6 +145,6 @@ async function fetchandDisplayHeader() {
     const user = getUser();
     const hardHeader = document.querySelector('header');
     body.removeChild(hardHeader);
-    const header = renderHeader(profile, user.id);
+    const header = renderProfileHeader(profile, user.id);
     body.prepend(header);
 }

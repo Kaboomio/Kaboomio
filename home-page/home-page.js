@@ -1,5 +1,5 @@
 import { checkAuth, logout, client, getMyProfile } from '../fetch-utils.js';
-import { renderHeader } from '../render-utils.js';
+import { renderHomeHeader } from '../render-utils.js';
 
 const body = document.querySelector('body');
 const playGameButton = document.getElementById('play-game-button');
@@ -76,6 +76,6 @@ async function fetchandDisplayHeader() {
     const profile = await getMyProfile();
     const hardHeader = document.querySelector('header');
     body.removeChild(hardHeader);
-    const header = renderHeader(profile);
+    const header = renderHomeHeader(profile);
     body.prepend(header);
 }
