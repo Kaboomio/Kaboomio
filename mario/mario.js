@@ -104,7 +104,7 @@ scene('game', ({ score, count }) => {
     // CASTLE BACKGROUND
     add([
         sprite('castle'),
-        pos(1560, 188),
+        pos(2000, 200),
         layer('bg'),
         origin('bot'),
         scale(0.25)
@@ -115,7 +115,7 @@ scene('game', ({ score, count }) => {
         sprite('mario', { frame: 0, anim: 0 }), 
         solid(), 
         area({ width: 20, height: 20 }),
-        pos(50, 240),        
+        pos(1000, 240),        
         body(),
         origin('bot'),
         'mario'
@@ -130,8 +130,8 @@ scene('game', ({ score, count }) => {
     const coinScore = 200;
     let isJumping = true; 
     let marioDirection = 'right';
-    let bigMario = true;
-    let fireMario = true;
+    let bigMario = false;
+    let fireMario = false;
 
     let lastMarioXPos = 0;
     let currMarioXPos = 0;
@@ -324,7 +324,7 @@ scene('game', ({ score, count }) => {
     });
 
     mario.onCollide('brick', (obj) => {
-        const marioPlusBlockHeight = bigMario ? 54 : 40;
+        const marioPlusBlockHeight = bigMario || fireMario ? 54 : 40;
 
         if (mario.pos.y === obj.pos.y + marioPlusBlockHeight) {
             const mushroomSurprises = get('mushroom-surprise');
@@ -379,23 +379,23 @@ scene('game', ({ score, count }) => {
     const mapWidth = 1700;
 
     const map = [
-        '                                                                                       ',
-        '                                                                                       ',
-        '                               !                                                       ',
-        '         !                                                     !                       ',
-        '                                            !                                          ',
-        '                    !                                                                  ',
-        '                %                               %%%%                                   ',
-        '                                                                                       ',
-        '                                                               ===                     ',
-        '                                                                                       ',
-        '          %   =%=%=                 -         %===#%==*=             %%%                ',
-        '                             -      |                                                   ',
-        '                       -     |      |                                                   ',
-        '     ) (   ^           |     |     ^|                                              i    ',
-        '===============================================================    =====================',
-        '===============================================================    =====================',
-        '===============================================================    =====================',
+        '                                                                                                                                                                                        ',
+        '                                                                                                    !                                                                   !               ',
+        '                               !                                                                                                     !                    !                             ',
+        '         !                                                     !                                                    !                                                                   ',
+        '                                            !                                                              !                           !                !                               ',
+        '                    !                                                           !                                                                                     /                 ',
+        '                %                                           =====   ===%              #          ===    =%%=                                                         //                 ',
+        '                                                                                                                                                                    ///                 ',
+        '                                                                                                                                                                   ////                 ',
+        '                                                                                                                                                                  /////                 ',
+        '          %   =%=%=                 -       -            =#=           =    ==     %  %  %    =          ==        /  /          //  /              ==%=         //////                 ',
+        '                             -      |       |                                                                     //  //        ///  //      -               -  ///////                 ',
+        '                       -     |      |       |                                                                    ///  ///      ////  ///     |               | ////////                 ',
+        '     ) (   ^           |     |     ^| ^ ^   |    (          (          )         k     )        )               ////  ////    /////  ////    |      ^   ^    |/////////      (  (     i ',
+        '====================================================  ==========   ================================================================  ===================================================',
+        '====================================================  ==========   ================================================================  ===================================================',
+        '====================================================  ==========   ================================================================  ===================================================',
     ];
 
     //configuring the map to display
@@ -419,7 +419,7 @@ scene('game', ({ score, count }) => {
         '!': () => [sprite('cloud'), pos(20, 50), layer('bg')],
         '(': () => [sprite('hill'), pos(0, -15), layer('bg')],
         ')': () => [sprite('shrub'), pos(0, 3), layer('bg')],
-        '/': () => [sprite('hard-block'), solid(), area()],
+        '/': () => [sprite('hard-block'), solid(), area(), scale(1.2)],
         '|': () => [sprite('pipe-bottom'), solid(), area(), scale(1.2)]
     };
 
