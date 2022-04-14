@@ -25,16 +25,16 @@ document.addEventListener('click', (e) => {
 
 window.addEventListener('load', async () => {
     loadingScreen.classList.toggle('invisible');
-    await fetchandDisplayLeaderboard();
+    await fetchAndDisplayLeaderboard();
     if (getUser()) {
-        await fetchandDisplayHeader();
+        await fetchAndDisplayHeader();
     }
     loadingScreen.classList.toggle('invisible');
 });
 
-sortParameter.addEventListener('change', fetchandDisplayLeaderboard);
+sortParameter.addEventListener('change', fetchAndDisplayLeaderboard);
 
-ascdescSelect.addEventListener('change', fetchandDisplayLeaderboard);
+ascdescSelect.addEventListener('change', fetchAndDisplayLeaderboard);
 scoreContainerEl.addEventListener('scroll', () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
     if (clientHeight + scrollTop >= scrollHeight){
