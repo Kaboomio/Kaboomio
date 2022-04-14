@@ -124,11 +124,7 @@ scene('game', ({ score, count }) => {
     // CASTLE BACKGROUND
     add([
         sprite('castle'),
-<<<<<<< HEAD
         pos(2000, 200),
-=======
-        pos(1560, 287),
->>>>>>> 9b50aebfc7107b274890cdebcbd4a417dc09e131
         layer('bg'),
         origin('bot'),
         scale(0.25)
@@ -139,11 +135,7 @@ scene('game', ({ score, count }) => {
         sprite('mario', { frame: 0, anim: 0 }), 
         solid(), 
         area({ width: 20, height: 20 }),
-<<<<<<< HEAD
-        pos(1000, 240),        
-=======
-        pos(1500, 240),        
->>>>>>> 9b50aebfc7107b274890cdebcbd4a417dc09e131
+        pos(20, 240),        
         body(),
         origin('bot'),
         'mario'
@@ -158,7 +150,7 @@ scene('game', ({ score, count }) => {
     const coinScore = 200;
     let isJumping = true; 
     let marioDirection = 'right';
-    let bigMario = false;
+    let bigMario = true;
     let fireMario = false;
 
     let lastMarioXPos = 0;
@@ -319,21 +311,17 @@ scene('game', ({ score, count }) => {
                 d.unuse('patrol');
                 d.unuse('dangerous');
                 d.unuse('solid');
-<<<<<<< HEAD
-                d.area.height = 20;
-=======
-                
-            } else if (bigMario) {
+                d.area.height = 10;
+            } 
+        } else {
+            if (bigMario) {
                 bigMario = false;
                 mario.unuse('solid');
                 wait(3, mario.use('solid'));
-    
-               
->>>>>>> 9b50aebfc7107b274890cdebcbd4a417dc09e131
+            } else {
+                go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
+                music.pause();
             }
-        } else {
-            go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
-            music.pause();
         }
     });
 
@@ -425,7 +413,6 @@ scene('game', ({ score, count }) => {
     const mapWidth = 1700;
 
     const map = [
-<<<<<<< HEAD
         '                                                                                                                                                                                        ',
         '                                                                                                    !                                                                   !               ',
         '                               !                                                                                                     !                    !                             ',
@@ -439,29 +426,10 @@ scene('game', ({ score, count }) => {
         '          %   =%=%=                 -       -            =#=           =    ==     %  %  %    =          ==        /  /          //  /              ==%=         //////                 ',
         '                             -      |       |                                                                     //  //        ///  //      -               -  ///////                 ',
         '                       -     |      |       |                                                                    ///  ///      ////  ///     |               | ////////                 ',
-        '     ) (   ^           |     |     ^| ^ ^   |    (          (          )         k     )        )               ////  ////    /////  ////    |      ^   ^    |/////////      (  (     i ',
+        '     ) (   ^           |     |     ^|   ^   |    (          (          )         k     )        )               ////  ////    /////  ////    |      ^   ^    |/////////      (  (     i ',
         '====================================================  ==========   ================================================================  ===================================================',
         '====================================================  ==========   ================================================================  ===================================================',
         '====================================================  ==========   ================================================================  ===================================================',
-=======
-        '                                                                                  ',
-        '                                                                                  ',
-        '                          !                                                       ',
-        '    !                                                     !                       ',
-        '                                       !                               !          ',
-        '               !                                                                  ',
-        '                                           %%%%                    !         i    ',
-        '                                                                             i    ',
-        '                                                          ===                i    ',
-        '                                                                             i    ',
-        '     *   =%=%=      =====               %===#%==*=             %%%           i    ',
-        '                                                                             i    ',
-        '                                            b                                i    ',
-        '   (    *)            )        b  )      )     (      )       )         b    i    ',
-        '==============================   ========================    =====================',
-        '==============================   ========================    =====================',
-        '==============================   ========================    =====================',
->>>>>>> 9b50aebfc7107b274890cdebcbd4a417dc09e131
     ];
 
     //configuring the map to display
@@ -672,8 +640,7 @@ function patrol(distance = 150, speed = 50, dir = 1) {
         add() {
             this.startingPos = this.pos;
             this.on('collide', (obj, side) => {
-                console.log(side);
-                if (side === 'left' || side === 'right') {
+                if (side.isLeft() || side.isRight()) {
                     dir = -dir;
                 }
             });
