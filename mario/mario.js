@@ -10,7 +10,11 @@ const loadingScreen = document.querySelector('.loading-screen');
 checkAuth();
 
 window.addEventListener('load', async ()=> {
-    await fetchAndDisplayHeader();
+    const profile = await getMyProfile();
+    if (!profile.username) {
+        location.replace('../profile-setup');
+    }
+    await fetchAndDisplayHeader(profile);
     canvas = document.querySelector('canvas');
     window.canvas.focus();
     loadingScreen.classList.add('invisible');
@@ -802,8 +806,7 @@ function slowMarioLeftSpeed(marioLeftSpeed, lastMarioXPos, currMarioXPos) {
     }
 }
 
-async function fetchAndDisplayHeader() {
-    const profile = await getMyProfile();
+async function fetchAndDisplayHeader(profile) {
     const hardHeader = document.querySelector('header');
     bodyDOM.removeChild(hardHeader);
     const header = renderMarioHeader(profile);

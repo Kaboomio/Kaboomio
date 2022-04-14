@@ -17,8 +17,12 @@ document.addEventListener('click', (e) => {
 });
 
 window.addEventListener('load', async () => {
+    const profile = await getMyProfile();
+    if (!profile.username) {
+        location.replace('../profile-setup');
+    }
     await fetchAndDisplayLeaderboard();
-    await fetchAndDisplayHeader();
+    await fetchAndDisplayHeader(profile);
     loadingScreen.classList.add('invisible');
 });
 
@@ -72,8 +76,7 @@ async function getScoreboard(){
     return response.body;
 }
 
-async function fetchAndDisplayHeader() {
-    const profile = await getMyProfile();
+async function fetchAndDisplayHeader(profile) {
     const hardHeader = document.querySelector('header');
     body.removeChild(hardHeader);
     const header = renderHomeHeader(profile);
