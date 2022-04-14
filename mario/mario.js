@@ -11,7 +11,8 @@ kaboom({
     // fullscreen: true,
     scale: 3, 
     debug: true,
-    background: [0, 0, 0, 1],
+    frameRate: 60,
+    background: [4, 156, 216, 1],
 });
 
 
@@ -23,12 +24,16 @@ loadAseprite('mario', '../assets/all-mario.png', '../assets/mario.json');
 loadSprite('mushroom', '../assets/mushroom.png');
 loadAseprite('enemies', '../assets/enemies.png', '../assets/enemies.json');
 loadSprite('surprise-box', '../assets/surprise-box.png');
+loadSprite('bullet', '../assets/bullet.png');
 loadSprite('pipe', '../assets/pipe.png');
 loadSprite('castle', '../assets/castle.png');
 loadSprite('fireball', '../assets/fireball.png');
 loadSprite('invisible', '../assets/invisible-image.png');
 loadSprite('flower', '../assets/fire_flower.gif');
 loadAseprite('over-world', '../assets/over-world.png', '../assets/over-world.json');
+loadSprite('cloud', '../assets/cloud.png');
+loadSprite('hill', '../assets/hill.png');
+loadSprite('shrub', '../assets/shrubbery.png');
 
 
 
@@ -230,7 +235,9 @@ scene('game', ({ score, count }) => {
         } else {
             if (isKeyDown('left') || isKeyDown('right')) {
                 const anim = fireMario ? 'FlameRun' : bigMario ? 'RunningBig' : 'Running';
-                mario.play(anim);
+                if (mario.curAnim() !== anim) {
+                    mario.play(anim);
+                }
             } else {
                 mario.frame = fireMario ? 17 : bigMario ? 8 : 0;
             }
@@ -293,6 +300,8 @@ scene('game', ({ score, count }) => {
     mario.onCollide('powerup', (obj) => {
         if (obj.is('mushroom')) {
             bigMario = true;
+            mario.area.width = 26;
+            mario.area.height = 34;
             destroy(obj);
         }
         if (obj.is('fire')) {
@@ -316,23 +325,13 @@ scene('game', ({ score, count }) => {
             const mushroomSurprises = get('mushroom-surprise');
             const coinSurprises = get('coin-surprise');
             const fireSurprises = get('fire-surprise');
-            for (let mushroomSurprise of mushroomSurprises) {
-                const marioDistance = mushroomSurprise.pos.x - mario.pos.x;
-                if (mario.pos.y === mushroomSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
-                    destroy(mushroomSurprise);
-                    gameLevel.spawn('@', mushroomSurprise.gridPos.sub(0, 1));
-                    gameLevel.spawn('+', mushroomSurprise.gridPos.sub(0, 0));
-                    // onUpdate('mushroom', (obj) => {
-                    //     obj.move(mushroomMove, 0);
-                    // });
-                }
-            }
             for (let coinSurprise of coinSurprises) {
                 const marioDistance = coinSurprise.pos.x - mario.pos.x;
                 if (mario.pos.y === coinSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
                     destroy(coinSurprise);
                     gameLevel.spawn('*', coinSurprise.gridPos.sub(0, 1));
-                    gameLevel.spawn('+', coinSurprise.gridPos.sub(0, 0));
+                    const box = gameLevel.spawn('+', coinSurprise.gridPos.sub(0, 0));
+                    box.bump(8, 2, true, true);
                 }
             }
             for (let fireSurprise of fireSurprises) {
@@ -340,12 +339,25 @@ scene('game', ({ score, count }) => {
                 if (mario.pos.y === fireSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
                     destroy(fireSurprise);
                     gameLevel.spawn('f', fireSurprise.gridPos.sub(0, 1));
-                    gameLevel.spawn('+', fireSurprise.gridPos.sub(0, 0));
+                    const box = gameLevel.spawn('+', fireSurprise.gridPos.sub(0, 0));
+                    box.bump(8, 2, true, true);
+                }
+            }
+            for (let mushroomSurprise of mushroomSurprises) {
+                const marioDistance = mushroomSurprise.pos.x - mario.pos.x;
+                if (mario.pos.y === mushroomSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
+                    destroy(mushroomSurprise);
+                    gameLevel.spawn('@', mushroomSurprise.gridPos.sub(0, 1));
+                    const box = gameLevel.spawn('+', mushroomSurprise.gridPos.sub(0, 0));
+                    box.bump(8, 2, true, true);
                 }
             }
         }
     });
-
+    let bulletspeed = 70;
+    onUpdate('bullet', (obj) => {
+        obj.move(-bulletspeed, 0);
+    });
     function addScoreText(obj, score) {
         add([
             text(score, {
@@ -364,18 +376,18 @@ scene('game', ({ score, count }) => {
     const map = [
         '                                                                                  ',
         '                                                                                  ',
-        '                                                                                  ',
-        '                                                                                  ',
-        '                                                                                  ',
-        '                                                                                  ',
+        '                          !                                                       ',
+        '    !                                                     !                       ',
+        '                                       !                                          ',
+        '               !                                                                 ',
         '                                           %%%%                                   ',
         '                                                                                  ',
         '                                                          ===                     ',
         '                                                                                  ',
-        '     *   =&=%=      =====               %===#%==*=             %%%                ',
+        '     *   =%=%=      =====               %===#%==*=             %%%                ',
         '                                                                                  ',
-        '                                                                                  ',
-        '        *                                                                   i     ',
+        '                                            b                                     ',
+        '        *                    b                                   b           i    ',
         '==============================   ========================    =====================',
         '==============================   ========================    =====================',
         '==============================   ========================    =====================',
@@ -388,17 +400,20 @@ scene('game', ({ score, count }) => {
         'i': () => [sprite('invisible'), area(), solid(), 'invisible'],
         '=': () => [sprite('brick'), area(), solid(), 'brick'],
         '*': () => [sprite('coin'), area(), 'coin'],
-        '%': () => [sprite('surprise-box'), solid(), area(), 'coin-surprise', 'brick'],
-        '&': () => [sprite('surprise-box'), solid(), area(), 'fire-surprise', 'brick'],
+        '%': () => [sprite('surprise-box'), solid(), area(), bump(), 'coin-surprise', 'brick'],
+        '&': () => [sprite('surprise-box'), solid(), area(), bump(), 'fire-surprise', 'brick'],
         'f': () => [sprite('flower'), solid(), area(), 'fire', 'powerup', body()],
-        '#': () => [sprite('surprise-box'), solid(), area(), 'mushroom-surprise', 'brick'],
+        '#': () => [sprite('surprise-box'), solid(), area(), bump(), 'mushroom-surprise', 'brick'],
         '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
         'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
+        'b': () => [sprite('bullet'), solid(), area(), 'bullet', 'dangerous'],
         '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
-        '+': () => [sprite('block'), solid(), area()],
+        '+': () => [sprite('block'), solid(), area(), bump()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body(), patrol(150)],
         '>': () => [sprite('fireball'), solid(), area(), 'mario-fireball', body()],
-        'm': () => [sprite('mario', { frame: 0 }), area({ width: 20, height: 20 }), body(), origin('bot'), 'player1']
+        '!': () => [sprite('cloud'), pos(20, 50), layer('bg')],
+        '(': () => [sprite('hill'), pos(0, -15), layer('bg')],
+        ')': () => [sprite('shrub'), pos(0, 3), layer('bg')]
     };
 
     const gameLevel = addLevel(map, levelConfig);
@@ -620,6 +635,50 @@ function spawnFireball(marioPos, marioDirection) {
         'fireball',
         { speed: marioDirection === 'right' ? 180 : -180 }
     ]);
+}
+
+function bump(offset = 8, speed = 2, stopAtOrigin = true, isY = true){
+    return {
+        id: 'bump', 
+        require: ['pos'],
+        bumpOffset: offset,
+        speed: speed,
+        bumped: false,
+        origPos: 0,
+        direction: -1, 
+        isY: isY,
+        update() {
+            if (this.bumped) {
+                if (isY){
+                    this.pos.y = this.pos.y + this.direction * this.speed;
+                    if (this.pos.y < this.origPos - this.bumpOffset) {
+                        this.direction = 1;
+                    }
+                    if (stopAtOrigin && this.pos.y >= this.origPos) {
+                        this.bumped = false;
+                        this.pos.y = this.origPos;
+                        this.direction = -1;
+                    }
+                } else {this.pos.x = this.pos.x + this.direction * this.speed;
+                    if (this.pos.x < this.origPos - this.bumpOffset) {
+                        this.direction = 1;
+                    }
+                    if (stopAtOrigin && this.pos.x >= this.origPos) {
+                        this.bumped = false;
+                        this.pos.x = this.origPos;
+                        this.direction = -1;
+                    }}
+            }
+        },
+        bump(){
+            this.bumped = true;
+            if (isY) {
+                this.origPos = this.pos.y;
+            } else {
+                this.origPos = this.pos.x;
+            }
+        }
+    };
 }
 
 
