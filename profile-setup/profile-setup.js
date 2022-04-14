@@ -15,6 +15,13 @@ window.addEventListener('load', async () => {
     usernames = await getAllUsernames();
 });
 
+// LOGOUT BUTTON FUNCTIONALITY
+document.addEventListener('click', (e) => {
+    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
+        logout();
+    }
+});
+
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const data = new FormData(form);
@@ -27,12 +34,6 @@ form.addEventListener('submit', async (e) => {
         await updateProfile(setUsername, setAvatar, setBio);
         location.replace('../home-page');
         form.reset();
-    }
-});
-
-document.addEventListener('click', (e) => {
-    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
-        logout();
     }
 });
 

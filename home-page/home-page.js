@@ -7,14 +7,8 @@ const leaderboardDisplay = document.getElementById('display-leaderboard');
 const yoshiEgg = document.getElementById('yoshi-egg');
 const loadingScreen = document.querySelector('.loading-screen');
 
-
 checkAuth();
 
-document.addEventListener('click', (e) => {
-    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
-        logout();
-    }
-});
 
 window.addEventListener('load', async () => {
     const profile = await getMyProfile();
@@ -24,6 +18,13 @@ window.addEventListener('load', async () => {
     await fetchAndDisplayLeaderboard();
     await fetchAndDisplayHeader(profile);
     loadingScreen.classList.add('invisible');
+});
+
+// LOGOUT BUTTON FUNCTIONALITY
+document.addEventListener('click', (e) => {
+    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
+        logout();
+    }
 });
 
 playGameButton.addEventListener('click', () => {

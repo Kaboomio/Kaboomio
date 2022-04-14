@@ -20,17 +20,18 @@ const profileId = params.get('id');
 
 checkAuth();
 
-document.addEventListener('click', (e) => {
-    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
-        logout();
-    }
-});
-
 window.addEventListener('load', async () => {
     await setUserInfo();
     await displayScoreTable();
     await fetchAndDisplayHeader();
     loadingScreen.classList.add('invisible');
+});
+
+// LOGOUT BUTTON FUNCTIONALITY
+document.addEventListener('click', (e) => {
+    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
+        logout();
+    }
 });
 
 editProfileForm.addEventListener('submit', async (e) => {

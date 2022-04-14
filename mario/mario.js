@@ -21,6 +21,7 @@ window.addEventListener('load', async ()=> {
 
 });
 
+// LOGOUT & FULLSCREEN BUTTON FUNCTIONALITY
 document.addEventListener('click', async (e) => {
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
         logout();

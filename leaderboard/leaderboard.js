@@ -8,19 +8,21 @@ const ascdescSelect = document.getElementById('sort-asc-desc');
 const loadingScreen = document.querySelector('.loading-screen');
 
 
+window.addEventListener('load', async () => {
+    await fetchAndDisplayLeaderboard();
+    if (getUser()) {
+        await fetchAndDisplayHeader();
+    }
+    loadingScreen.classList.add('invisible');
+});
+
+// LOGOUT BUTTON FUNCTIONALITY
 document.addEventListener('click', (e) => {
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
         logout();
     }
 });
 
-window.addEventListener('load', async () => {
-    await fetchandDisplayLeaderboard();
-    if (getUser()) {
-        await fetchAndDisplayHeader();
-    }
-    loadingScreen.classList.add('invisible');
-});
 
 scoreContainerEl.addEventListener('scroll', () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
@@ -29,9 +31,9 @@ scoreContainerEl.addEventListener('scroll', () => {
     }
 });
 
-sortParameter.addEventListener('change', fetchandDisplayLeaderboard);
+sortParameter.addEventListener('change', fetchAndDisplayLeaderboard);
 
-ascdescSelect.addEventListener('change', fetchandDisplayLeaderboard);
+ascdescSelect.addEventListener('change', fetchAndDisplayLeaderboard);
 
 
 async function getLeaderboard(type, trueFalse){
@@ -45,7 +47,7 @@ async function getLeaderboard(type, trueFalse){
 
 }
 
-async function fetchandDisplayLeaderboard() {
+async function fetchAndDisplayLeaderboard() {
 
     scoreContainerEl.textContent = '';
 
