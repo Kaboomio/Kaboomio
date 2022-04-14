@@ -24,6 +24,7 @@ loadAseprite('mario', '../assets/all-mario.png', '../assets/mario.json');
 loadSprite('mushroom', '../assets/mushroom.png');
 loadAseprite('enemies', '../assets/enemies.png', '../assets/enemies.json');
 loadSprite('surprise-box', '../assets/surprise-box.png');
+loadSprite('bullet', '../assets/bullet.png');
 loadSprite('pipe', '../assets/pipe.png');
 loadSprite('castle', '../assets/castle.png');
 loadSprite('fireball', '../assets/fireball.png');
@@ -379,7 +380,10 @@ scene('game', ({ score, count }) => {
             }
         }
     });
-
+    let bulletspeed = 70;
+    onUpdate('bullet', (obj) => {
+        obj.move(-bulletspeed, 0);
+    });
     function addScoreText(obj, score) {
         add([
             text(score, {
@@ -408,8 +412,8 @@ scene('game', ({ score, count }) => {
         '                                                                                  ',
         '     *   =%=%=      =====               %===#%==*=             %%%                ',
         '                                                                                  ',
-        '                                                                                  ',
-        '        *                                                                   i     ',
+        '                                            b                                     ',
+        '        *                    b                                   b           i    ',
         '==============================   ========================    =====================',
         '==============================   ========================    =====================',
         '==============================   ========================    =====================',
@@ -428,6 +432,7 @@ scene('game', ({ score, count }) => {
         '#': () => [sprite('surprise-box'), solid(), area(), bump(), 'mushroom-surprise', 'brick'],
         '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
         'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
+        'b': () => [sprite('bullet'), solid(), area(), 'bullet', 'dangerous'],
         '?': () => [sprite('pipe'), solid(), area(), 'pipe'],
         '+': () => [sprite('block'), solid(), area(), bump()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body(), patrol(150)],
