@@ -68,6 +68,7 @@ loadAseprite('over-world', '../assets/over-world.png', '../assets/over-world.jso
 loadSprite('cloud', '../assets/cloud.png');
 loadSprite('hill', '../assets/hill.png');
 loadSprite('shrub', '../assets/shrubbery.png');
+loadSprite('hard-block', '../assets/hard-block.png');
 
 
 
@@ -122,7 +123,7 @@ scene('game', ({ score, count }) => {
     // CASTLE BACKGROUND
     add([
         sprite('castle'),
-        pos(1560, 188),
+        pos(1560, 287),
         layer('bg'),
         origin('bot'),
         scale(0.25)
@@ -133,7 +134,7 @@ scene('game', ({ score, count }) => {
         sprite('mario', { frame: 0, anim: 0 }), 
         solid(), 
         area({ width: 20, height: 20 }),
-        pos(50, 240),        
+        pos(1500, 240),        
         body(),
         origin('bot'),
         'mario'
@@ -341,13 +342,15 @@ scene('game', ({ score, count }) => {
     });
 
     mario.onCollide('brick', (obj) => {
-        if (mario.pos.y === obj.pos.y + 40) {
+        const marioPlusBlockHeight = bigMario ? 54 : 40;
+
+        if (mario.pos.y === obj.pos.y + marioPlusBlockHeight) {
             const mushroomSurprises = get('mushroom-surprise');
             const coinSurprises = get('coin-surprise');
             const fireSurprises = get('fire-surprise');
             for (let coinSurprise of coinSurprises) {
                 const marioDistance = coinSurprise.pos.x - mario.pos.x;
-                if (mario.pos.y === coinSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
+                if (mario.pos.y === coinSurprise.pos.y + marioPlusBlockHeight && marioDistance > -20 && marioDistance < 0) {
                     destroy(coinSurprise);
                     gameLevel.spawn('*', coinSurprise.gridPos.sub(0, 1));
                     const box = gameLevel.spawn('+', coinSurprise.gridPos.sub(0, 0));
@@ -356,7 +359,7 @@ scene('game', ({ score, count }) => {
             }
             for (let fireSurprise of fireSurprises) {
                 const marioDistance = fireSurprise.pos.x - mario.pos.x;
-                if (mario.pos.y === fireSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
+                if (mario.pos.y === fireSurprise.pos.y + marioPlusBlockHeight && marioDistance > -20 && marioDistance < 0) {
                     destroy(fireSurprise);
                     gameLevel.spawn('f', fireSurprise.gridPos.sub(0, 1));
                     const box = gameLevel.spawn('+', fireSurprise.gridPos.sub(0, 0));
@@ -365,7 +368,7 @@ scene('game', ({ score, count }) => {
             }
             for (let mushroomSurprise of mushroomSurprises) {
                 const marioDistance = mushroomSurprise.pos.x - mario.pos.x;
-                if (mario.pos.y === mushroomSurprise.pos.y + 40 && marioDistance > -20 && marioDistance < 0) {
+                if (mario.pos.y === mushroomSurprise.pos.y + marioPlusBlockHeight && marioDistance > -20 && marioDistance < 0) {
                     destroy(mushroomSurprise);
                     gameLevel.spawn('@', mushroomSurprise.gridPos.sub(0, 1));
                     const box = gameLevel.spawn('+', mushroomSurprise.gridPos.sub(0, 0));
@@ -374,10 +377,18 @@ scene('game', ({ score, count }) => {
             }
         }
     });
+
+
+//bullet enemy movement
+
     let bulletspeed = 70;
     onUpdate('bullet', (obj) => {
         obj.move(-bulletspeed, 0);
     });
+
+
+//add score to canvas function
+
     function addScoreText(obj, score) {
         add([
             text(score, {
@@ -398,16 +409,16 @@ scene('game', ({ score, count }) => {
         '                                                                                  ',
         '                          !                                                       ',
         '    !                                                     !                       ',
-        '                                       !                                          ',
-        '               !                                                                 ',
-        '                                           %%%%                                   ',
-        '                                                                                  ',
-        '                                                          ===                     ',
-        '                                                                                  ',
-        '     *   =%=%=      =====               %===#%==*=             %%%                ',
-        '                                                                                  ',
-        '                                            b                                     ',
-        '        *                    b                                   b           i    ',
+        '                                       !                               !          ',
+        '               !                                                                  ',
+        '                                           %%%%                    !         i    ',
+        '                                                                             i    ',
+        '                                                          ===                i    ',
+        '                                                                             i    ',
+        '     *   =%=%=      =====               %===#%==*=             %%%           i    ',
+        '                                                                             i    ',
+        '                                            b                                i    ',
+        '   (    *)            )        b  )      )     (      )       )         b    i    ',
         '==============================   ========================    =====================',
         '==============================   ========================    =====================',
         '==============================   ========================    =====================',
@@ -433,7 +444,8 @@ scene('game', ({ score, count }) => {
         '>': () => [sprite('fireball'), solid(), area(), 'mario-fireball', body()],
         '!': () => [sprite('cloud'), pos(20, 50), layer('bg')],
         '(': () => [sprite('hill'), pos(0, -15), layer('bg')],
-        ')': () => [sprite('shrub'), pos(0, 3), layer('bg')]
+        ')': () => [sprite('shrub'), pos(0, 3), layer('bg')],
+        '/': () => [sprite('hard-block'), solid(), area()],
     };
 
     const gameLevel = addLevel(map, levelConfig);
