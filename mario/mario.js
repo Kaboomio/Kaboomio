@@ -119,16 +119,16 @@ scene('game', ({ score, count }) => {
 
     let marioRightSpeed = 20;
     let marioLeftSpeed = 20;
-    let leftGlideSpeed = 0;
-    let rightGlideSpeed = 0;
-    let airGlideSpeed = 0;
+    let marioLeftGlideSpeed = 0;
+    let marioRightGlideSpeed = 0;
+    let marioAirGlideSpeed = 0;
     const marioJumpHeight = 510;
     const coinScore = 200;
     let isJumping = true; 
     let marioDirection = 'right';
 
-    let lastMarioXPos = mario.pos.x;
-    let currMarioXPos = mario.pos.x;
+    let lastMarioXPos = 0;
+    let currMarioXPos = 0;
 
     //HORIZONTAL MOMENTUM
     mario.onUpdate(() => {
@@ -153,11 +153,11 @@ scene('game', ({ score, count }) => {
 
     //MARIO ACTIONS
     onKeyDown('left', () => {
-        leftGlideSpeed = 0;
-        if (rightGlideSpeed > 0) {
-            rightGlideSpeed = rightGlideSpeed - 1;
-            if (rightGlideSpeed < 0) {
-                rightGlideSpeed = 0;
+        marioLeftGlideSpeed = 0;
+        if (marioRightGlideSpeed > 0) {
+            marioRightGlideSpeed = marioRightGlideSpeed - 1;
+            if (marioRightGlideSpeed < 0) {
+                marioRightGlideSpeed = 0;
             }
         }
         if (marioLeftSpeed < 140) {
@@ -168,30 +168,30 @@ scene('game', ({ score, count }) => {
     });
 
     onKeyRelease('left', () => {
-        rightGlideSpeed = 0;
-        leftGlideSpeed = marioLeftSpeed;
+        marioRightGlideSpeed = 0;
+        marioLeftGlideSpeed = marioLeftSpeed;
         marioLeftSpeed = 20;
     })
     
     mario.onUpdate(() => {
-        if (leftGlideSpeed > 100) {
-            mario.move(-leftGlideSpeed, 0);
-            leftGlideSpeed = leftGlideSpeed -1;
-        } else if (leftGlideSpeed > 30) {
-            mario.move(-leftGlideSpeed, 0);
-            leftGlideSpeed = leftGlideSpeed - 2;
-        } else if (leftGlideSpeed > 0) {
-            mario.move(-leftGlideSpeed, 0);
-            leftGlideSpeed = leftGlideSpeed - 1;
+        if (marioLeftGlideSpeed > 100) {
+            mario.move(-marioLeftGlideSpeed, 0);
+            marioLeftGlideSpeed = marioLeftGlideSpeed -1;
+        } else if (marioLeftGlideSpeed > 30) {
+            mario.move(-marioLeftGlideSpeed, 0);
+            marioLeftGlideSpeed = marioLeftGlideSpeed - 2;
+        } else if (marioLeftGlideSpeed > 0) {
+            mario.move(-marioLeftGlideSpeed, 0);
+            marioLeftGlideSpeed = marioLeftGlideSpeed - 1;
         }
     })
     
     onKeyDown('right', () => {
-        rightGlideSpeed = 0;
-        if (leftGlideSpeed > 10) {
-            leftGlideSpeed = leftGlideSpeed - 1;
-            if (leftGlideSpeed <= 10) {
-                leftGlideSpeed = 0;
+        marioRightGlideSpeed = 0;
+        if (marioLeftGlideSpeed > 10) {
+            marioLeftGlideSpeed = marioLeftGlideSpeed - 1;
+            if (marioLeftGlideSpeed <= 10) {
+                marioLeftGlideSpeed = 0;
             }
         }
         if (marioRightSpeed < 140) {
@@ -203,24 +203,24 @@ scene('game', ({ score, count }) => {
     });
     
     onKeyRelease('right', () => {
-        leftGlideSpeed = 0;
-        rightGlideSpeed = marioRightSpeed;
+        marioLeftGlideSpeed = 0;
+        marioRightGlideSpeed = marioRightSpeed;
         marioRightSpeed = 20;
     })
     
     mario.onUpdate(() => {
-        if (rightGlideSpeed > 100) {
-            mario.move(rightGlideSpeed, 0);
-            rightGlideSpeed = rightGlideSpeed - 1;
-        } else if (rightGlideSpeed > 30) {
-            mario.move(rightGlideSpeed, 0);
-            rightGlideSpeed = rightGlideSpeed - 2;
-        } else if (rightGlideSpeed > 0) {
-            mario.move(rightGlideSpeed, 0);
-            rightGlideSpeed = rightGlideSpeed - 1;
+        if (marioRightGlideSpeed > 100) {
+            mario.move(marioRightGlideSpeed, 0);
+            marioRightGlideSpeed = marioRightGlideSpeed - 1;
+        } else if (marioRightGlideSpeed > 30) {
+            mario.move(marioRightGlideSpeed, 0);
+            marioRightGlideSpeed = marioRightGlideSpeed - 2;
+        } else if (marioRightGlideSpeed > 0) {
+            mario.move(marioRightGlideSpeed, 0);
+            marioRightGlideSpeed = marioRightGlideSpeed - 1;
         }
         if (!mario.isGrounded()) {
-            mario.move(airGlideSpeed, 0)
+            mario.move(marioAirGlideSpeed, 0)
         }
     })
 
@@ -228,9 +228,9 @@ scene('game', ({ score, count }) => {
         if (mario.isGrounded()) {
             mario.jump(marioJumpHeight);
             if (marioRightSpeed > marioLeftSpeed) {
-                airGlideSpeed = marioRightSpeed / 5;
+                marioAirGlideSpeed = marioRightSpeed / 5;
             } else {
-                airGlideSpeed = -marioLeftSpeed / 5;
+                marioAirGlideSpeed = -marioLeftSpeed / 5;
             }
             play('jump');
         }
@@ -372,7 +372,7 @@ scene('game', ({ score, count }) => {
         '     *   =#=%=      =====               %===#%==*=             %%%                ',
         '                                                                                  ',
         '                                                                                  ',
-        '        *                                                                   i    ',
+        '        *                                                                   i     ',
         '==============================   ========================    =====================',
         '==============================   ========================    =====================',
         '==============================   ========================    =====================',
