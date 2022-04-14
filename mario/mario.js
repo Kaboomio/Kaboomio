@@ -147,7 +147,7 @@ scene('game', ({ score, count }) => {
 
     //MARIO & HIS MOVEMENT
     const mario = add([
-        sprite('mario', { anim: 'Running' }), 
+        sprite('mario', { frame: 0, anim: 0 }), 
         solid(), 
         area({ width: 20, height: 20 }),
         pos(36, 0),        
@@ -161,6 +161,8 @@ scene('game', ({ score, count }) => {
     const coinScore = 200;
     let isJumping = true;
     let marioDirection = 'right';
+    let bigMario = false;
+    let fireMario = false;
 
 
     //MARIO ACTIONS
@@ -173,7 +175,6 @@ scene('game', ({ score, count }) => {
         mario.move(marioSpeed, 0);
         mario.flipX(false);
         play('silence');
-
     });
 
     onKeyPress('space', () => {
@@ -198,8 +199,23 @@ scene('game', ({ score, count }) => {
         if (mario.pos.y >= fallToDeath) {
             go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
         }
-
+        updateMarioSprite();
     });
+
+    function updateMarioSprite() {
+        if (isJumping) {
+            mario.frame = fireMario ? 22 : bigMario ? 13 : 5;
+        } else {
+            if (isKeyDown('left') || isKeyDown('right')) {
+                const frame = fireMario ? 'FlameRun' : bigMario ? 'RunningBig' : 'Running';
+                if (mario.curAnim() !== frame) {
+                    mario.play(frame);
+                }
+            } else {
+                mario.frame = fireMario ? 17 : bigMario ? 8 : 0;
+            }
+        }
+    }
 
 
     let fireballDirection = 'down';
@@ -250,6 +266,7 @@ scene('game', ({ score, count }) => {
 
     mario.onCollide('powerup', (obj) => {
         if (obj.is('mushroom')) {
+            bigMario = true;
             destroy(obj);
         }
     });
