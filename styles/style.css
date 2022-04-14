@@ -245,6 +245,7 @@ footer {
     border-radius: 10px;
     min-width: 270px;
     margin-bottom: 40px;
+    border: 2px solid var(--color1);
 }
 
 select{
