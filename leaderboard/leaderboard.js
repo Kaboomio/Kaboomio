@@ -17,12 +17,11 @@ document.addEventListener('click', (e) => {
 });
 
 window.addEventListener('load', async () => {
-    loadingScreen.classList.toggle('invisible');
     await fetchandDisplayLeaderboard();
     if (getUser()) {
         await fetchandDisplayHeader();
     }
-    loadingScreen.classList.toggle('invisible');
+    loadingScreen.classList.add('invisible');
 });
 
 scoreContainerEl.addEventListener('scroll', () => {

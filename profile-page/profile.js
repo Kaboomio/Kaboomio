@@ -27,11 +27,10 @@ document.addEventListener('click', (e) => {
 });
 
 window.addEventListener('load', async () => {
-    loadingScreen.classList.toggle('invisible');
     await setUserInfo();
     await displayScoreTable();
     await fetchandDisplayHeader();
-    loadingScreen.classList.toggle('invisible');
+    loadingScreen.classList.add('invisible');
 });
 
 editProfileForm.addEventListener('submit', async (e) => {

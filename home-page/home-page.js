@@ -17,10 +17,9 @@ document.addEventListener('click', (e) => {
 });
 
 window.addEventListener('load', async () => {
-    loadingScreen.classList.toggle('invisible');
     await fetchAndDisplayLeaderboard();
     await fetchandDisplayHeader();
-    loadingScreen.classList.toggle('invisible');
+    loadingScreen.classList.add('invisible');
 });
 
 playGameButton.addEventListener('click', () => {
