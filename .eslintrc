@@ -55,6 +55,7 @@
         "loadAseprite": false,
         "onKeyRelease": false,
         "isKeyDown": false,
+        "toScreen": false,
 
         
 
