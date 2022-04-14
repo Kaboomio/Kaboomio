@@ -60,7 +60,7 @@ editProfileForm.addEventListener('submit', async (e) => {
 // FUNCTIONS
 function toggleEditing() {
     formContainer.classList.toggle('hidden');
-    bioEl.classList.toggle('hidden');
+    // bioEl.classList.toggle('hidden');
 }
 
 async function setUserInfo() {
@@ -117,7 +117,7 @@ async function displayScoreTable() {
         initialsEl.textContent = score.initials;
         scoreEl.textContent = score.score;
         levelEl.textContent = score.level;
-        dateEl.textContent = `${playDate.getMonth()}/${playDate.getDate()}`;
+        dateEl.textContent = `${playDate.getMonth() + 1}/${playDate.getDate()}`;
         timeEl.textContent = score.time + ' sec';
 
         const removeScoreEl = document.createElement('span');
