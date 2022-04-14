@@ -340,11 +340,9 @@ export function renderProfileHeader(profile, userId) {
     return header;
 }
 
-export function renderLeaderboardHeader(profile, userId) {
+export function renderLeaderboardHeader(profile) {
     const header = document.createElement('header');
     const headerLeft = document.createElement('div');
-    const avatarDiv = document.createElement('div');
-    const avatarImg = document.createElement('img');
     const nameEl = document.createElement('h1');
     const headerRight = document.createElement('div');
     const homeDiv = document.createElement('div');
@@ -365,9 +363,6 @@ export function renderLeaderboardHeader(profile, userId) {
     const logoutTooltip = document.createElement('span');
 
     headerLeft.classList.add('header-left');
-    avatarImg.id = 'avatar-icon';
-    avatarImg.draggable = false;
-    avatarDiv.id = 'avatar-div';
     headerRight.classList.add('header-right');
     homeDiv.classList.add('icons');
     homeImg.id = 'home-icon';
@@ -407,38 +402,19 @@ export function renderLeaderboardHeader(profile, userId) {
         settingsAnchor.href = `../profile-page/?id=${profile.id}`;
         settingsTooltip.textContent = 'Edit Profile';
     }
-    if (!profile.img_url) {
-        avatarImg.src = 'https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/mario.png';
-    } else {
-        avatarImg.src = `${profile.img_url}`;
-    }
-    if (userId === 'about') {
-        nameEl.textContent = `Meet the Kaboomio Team`;
-        if (!profile.username) {
-            settingsImg.style.animation = 'pulse 2s infinite ease-in-out';
-        }
-    } else if (!profile.username) {
+    if (!profile.username) {
         nameEl.textContent = 'Dont forget to finish profile setup!';
         settingsImg.style.animation = 'pulse 2s infinite ease-in-out';
-    } else if (profile.user_id === userId) {
-        nameEl.textContent = `View and Edit Profile`;
-    } else if (userId) {
-        nameEl.textContent = `${profile.username}'s profile`;
-    } else if (window.location.pathname === '/home-page/') {
-        nameEl.textContent = `It's a me, ${profile.username}`;
-    } else if (window.location.pathname === '/leaderboard/') {
+    } else {
         nameEl.textContent = `Leaderboard`;
-        headerLeft.style.justifyItems = 'center';
     }
 
-    avatarDiv.append(avatarImg);
-    if (userId || !profile.username || window.location.pathname === '/leaderboard/') {
-        headerLeft.append(nameEl);
-    } else {
-        headerLeft.append(avatarDiv, nameEl);
-    }
+    headerLeft.append(nameEl);
+
     homeAnchor.append(homeImg);
     leaderboardAnchor.append(leaderboardImg);
+    settingsAnchor.append(settingsImg);
+    logoutAnchor.append(logoutImg);
     if (!profile.username) {
         homeDiv.append();
         leaderboardDiv.append();
@@ -446,9 +422,7 @@ export function renderLeaderboardHeader(profile, userId) {
         homeDiv.append(homeAnchor, homeTooltip);
         leaderboardDiv.append(leaderboardAnchor, leaderboardTooltip);
     }
-    settingsAnchor.append(settingsImg);
     settingsDiv.append(settingsAnchor, settingsTooltip);
-    logoutAnchor.append(logoutImg);
     logoutDiv.append(logoutAnchor, logoutTooltip);
     headerRight.append(homeDiv, leaderboardDiv, settingsDiv, logoutDiv);
 
