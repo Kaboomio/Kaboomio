@@ -145,6 +145,8 @@ scene('game', ({ score, count }) => {
     let marioDirection = 'right';
     let bigMario = false;
     let fireMario = false;
+    const enemyScore = 100;
+
     let timeLeft = 400;
     let currentLevel = 1;
     let lastMarioXPos = 0;
@@ -322,6 +324,9 @@ scene('game', ({ score, count }) => {
                 d.unuse('dangerous');
                 d.unuse('solid');
                 d.area.height = 10;
+                scoreLabel.value += enemyScore;
+                scoreLabel.text = scoreLabel.value;
+                addScoreText(d, enemyScore);
             } 
         } else {
             if (bigMario) {
