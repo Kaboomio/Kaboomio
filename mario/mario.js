@@ -206,8 +206,10 @@ scene('game', ({ score, count, levelNumber }) => {
                 marioLeftSpeed = marioLeftSpeed + 2;
             }
         }
-        mario.move(-marioLeftSpeed, 0);
-        mario.flipX(true);
+        if (toScreen(mario.pos).x > 10) {
+            mario.move(-marioLeftSpeed, 0);
+            mario.flipX(true);
+        }
     });
 
     onKeyRelease('left', () => {
@@ -601,8 +603,20 @@ scene('game', ({ score, count, levelNumber }) => {
             go('lose', { score: scoreLabel.value, timeLeft: 0, level: currentLevel });
         }
     });
-    let levelComplete = false;
+
+    // destroy enemies who are off screen left
+    let enemies = get('dangerous');
+    onUpdate(() => {
+        for (let enemy of enemies) {
+            if (toScreen(enemy.pos).x < -20) {
+                destroy(enemy);
+            }
+        }
+    });
+
     //End of level win condition
+    let levelComplete = false;
+        
     mario.onCollide('invisible', () => {
         if (!levelComplete) {
             add([
@@ -884,19 +898,29 @@ function checkIfNewFrame(currTime, currFrame) {
 // GLIDE FUNCTIONS - moves mario according to glide speed & decreases glide speed each time function is called
 function marioLeftGlide(marioLeftGlideSpeed, mario) {
     if (marioLeftGlideSpeed > 100) {
-        mario.move(-marioLeftGlideSpeed, 0);
+        if (toScreen(mario.pos).x > 10) {
+            mario.move(-marioLeftGlideSpeed, 0);
+        }
         return marioLeftGlideSpeed = marioLeftGlideSpeed - 6;
     } else if (marioLeftGlideSpeed > 50) {
-        mario.move(-marioLeftGlideSpeed, 0);
+        if (toScreen(mario.pos).x > 10) {
+            mario.move(-marioLeftGlideSpeed, 0);
+        }
         return marioLeftGlideSpeed = marioLeftGlideSpeed - 5;
     } else if (marioLeftGlideSpeed > 20) {
-        mario.move(-marioLeftGlideSpeed, 0);
+        if (toScreen(mario.pos).x > 10) {
+            mario.move(-marioLeftGlideSpeed, 0);
+        }
         return marioLeftGlideSpeed = marioLeftGlideSpeed - 3;
     } else if (marioLeftGlideSpeed > 4) {
-        mario.move(-marioLeftGlideSpeed, 0);
+        if (toScreen(mario.pos).x > 10) {
+            mario.move(-marioLeftGlideSpeed, 0);
+        }
         return marioLeftGlideSpeed = marioLeftGlideSpeed - 2;
     } else if (marioLeftGlideSpeed > 0) {
-        mario.move(-marioLeftGlideSpeed, 0);
+        if (toScreen(mario.pos).x > 10) {
+            mario.move(-marioLeftGlideSpeed, 0);
+        }
         return marioLeftGlideSpeed = marioLeftGlideSpeed - 1;
     } else if (marioLeftGlideSpeed < 0) {
         return marioLeftGlideSpeed = 0;
