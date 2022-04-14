@@ -310,25 +310,6 @@ color: goldenrod;
     
 }
 
-/* table css across all pages */
-
-table {
-    margin: 10px 70px 70px;
-    border-radius: 5px;
-    font-size: 12px;
-    font-weight: normal;
-    border: none;
-    border-collapse: collapse;
-    width: 100%;
-    max-width: 100%;
-    white-space: nowrap;
-    max-width: 60vw;
-}
-
-tr:nth-child(even) {
-    background-color: #F8F8F8;
-}
-
 /* profile page styling */
 
 .flex-row {
@@ -449,8 +430,7 @@ tr:nth-child(even) {
 }
 
 #profilePage .removeItem {
-    margin-left: 10px;
-    width: 30px;
+    width: 5vw;
 }
 
 #profilePage .removeItem:hover {
@@ -485,8 +465,6 @@ tr:nth-child(even) {
 
 #profilePage #previousScoresContainer {
     padding-bottom: 30px;
-    width: 70%;
-    align-items: justify;
 }
 
 #profilePage .mini {

@@ -98,18 +98,11 @@ async function setUserInfo() {
 async function displayScoreTable() {
     const scores = await getProfileScores(profileId);
 
-    // previousScoresContainer.textContent = '';
-
-    const scoreboardHeader = document.createElement('p');
-    const scoresList = document.createElement('ol');
-
-    // scoreboardHeader.textContent = `Initials.............Score............Level..............Date..................Elapsed Time`;
-    scoreboardHeader.classList.add('header');
+    previousScoresContainer.textContent = '';
 
     for (let score of scores) {
         const playDate = new Date(score.created_at);
         const scoreRow = document.createElement('tr');
-        scoreRow.classList.add('mini');
 
         const initialsEl = document.createElement('td');
         const scoreEl = document.createElement('td');
@@ -120,7 +113,7 @@ async function displayScoreTable() {
         initialsEl.textContent = score.initials;
         scoreEl.textContent = score.score;
         levelEl.textContent = score.level;
-        dateEl.textContent = playDate.toLocaleDateString('en-US');
+        dateEl.textContent = `${playDate.getMonth()}/${playDate.getDate()}`;
         timeEl.textContent = score.time + ' sec';
 
         const removeScoreEl = document.createElement('span');
@@ -131,9 +124,8 @@ async function displayScoreTable() {
         const userProfileId = await getMyProfile();
     
         removeScoreEl.addEventListener('click', async () => {
-            console.log(removeScoreEl.id);
             await deleteScore(removeScoreEl.id);
-            displayScoreTable();
+            await displayScoreTable();
         });
     
         if (userProfileId.id.toString() !== profileId) {
@@ -156,18 +148,4 @@ async function fetchandDisplayHeader() {
     body.removeChild(hardHeader);
     const header = renderHeader(profile, user.id);
     body.prepend(header);
-}
-
-
-async function createRow(score) {
-    const playDate = new Date(score.created_at);
-    const scoreRow = document.createElement('li');
-    scoreRow.classList.add('mini');
-    scoreRow.textContent = `${score.initials}................${score.score}................${score.level}................${playDate.toLocaleDateString('en-US')}................${(100 - score.time)} sec`;
-
-
-
-    scoreRow.append(removeScoreEl);
-
-    return scoreRow;
 }

@@ -34,31 +34,39 @@
         }
 
         table {
-            margin: 10px 70px 70px;
-            border-radius: 5px;
-            font-size: 12px;
             font-weight: normal;
-            border: none;
-            border-collapse: collapse;
-            width: 100%;
-            max-width: 100%;
-            white-space: nowrap;
-            max-width: 60vw;
+            width: 60vw;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-items: center;
         }
 
-        th {
+        th, td {
             margin: 0px;
             padding: 0px;
             float: left;
-            width: 100px;
+            width: 11vw;
             overflow: hidden;
             white-space: nowrap;
             background-color: black;
-            
         }
 
-        th:after {
-            content: "............................................";
+        th {
+            margin-bottom: 15px;
+        }
+
+        td {
+            margin-bottom: 5px;
+        }
+
+        th:after, td:after {
+            content: "....................................................";
+        }
+
+        .placeholder {
+            width: 30px;
+            margin-left: 10px;
         }
     </style>
     <title>Profile | Kaboomio</title>
