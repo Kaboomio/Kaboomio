@@ -12,7 +12,7 @@ kaboom({
     scale: 3, 
     debug: true,
     frameRate: 60,
-    background: [0, 0, 0, 1],
+    background: [4, 156, 216, 1],
 });
 
 
@@ -30,6 +30,9 @@ loadSprite('fireball', '../assets/fireball.png');
 loadSprite('invisible', '../assets/invisible-image.png');
 loadSprite('flower', '../assets/fire_flower.gif');
 loadAseprite('over-world', '../assets/over-world.png', '../assets/over-world.json');
+loadSprite('cloud', '../assets/cloud.png');
+loadSprite('hill', '../assets/hill.png');
+loadSprite('shrub', '../assets/shrubbery.png');
 
 
 
@@ -327,6 +330,8 @@ scene('game', ({ score, count }) => {
     mario.onCollide('powerup', (obj) => {
         if (obj.is('mushroom')) {
             bigMario = true;
+            mario.area.width = 26;
+            mario.area.height = 34;
             destroy(obj);
         }
         if (obj.is('fire')) {
@@ -398,18 +403,18 @@ scene('game', ({ score, count }) => {
     const map = [
         '                                                                                  ',
         '                                                                                  ',
-        '                                                                                  ',
-        '                                                                                  ',
-        '                                                                                  ',
-        '                                                                                  ',
+        '                          !                                                       ',
+        '    !                                                     !                       ',
+        '                                       !                                          ',
+        '               !                                                                 ',
         '                                           %%%%                                   ',
         '                                                                                  ',
         '                                                          ===                     ',
         '                                                                                  ',
         '     *   =%=%=      =====               %===#%==*=             %%%                ',
         '                                                                                  ',
-        '                                                                                  ',
-        '        *                                                                   i     ',
+        '                                                                                 ',
+        '       *       )    (                                                         i     ',
         '==============================   ========================    =====================',
         '==============================   ========================    =====================',
         '==============================   ========================    =====================',
@@ -432,6 +437,9 @@ scene('game', ({ score, count }) => {
         '+': () => [sprite('block'), solid(), area(), bump()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body(), patrol(150)],
         '>': () => [sprite('fireball'), solid(), area(), 'mario-fireball', body()],
+        '!': () => [sprite('cloud'), pos(20, 50), layer('bg')],
+        '(': () => [sprite('hill'), pos(0, -15), layer('bg')],
+        ')': () => [sprite('shrub'), pos(0, 3), layer('bg')]
     };
 
     const gameLevel = addLevel(map, levelConfig);
