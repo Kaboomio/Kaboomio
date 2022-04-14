@@ -604,6 +604,16 @@ scene('game', ({ score, count }) => {
         }
     });
 
+    let enemies = get('dangerous');
+
+    // destroy objects off screen
+    onUpdate(() => {
+        for (let enemy of enemies) {
+            if (toScreen(enemy.pos).x < -20) {
+                destroy(enemy);
+            }
+        }
+    });
     //End of level win condition
     mario.onCollide('invisible', () => {
         add([
