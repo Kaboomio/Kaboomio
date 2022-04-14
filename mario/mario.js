@@ -295,8 +295,18 @@ scene('game', ({ score, count }) => {
     });
 
     onCollide('dangerous', 'fireball', (item, item2) => {
-        wait(1, destroy(item));
-        wait(1, destroy(item2));
+        if (item.is('goomba')) {
+            destroy(item);
+            destroy(item2);
+        } else if (item.is('koopa')) {
+            destroy(item2);
+            item.frame = 6;
+            item.move(0, 100);
+            item.unuse('patrol');
+            item.unuse('dangerous');
+            item.unuse('solid');
+            item.unuse('anim');
+        }
     });
 
     onCollide('fireball', 'brick', (item) => {
@@ -308,12 +318,17 @@ scene('game', ({ score, count }) => {
         if (isJumping) {
             if (d.is('goomba')) {
                 d.frame = 2;
-                d.anim = '';
+                d.unuse('anim');
                 d.unuse('patrol');
                 d.unuse('dangerous');
                 d.unuse('solid');
                 d.area.height = 10;
-            } 
+            } else if (d.is('koopa')) {
+                d.frame = 6;
+                d.anim = '';
+                d.move(100, 0);
+                d.unuse('patrol', 'dangerous');
+            }
         } else {
             if (bigMario) {
                 bigMario = false;
@@ -444,8 +459,8 @@ scene('game', ({ score, count }) => {
         '&': () => [sprite('surprise-box'), solid(), area(), bump(), 'fire-surprise', 'brick'],
         'f': () => [sprite('flower'), solid(), area(), 'fire', 'powerup', body()],
         '#': () => [sprite('surprise-box'), solid(), area(), bump(), 'mushroom-surprise', 'brick'],
-        '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
-        'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
+        '^': () => [sprite('enemies', { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
+        'k': () => [sprite('enemies', { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
         'b': () => [sprite('bullet'), solid(), area(), 'bullet', 'dangerous'],
         '-': () => [sprite('pipe-top'), solid(), area(), 'pipe', pos(0, 2), scale(1.2), 'brick'],
         '+': () => [sprite('block'), solid(), area(), bump()],
