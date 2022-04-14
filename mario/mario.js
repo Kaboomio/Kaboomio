@@ -262,7 +262,9 @@ scene('game', ({ score, count }) => {
         } else {
             if (isKeyDown('left') || isKeyDown('right')) {
                 const anim = fireMario ? 'FlameRun' : bigMario ? 'RunningBig' : 'Running';
-                mario.play(anim);
+                if (mario.curAnim() !== anim) {
+                    mario.play(anim);
+                }
             } else {
                 mario.frame = fireMario ? 17 : bigMario ? 8 : 0;
             }
@@ -376,6 +378,7 @@ scene('game', ({ score, count }) => {
                 }
             }
         }
+        bump();
     });
 
     function addScoreText(obj, score) {
