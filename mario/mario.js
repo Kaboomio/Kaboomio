@@ -160,6 +160,7 @@ scene('game', ({ score, count }) => {
     const marioJumpHeight = 600;
     const coinScore = 200;
     let isJumping = true;
+    let marioDirection = 'right';
 
 
     //MARIO ACTIONS
