@@ -380,10 +380,18 @@ scene('game', ({ score, count }) => {
             }
         }
     });
+
+
+//bullet enemy movement
+
     let bulletspeed = 70;
     onUpdate('bullet', (obj) => {
         obj.move(-bulletspeed, 0);
     });
+
+
+//add score to canvas function
+
     function addScoreText(obj, score) {
         add([
             text(score, {
