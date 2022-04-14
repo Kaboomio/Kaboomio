@@ -72,7 +72,7 @@ button.addEventListener('click', async (e) => {
 scene('start', () => {
 
     
-    const startScreen = add([
+    add([
         sprite('start-screen'),
         origin('center'), 
         pos(center().x, center().y - 30), 
@@ -95,7 +95,7 @@ scene('game', ({ score, count }) => {
     layers(['bg', 'obj', 'ui'], 'obj'); 
     music.play();
     music.volume(0.0);
-    camPos(310, 160)
+    camPos(310, 160);
     
     // CASTLE BACKGROUND
     add([
@@ -134,12 +134,12 @@ scene('game', ({ score, count }) => {
 
     //HORIZONTAL MOMENTUM
     mario.onUpdate(() => {
-        currMarioXPos = mario.pos.x
+        currMarioXPos = mario.pos.x;
         // SLOWING DOWN SPEED BECAUSE MARIO IS IDLE
-        if (marioRightSpeed > 20 && lastMarioXPos == currMarioXPos) {
+        if (marioRightSpeed > 20 && lastMarioXPos === currMarioXPos) {
             marioRightSpeed = marioRightSpeed - 2;
         }
-        if (marioLeftSpeed > 20 && lastMarioXPos == currMarioXPos) {
+        if (marioLeftSpeed > 20 && lastMarioXPos === currMarioXPos) {
             marioLeftSpeed = marioLeftSpeed - 2;
         }
         // IF MARIO IS MOVING RIGHT, SLOW DOWN LEFT SPEED
@@ -151,7 +151,7 @@ scene('game', ({ score, count }) => {
             marioRightSpeed = 0;
         }
         lastMarioXPos = currMarioXPos;
-    })
+    });
 
     //MARIO ACTIONS
     onKeyDown('left', () => {
@@ -173,7 +173,7 @@ scene('game', ({ score, count }) => {
         marioRightGlideSpeed = 0;
         marioLeftGlideSpeed = marioLeftSpeed;
         marioLeftSpeed = 20;
-    })
+    });
     
     mario.onUpdate(() => {
         if (marioLeftGlideSpeed > 100) {
@@ -186,7 +186,7 @@ scene('game', ({ score, count }) => {
             mario.move(-marioLeftGlideSpeed, 0);
             marioLeftGlideSpeed = marioLeftGlideSpeed - 1;
         }
-    })
+    });
     
     onKeyDown('right', () => {
         marioRightGlideSpeed = 0;
@@ -208,7 +208,7 @@ scene('game', ({ score, count }) => {
         marioLeftGlideSpeed = 0;
         marioRightGlideSpeed = marioRightSpeed;
         marioRightSpeed = 20;
-    })
+    });
     
     mario.onUpdate(() => {
         if (marioRightGlideSpeed > 100) {
@@ -224,7 +224,7 @@ scene('game', ({ score, count }) => {
         if (!mario.isGrounded()) {
             mario.move(marioAirGlideSpeed, 0)
         }
-    })
+    });
 
     onKeyPress('space', () => {
         if (mario.isGrounded()) {
@@ -261,10 +261,8 @@ scene('game', ({ score, count }) => {
             mario.frame = fireMario ? 22 : bigMario ? 13 : 5;
         } else {
             if (isKeyDown('left') || isKeyDown('right')) {
-                const frame = fireMario ? 'FlameRun' : bigMario ? 'RunningBig' : 'Running';
-                if (mario.curAnim() !== frame) {
-                    mario.play(frame);
-                }
+                const anim = fireMario ? 'FlameRun' : bigMario ? 'RunningBig' : 'Running';
+                mario.play(anim);
             } else {
                 mario.frame = fireMario ? 17 : bigMario ? 8 : 0;
             }
