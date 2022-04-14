@@ -10,7 +10,7 @@ const loadingScreen = document.querySelector('.loading-screen');
 // EVENT LISTENERS
 window.addEventListener('load', async () => {
     await fetchAndDisplayLeaderboard();
-    if (getUser()) {
+    if (await getUser()) {
         await fetchAndDisplayHeader();
     }
     loadingScreen.classList.add('invisible');
@@ -21,15 +21,6 @@ document.addEventListener('click', (e) => {
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
         logout();
     }
-});
-
-window.addEventListener('load', async () => {
-    loadingScreen.classList.toggle('invisible');
-    await fetchAndDisplayLeaderboard();
-    if (getUser()) {
-        await fetchAndDisplayHeader();
-    }
-    loadingScreen.classList.toggle('invisible');
 });
 
 sortParameter.addEventListener('change', fetchAndDisplayLeaderboard);
