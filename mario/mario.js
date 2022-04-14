@@ -18,7 +18,7 @@ kaboom({
 loadSprite('coin', '../assets/coin.png');
 loadSprite('brick', '../assets/brick.png');
 loadSprite('block', '../assets/box.png');
-await loadAseprite('mario', '../assets/all-mario.png', '../assets/enemies.json');
+loadAseprite('mario', '../assets/all-mario.png', '../assets/mario.json');
 loadSprite('mushroom', '../assets/mushroom.png');
 loadAseprite('enemies', '../assets/enemies.png', '../assets/enemies.json');
 loadSprite('surprise-box', '../assets/surprise-box.png');
@@ -147,7 +147,7 @@ scene('game', ({ score, count }) => {
 
     //MARIO & HIS MOVEMENT
     const mario = add([
-        sprite('mario'), 
+        sprite('mario', { anim: 'Running' }), 
         solid(), 
         area({ width: 20, height: 20 }),
         pos(36, 0),        
@@ -333,7 +333,7 @@ scene('game', ({ score, count }) => {
         '+': () => [sprite('block'), solid(), area()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body(), patrol(150)],
         '>': () => [sprite('fireball'), solid(), area(), 'mario-fireball', body()],
-        'm': () => [sprite('mario', { frame: 0}), area({ width: 20, height: 20 }), body(), marioActions(), origin('bot'), 'player1']
+        'm': () => [sprite('mario', { frame: 0 }), area({ width: 20, height: 20 }), body(), origin('bot'), 'player1']
     };
 
     const gameLevel = addLevel(map, levelConfig);
