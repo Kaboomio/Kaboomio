@@ -103,7 +103,7 @@ scene('game', ({ score, count }) => {
     // CASTLE BACKGROUND
     add([
         sprite('castle'),
-        pos(1560, 188),
+        pos(1560, 287),
         layer('bg'),
         origin('bot'),
         scale(0.25)
@@ -114,7 +114,7 @@ scene('game', ({ score, count }) => {
         sprite('mario', { frame: 0, anim: 0 }), 
         solid(), 
         area({ width: 20, height: 20 }),
-        pos(50, 240),        
+        pos(1500, 240),        
         body(),
         origin('bot'),
         'mario'
@@ -357,10 +357,18 @@ scene('game', ({ score, count }) => {
             }
         }
     });
+
+
+//bullet enemy movement
+
     let bulletspeed = 70;
     onUpdate('bullet', (obj) => {
         obj.move(-bulletspeed, 0);
     });
+
+
+//add score to canvas function
+
     function addScoreText(obj, score) {
         add([
             text(score, {
@@ -381,16 +389,16 @@ scene('game', ({ score, count }) => {
         '                                                                                  ',
         '                          !                                                       ',
         '    !                                                     !                       ',
-        '                                       !                                          ',
-        '               !                                                                 ',
-        '                                           %%%%                                   ',
-        '                                                                                  ',
-        '                                                          ===                     ',
-        '                                                                                  ',
-        '     *   =%=%=      =====               %===#%==*=             %%%                ',
-        '                                                                                  ',
-        '                                            b                                     ',
-        '        *                    b                                   b           i    ',
+        '                                       !                               !          ',
+        '               !                                                                  ',
+        '                                           %%%%                    !         i    ',
+        '                                                                             i    ',
+        '                                                          ===                i    ',
+        '                                                                             i    ',
+        '     *   =%=%=      =====               %===#%==*=             %%%           i    ',
+        '                                                                             i    ',
+        '                                            b                                i    ',
+        '   (    *)            )        b  )      )     (      )       )         b    i    ',
         '==============================   ========================    =====================',
         '==============================   ========================    =====================',
         '==============================   ========================    =====================',
