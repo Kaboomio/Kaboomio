@@ -8,8 +8,10 @@ kaboom({
     global: true,
     width: 608,
     height: 342,
-    scale: 2, 
+    // fullscreen: true,
+    scale: 3, 
     debug: true,
+    frameRate: 60,
     background: [0, 0, 0, 1],
 });
 
@@ -66,43 +68,6 @@ button.addEventListener('click', async (e) => {
     await goGameboy(e, buttonId);
 });
 
-async function goFullscreen(e, buttonId) {
-    if (buttonId === 'fullscreen') {
-        let aspectRatio = 16 / 9;
-        let vh = window.innerHeight - 115;
-        let vw = window.innerWidth;
-        if ((vw / vh) < aspectRatio) {
-            canvas.style.width = `${vw}px`;
-            canvas.style.height = `${vw / aspectRatio}px`;
-            canvas.style.padding = '57.5px 0 0';
-            canvas.style.top = '50%';
-            canvas.style.transform = 'translate(-50%, -50%)';
-            gameboy.classList.add('hidden');
-        } else {
-            canvas.style.width = `${vh * aspectRatio}px`;
-            canvas.style.height = `${vh}px`;
-            canvas.style.padding = '0';
-            canvas.style.top = '90px';
-            gameboy.classList.add('hidden');
-        }
-        e.path[0].id = 'gameboy';
-        e.path[0].textContent = 'Gameboy';
-    }
-}
-
-async function goGameboy(e, buttonId) {
-    if (buttonId === 'gameboy') {
-        canvas.style.width = `608px`;
-        canvas.style.height = `342px`;
-        canvas.style.padding = '70px 54px 440px 42px';
-        canvas.style.top = '120px';
-        canvas.style.transform = 'translateX(-50%)';
-        gameboy.classList.remove('hidden');
-        e.path[0].id = 'fullscreen';
-        e.path[0].textContent = 'Fullscreen';
-    }
-}
-
 //START SCENE
 scene('start', () => {
 
@@ -110,24 +75,18 @@ scene('start', () => {
     const startScreen = add([
         sprite('start-screen'),
         origin('center'), 
-        pos(0, 0), 
+        pos(center().x, center().y - 30), 
         scale(0.65),
     ]);
     add([
         text('Press Spacebar To Start'),
         origin('center'), 
-        pos(0, 125), 
+        pos(center().x, center().y + 90), 
         scale(0.25)
     ]);
 
     onKeyDown('space', () => {
         go('game', { score: 0, count: 0 });
-        
-        
-    });
-    
-    onUpdate(() => {
-        camPos(startScreen.pos.x, (startScreen.pos.y + 50));
     });
 });
 
@@ -135,8 +94,10 @@ scene('start', () => {
 scene('game', ({ score, count }) => {
     layers(['bg', 'obj', 'ui'], 'obj'); 
     music.play();
-    music.volume(0.0); 
+    music.volume(0.0);
+    camPos(310, 160)
     
+    // CASTLE BACKGROUND
     add([
         sprite('castle'),
         pos(1560, 188),
@@ -150,36 +111,129 @@ scene('game', ({ score, count }) => {
         sprite('mario', { frame: 0, anim: 0 }), 
         solid(), 
         area({ width: 20, height: 20 }),
-        pos(36, 0),        
+        pos(50, 240),        
         body(),
         origin('bot'),
         'mario'
     ]);
 
-    const marioSpeed = 120;
-    const marioJumpHeight = 600;
+    let marioRightSpeed = 20;
+    let marioLeftSpeed = 20;
+    let marioLeftGlideSpeed = 0;
+    let marioRightGlideSpeed = 0;
+    let marioAirGlideSpeed = 0;
+    const marioJumpHeight = 510;
     const coinScore = 200;
-    let isJumping = true;
+    let isJumping = true; 
     let marioDirection = 'right';
     let bigMario = false;
     let fireMario = false;
 
+    let lastMarioXPos = 0;
+    let currMarioXPos = 0;
+
+    //HORIZONTAL MOMENTUM
+    mario.onUpdate(() => {
+        currMarioXPos = mario.pos.x
+        // SLOWING DOWN SPEED BECAUSE MARIO IS IDLE
+        if (marioRightSpeed > 20 && lastMarioXPos == currMarioXPos) {
+            marioRightSpeed = marioRightSpeed - 2;
+        }
+        if (marioLeftSpeed > 20 && lastMarioXPos == currMarioXPos) {
+            marioLeftSpeed = marioLeftSpeed - 2;
+        }
+        // IF MARIO IS MOVING RIGHT, SLOW DOWN LEFT SPEED
+        if (marioLeftSpeed > 20 && lastMarioXPos < currMarioXPos) {
+            marioLeftSpeed = 0;
+        }
+        // IF MARIO IS MOVING LEFT, SLOW DOWN RIGHT SPEED
+        if (marioRightSpeed > 20 && lastMarioXPos > currMarioXPos) {
+            marioRightSpeed = 0;
+        }
+        lastMarioXPos = currMarioXPos;
+    })
 
     //MARIO ACTIONS
     onKeyDown('left', () => {
-        mario.move(-marioSpeed, 0);
+        marioLeftGlideSpeed = 0;
+        if (marioRightGlideSpeed > 0) {
+            marioRightGlideSpeed = marioRightGlideSpeed - 1;
+            if (marioRightGlideSpeed < 0) {
+                marioRightGlideSpeed = 0;
+            }
+        }
+        if (marioLeftSpeed < 140) {
+            marioLeftSpeed++;
+        }
+        mario.move(-marioLeftSpeed, 0);
         mario.flipX(true);
     });
 
+    onKeyRelease('left', () => {
+        marioRightGlideSpeed = 0;
+        marioLeftGlideSpeed = marioLeftSpeed;
+        marioLeftSpeed = 20;
+    })
+    
+    mario.onUpdate(() => {
+        if (marioLeftGlideSpeed > 100) {
+            mario.move(-marioLeftGlideSpeed, 0);
+            marioLeftGlideSpeed = marioLeftGlideSpeed -1;
+        } else if (marioLeftGlideSpeed > 30) {
+            mario.move(-marioLeftGlideSpeed, 0);
+            marioLeftGlideSpeed = marioLeftGlideSpeed - 2;
+        } else if (marioLeftGlideSpeed > 0) {
+            mario.move(-marioLeftGlideSpeed, 0);
+            marioLeftGlideSpeed = marioLeftGlideSpeed - 1;
+        }
+    })
+    
     onKeyDown('right', () => {
-        mario.move(marioSpeed, 0);
+        marioRightGlideSpeed = 0;
+        if (marioLeftGlideSpeed > 10) {
+            marioLeftGlideSpeed = marioLeftGlideSpeed - 1;
+            if (marioLeftGlideSpeed <= 10) {
+                marioLeftGlideSpeed = 0;
+            }
+        }
+        if (marioRightSpeed < 140) {
+            marioRightSpeed++;
+        }
+        mario.move(marioRightSpeed, 0);
         mario.flipX(false);
         play('silence');
     });
+    
+    onKeyRelease('right', () => {
+        marioLeftGlideSpeed = 0;
+        marioRightGlideSpeed = marioRightSpeed;
+        marioRightSpeed = 20;
+    })
+    
+    mario.onUpdate(() => {
+        if (marioRightGlideSpeed > 100) {
+            mario.move(marioRightGlideSpeed, 0);
+            marioRightGlideSpeed = marioRightGlideSpeed - 1;
+        } else if (marioRightGlideSpeed > 30) {
+            mario.move(marioRightGlideSpeed, 0);
+            marioRightGlideSpeed = marioRightGlideSpeed - 2;
+        } else if (marioRightGlideSpeed > 0) {
+            mario.move(marioRightGlideSpeed, 0);
+            marioRightGlideSpeed = marioRightGlideSpeed - 1;
+        }
+        if (!mario.isGrounded()) {
+            mario.move(marioAirGlideSpeed, 0)
+        }
+    })
 
     onKeyPress('space', () => {
         if (mario.isGrounded()) {
             mario.jump(marioJumpHeight);
+            if (marioRightSpeed > marioLeftSpeed) {
+                marioAirGlideSpeed = marioRightSpeed / 5;
+            } else {
+                marioAirGlideSpeed = -marioLeftSpeed / 5;
+            }
             play('jump');
         }
     });
@@ -195,7 +249,7 @@ scene('game', ({ score, count }) => {
         } else {
             isJumping = true;
         }
-        camPos(mario.pos);
+        // camPos(mario.pos);
         if (mario.pos.y >= fallToDeath) {
             go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
         }
@@ -329,8 +383,8 @@ scene('game', ({ score, count }) => {
     function addScoreText(obj, score) {
         add([
             text(score, {
-                size: 8,
-                width: 20, 
+                size: 10,
+                width: 25, 
                 font: 'sinko', 
             }),
             pos(obj.pos.x, obj.pos.y),
@@ -343,14 +397,21 @@ scene('game', ({ score, count }) => {
 
     const map = [
         '                                                                                  ',
+        '                                                                                  ',
+        '                                                                                  ',
+        '                                                                                  ',
+        '                                                                                  ',
+        '                                                                                  ',
         '                                           %%%%                                   ',
         '                                                                                  ',
         '                                                          ===                     ',
         '                                                                                  ',
-        '     *   =&=%=                          %===#%==*=             %%%                ',
-        '                                  ===                   =                         ',
-        '                                                        =                         ',
-        '        *           ^   ^                             ^ =                    i    ',
+        '     *   =&=%=      =====               %===#%==*=             %%%                ',
+        '                                                                                  ',
+        '                                                                                  ',
+        '        *                                                                   i     ',
+        '==============================   ========================    =====================',
+        '==============================   ========================    =====================',
         '==============================   ========================    =====================',
     ];
 
@@ -421,12 +482,12 @@ scene('game', ({ score, count }) => {
     ]);
 
     //TIMER CODE
-    let timeLeft = 6000;
+    let framesLeft = 9600;
+    let timeLeft = 400
     let currentLevel = 1;
 
     add([
-        
-        text(timeLeft / 60, {
+        text(timeLeft, {
             size: 18,
             width: 320, 
             font: 'sinko', 
@@ -443,19 +504,22 @@ scene('game', ({ score, count }) => {
     let timer = get('timer');
 
     onUpdate(() => {
-        timeLeft--; 
-        if ((timeLeft / 60) % 1 === 0) {
-            timer[0].text = timeLeft / 60;
+        framesLeft--; 
+        if ((framesLeft / 24) % 1 === 0) {
+            timeLeft--;
+            timer[0].text = timeLeft;
         }
         if (timeLeft < 1) {
-            go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
+            go('lose', { score: scoreLabel.value, timeLeft: 0, level: currentLevel });
         }
     });
 
     //CAMERA POSITIONING
-    onUpdate(() => {
-        // camPos(mario.pos.x, 180);
-        camPos(mario.pos);
+    mario.onUpdate(() => {
+        let currCam = camPos()
+        if (currCam.x < mario.pos.x) {
+            camPos(mario.pos.x, currCam.y);
+        }
     });
 
     //end of levels win condition
@@ -471,7 +535,6 @@ scene('game', ({ score, count }) => {
         ]);
         wait(1, () => {
             let nextLevel = levelNumber + 1;
-  
             if (nextLevel > map.length) {
                 go('start');
             } else {
@@ -495,25 +558,29 @@ scene('lose', ({ score, time, level }) => {
             size: 226,
         }),
         origin('center'), 
-        pos(480, 125),
+        pos(center().x, center().y - 100),
         scale(0.25),
         
         gameOverMusic.play(),
         gameOverMusic.volume(0.25)
     ]);
-    add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)]);
+    add([
+        text(score, 32), 
+        origin('center'), 
+        pos(center().x, center().y - 20)
+    ]);
 
     add([
         text('Enter your initials and press Enter:'),
         scale(0.25),
         origin('center'),
-        pos(center().x, center().y + 85)
+        pos(center().x, center().y + 60)
     ]);
 
     let n = add([
         text(''),
         origin('center'),
-        pos(center().x, center().y + 150),
+        pos(center().x, center().y + 125),
         { value: '' }
     ]);
 
@@ -524,9 +591,7 @@ scene('lose', ({ score, time, level }) => {
         if (n.value.length > maxChar){
             n.value = n.value.slice(0, 2);
         }
-
     });
-
 
     onKeyPress('backspace', () => {
         n.value = n.value.replace(n.value.charAt(n.value.length - 1), '');
@@ -544,7 +609,7 @@ scene('lose', ({ score, time, level }) => {
 
 //initialize start scene - must be at end of game configs
 
-go('start', { score: 0, count: 0 });
+go('game', { score: 0, count: 0 });
 
 
 
@@ -589,6 +654,44 @@ function spawnFireball(marioPos, marioDirection) {
         'fireball',
         { speed: marioDirection === 'right' ? 180 : -180 }
     ]);
+}
+
+
+async function goFullscreen(e, buttonId) {
+    if (buttonId === 'fullscreen') {
+        let aspectRatio = 16 / 9;
+        let vh = window.innerHeight - 115;
+        let vw = window.innerWidth;
+        if ((vw / vh) < aspectRatio) {
+            canvas.style.width = `${vw}px`;
+            canvas.style.height = `${vw / aspectRatio}px`;
+            canvas.style.padding = '57.5px 0 0';
+            canvas.style.top = '50%';
+            canvas.style.transform = 'translate(-50%, -50%)';
+            gameboy.classList.add('hidden');
+        } else {
+            canvas.style.width = `${vh * aspectRatio}px`;
+            canvas.style.height = `${vh}px`;
+            canvas.style.padding = '0';
+            canvas.style.top = '90px';
+            gameboy.classList.add('hidden');
+        }
+        e.path[0].id = 'gameboy';
+        e.path[0].textContent = 'Gameboy';
+    }
+}
+
+async function goGameboy(e, buttonId) {
+    if (buttonId === 'gameboy') {
+        canvas.style.width = `608px`;
+        canvas.style.height = `342px`;
+        canvas.style.padding = '70px 54px 440px 42px';
+        canvas.style.top = '120px';
+        canvas.style.transform = 'translateX(-50%)';
+        gameboy.classList.remove('hidden');
+        e.path[0].id = 'fullscreen';
+        e.path[0].textContent = 'Fullscreen';
+    }
 }
 
 

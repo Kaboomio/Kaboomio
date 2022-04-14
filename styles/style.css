@@ -221,7 +221,7 @@ footer {
 .leaderboard{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin: 40px;
+    margin: 40px 0;
     width: 90%;
     flex-wrap: wrap;
 }
@@ -243,7 +243,7 @@ footer {
     background-color: black;
     color: white;
     overflow: hidden;
-    height: 90%;
+    height: 80%;
     border-radius: 10px;
     min-width: 270px;
     margin-bottom: 40px;
@@ -256,7 +256,6 @@ select{
 
 .trophy {
     display: flex;
-
 }
 
 #leaderboard-trophy-container {
@@ -350,7 +349,7 @@ h1{
 }
 
 #profilePage .infoSection {
-    margin: 20px 0px 60px 0px;
+    margin: 40px 0px 60px 0px;
     background-color: var(--color5);
     border: none;
     width: 80%;
@@ -623,7 +622,7 @@ h1{
 /* profile setup page styling */
 #profile-setup-main {
     height: 90%;
-    padding-top: 3%;
+    margin-top: 25px;
 }
 #profile-setup-form {
     display: flex;
@@ -631,7 +630,7 @@ h1{
     justify-content: center;
     padding-bottom: 50px;
     height: 100%;
-    width: 80vw;
+    width: 80%;
 }
 input[type=radio] {
     visibility: collapse;
@@ -729,17 +728,18 @@ input[type=radio]:checked + figure {
         width: 200px;
     }
     .leaderboard-left img{
-        width: 200px;
         animation: shrink 1s ease-in;
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
+        width: 200px;
     }
+
 }
 @keyframes shrink {
-    0%{width: 535px }
-    50%{width: 350}
-    100%{width: 200px}
+    0%{width: 100% }
+    100%{width: 35%}
+    100%{transform: translateX(157px);}
 }
 /* all page media queries */
 @media (max-width: 640px) {
