@@ -145,6 +145,8 @@ scene('game', ({ score, count }) => {
     let marioDirection = 'right';
     let bigMario = false;
     let fireMario = false;
+    const enemyScore = 100;
+
     let timeLeft = 400;
     let currentLevel = 1;
     let lastMarioXPos = 0;
@@ -355,12 +357,19 @@ scene('game', ({ score, count }) => {
                 d.unuse('dangerous');
                 d.unuse('solid');
                 d.area.height = 10;
+<<<<<<< HEAD
             } else if (d.is('koopa')) {
                 d.frame = 6;
                 d.anim = '';
                 d.move(100, 0);
                 d.unuse('patrol', 'dangerous');
             }
+=======
+                scoreLabel.value += enemyScore;
+                scoreLabel.text = scoreLabel.value;
+                addScoreText(d, enemyScore);
+            } 
+>>>>>>> b78b7637da8a16536e2e10e37f189c790c6d1ad6
         } else {
             if (bigMario) {
                 bigMario = false;
