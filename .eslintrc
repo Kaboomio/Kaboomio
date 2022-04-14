@@ -52,7 +52,9 @@
         "time": false,
         "toWorld": false,
         "color": false,
-        "loadAseprite": false
+        "loadAseprite": false,
+        "onKeyRelease": false,
+        "isKeyDown": false,
 
         
 
