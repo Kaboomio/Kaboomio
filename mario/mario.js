@@ -163,7 +163,7 @@ scene('game', ({ score, count, levelNumber }) => {
         sprite('mario', { frame: 0, anim: 0 }), 
         solid(), 
         area({ width: 20, height: 20 }),
-        pos(2800, 240),        
+        pos(20, 240),        
         body(),
         origin('bot'),
         'mario'
