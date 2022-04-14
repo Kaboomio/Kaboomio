@@ -1,5 +1,5 @@
 import { logout, getMyProfile, getUser } from '../fetch-utils.js';
-import { renderHeader } from '../render-utils.js';
+import { renderAboutHeader } from '../render-utils.js';
 
 // checkAuth();
 
@@ -21,9 +21,8 @@ window.addEventListener('load', async () => {
 
 async function fetchandDisplayHeader() {
     const profile = await getMyProfile();
-    const userId = 'about';
     const hardHeader = document.querySelector('header');
     body.removeChild(hardHeader);
-    const header = renderHeader(profile, userId);
+    const header = renderAboutHeader(profile);
     body.prepend(header);
 }
