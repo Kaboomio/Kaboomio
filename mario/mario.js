@@ -9,6 +9,8 @@ let canvas = null;
 
 checkAuth();
 
+//small change
+
 // EVENT LISTENERS (for page)
 window.addEventListener('load', async ()=> {
     const profile = await getMyProfile();
@@ -166,29 +168,7 @@ scene('game', ({ score, count }) => {
         'mario'
     ]);
 
-<<<<<<< HEAD
-    let marioRightSpeed = 20;
-    let marioLeftSpeed = 20;
-    let marioLeftGlideSpeed = 0;
-    let marioRightGlideSpeed = 0;
-    let marioAirGlideSpeed = 0;
-    const marioJumpHeight = 510;
-    const coinScore = 200;
-    let isJumping = true; 
-    let marioDirection = 'right';
-    let bigMario = true;
-    let fireMario = true;
-
-    let lastMarioXPos = 0;
-    let currMarioXPos = 0;
-    let currTime = 0;
-    let lastFrame = 0;
-    let currFrame = 0;
-
-    // MARIO MOVEMENT STUFF BASED ON 60 FPS
-=======
     // CAMERA & MARIO MOVEMENT STUFF BASED ON 60 FPS
->>>>>>> db2e8654030ec51e6b0d78ad7128da0e9d46f393
     mario.onUpdate(() => {
         lastFrame = currFrame;
         currFrame = checkIfNewFrame(currTime, currFrame);
@@ -357,19 +337,10 @@ scene('game', ({ score, count }) => {
                 d.unuse('dangerous');
                 d.unuse('solid');
                 d.area.height = 10;
-<<<<<<< HEAD
-            } else if (d.is('koopa')) {
-                d.frame = 6;
-                d.anim = '';
-                d.move(100, 0);
-                d.unuse('patrol', 'dangerous');
-            }
-=======
                 scoreLabel.value += enemyScore;
                 scoreLabel.text = scoreLabel.value;
                 addScoreText(d, enemyScore);
             } 
->>>>>>> b78b7637da8a16536e2e10e37f189c790c6d1ad6
         } else {
             if (bigMario) {
                 bigMario = false;
@@ -500,14 +471,9 @@ scene('game', ({ score, count }) => {
         '&': () => [sprite('surprise-box'), solid(), area(), bump(), 'fire-surprise', 'brick'],
         'f': () => [sprite('flower'), solid(), area(), 'fire', 'powerup', body()],
         '#': () => [sprite('surprise-box'), solid(), area(), bump(), 'mushroom-surprise', 'brick'],
-<<<<<<< HEAD
-        '^': () => [sprite('enemies', { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
-        'k': () => [sprite('enemies', { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
-=======
         '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
         'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
         's': () => [sprite('spiny'), solid(), area(), 'bullet', 'dangerous', body(), patrol(150)],
->>>>>>> c1b34e99e40ba79ca7e80a36a62c1064e587da9d
         'b': () => [sprite('bullet'), solid(), area(), 'bullet', 'dangerous'],
         '-': () => [sprite('pipe-top'), solid(), area(), 'pipe', pos(0, 2), scale(1.2), 'brick'],
         '+': () => [sprite('block'), solid(), area(), bump()],
