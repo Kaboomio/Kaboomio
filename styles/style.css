@@ -562,7 +562,7 @@ h1{
     flex-wrap: wrap;
     color: white;
     flex-direction: column;
-    font-size: 1rem;
+    font-size: 2vw;
     align-items: flex-start;
     padding-right: 5px;
 }
@@ -572,7 +572,7 @@ h1{
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    font-size: 1rem;
+    font-size: 2vw;
     padding: 5px;
 }
 
@@ -591,7 +591,7 @@ h1{
 #label{
     margin: 0 auto;
     background-color: black;
-    font-size: 1rem;
+    font-size: 2vw;
     color: white;
     padding: 5px;
 }
