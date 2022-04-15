@@ -115,13 +115,10 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
     let marioLeftGlideSpeed = 0;
     let marioRightGlideSpeed = 0;
     let marioAirGlideSpeed = 0;
-    const marioJumpHeight = 510;
-    const coinScore = 200;
     let isJumping = true; 
     let marioDirection = 'right';
     let bigMario = false;
     let fireMario = false;
-    const enemyScore = 100;
     let timeLeft = 400;
     let currentLevel = Number(levelNumber);
     let lastMarioXPos = 0;
@@ -132,6 +129,9 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
     let gameLoadTime = time();
     let levelPlayTime = 0;
     const fallToDeath = 500;
+    const enemyScore = 100;
+    const marioJumpHeight = 510;
+    const coinScore = 200;
 
     //GAME LEVEL CONFIG
     const mapWidth = 3000;
@@ -377,6 +377,8 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
             if (bigMario || fireMario) {
                 destroy(d);
                 addCarefulText();
+                mario.area.height = 20;
+                mario.area.width = 20;
                 wait(0.1, () => {
                     bigMario = false;
                     fireMario = false;
