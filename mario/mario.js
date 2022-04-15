@@ -369,12 +369,18 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
             mario.area.width = 26;
             mario.area.height = 34;
             destroy(obj);
+            scoreLabel.value += 1000;
+            scoreLabel.text = scoreLabel.value;
+            addScoreText(obj, 1000);
         }
         if (obj.is('fire')) {
             fireMario = true;
             destroy(obj);
             mario.area.width = 26;
             mario.area.height = 34;
+            scoreLabel.value += 1000;
+            scoreLabel.text = scoreLabel.value;
+            addScoreText(obj, 1000);
         }
     });
 
@@ -776,7 +782,7 @@ function addScoreText(obj, score) {
     add([
         text(score, {
             size: 10,
-            width: 25, 
+            width: 35, 
             font: 'sinko', 
         }),
         pos(obj.pos.x, obj.pos.y),
