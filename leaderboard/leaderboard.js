@@ -40,7 +40,7 @@ async function getLeaderboard(type, trueFalse){
         .from('scores')
         .select('*')
         .order(type, { ascending: trueFalse })
-        .range(0, 9);
+        .range(0, 10);
 
     return response.body;
 }
