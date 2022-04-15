@@ -335,7 +335,7 @@ export function renderAboutHeader(profile) {
         settingsAnchor.href = '../profile-setup';
         settingsTooltip.textContent = 'Profile Setup';
     } else {
-        settingsAnchor.href = `../profile-page/?id=${profile.id}`;
+        settingsAnchor.href = `../profile-page/?id=${userId}`;
         settingsTooltip.textContent = 'Edit Profile';
     }
 
