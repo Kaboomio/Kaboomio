@@ -14,6 +14,7 @@ const editProfileForm = document.getElementById('editProfile');
 const formContainer = document.querySelector('.profileEditForm');
 const editUsernameEl = document.querySelector('#editUsername');
 const editBioEl = document.querySelector('#editBio');
+const tooltipEl = document.querySelector('.tooltip');
 
 const params = new URLSearchParams(window.location.search);
 const profileId = params.get('id');
@@ -95,6 +96,7 @@ async function setUserInfo() {
 
     if (userProfileId.id.toString() === profileId) {
         editIconEl.classList.remove('hidden');
+        tooltipEl.classList.remove('hidden');
     }
 
     editUsernameEl.value = profile.username;
