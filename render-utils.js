@@ -328,7 +328,7 @@ export function renderAboutHeader(profile) {
     logoutTooltip.textContent = 'Logout';
     logoutTooltip.classList.add('tooltip');
     
-    // CONDITIONAL ELEMENT ATTRIBUTES IF USER HAS NOT FINISHED PROFILE SETU
+    // CONDITIONAL ELEMENT ATTRIBUTES IF USER HAS NOT FINISHED PROFILE SETUP
     if (!profile.username) {
         nameEl.textContent = 'Dont forget to finish profile setup!';
         settingsImg.style.animation = 'pulse 2s infinite ease-in-out';
