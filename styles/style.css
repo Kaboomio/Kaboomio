@@ -447,11 +447,13 @@ h1{
 
 #profilePage .removeItem {
     width: 5vw;
+    cursor: pointer;
 }
 
 #profilePage .removeItem:hover {
     background-color: var(--color4);
     color: white;
+    cursor: pointer;
 }
 
 #profilePage .avatar-imgs {
@@ -485,6 +487,63 @@ h1{
 
 #profilePage .mini {
     align-items: justify;
+}
+
+#editIcon {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+
+#profilePage .tooltip {
+    background-color: white;
+    color: var(--color5);
+}
+
+#profilePage .tooltip:after {
+    border-color:  transparent transparent white transparent;
+}
+
+#profilePage table {
+    font-weight: normal;
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    font-size: x-large;
+}
+
+#profilePage th, td {
+    margin: 0px;
+    padding: 0px;
+    float: left;
+    width: 11vw;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: black;
+}
+
+#profilePage th {
+    margin-bottom: 15px;
+    font-weight: 900;
+}
+
+#profilePage td {
+    margin-bottom: 5px;
+}
+
+#profilePage th:after, td:after {
+    content: "....................................................";
+}
+
+#profilePage .placeholder {
+    width: 30px;
+    margin-left: 10px;
+}
+
+#profilePage .scoreDiv {
+    border-radius: 10px;
 }
 
 /* Homepage styling */
