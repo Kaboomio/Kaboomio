@@ -26,6 +26,7 @@ document.addEventListener('click', (e) => {
 sortParameter.addEventListener('change', fetchAndDisplayLeaderboard);
 
 ascdescSelect.addEventListener('change', fetchAndDisplayLeaderboard);
+
 scoreContainerEl.addEventListener('scroll', () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
     if (clientHeight + scrollTop >= scrollHeight){
@@ -43,7 +44,7 @@ async function getLeaderboard(type, trueFalse){
         .from('scores')
         .select('*')
         .order(type, { ascending: trueFalse })
-        .range(0, 10);
+        .range(0, 9);
 
     return response.body;
 }
