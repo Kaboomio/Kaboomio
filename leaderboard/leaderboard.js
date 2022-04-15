@@ -23,10 +23,6 @@ document.addEventListener('click', (e) => {
     }
 });
 
-sortParameter.addEventListener('change', fetchAndDisplayLeaderboard);
-
-ascdescSelect.addEventListener('change', fetchAndDisplayLeaderboard);
-
 scoreContainerEl.addEventListener('scroll', () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
     if (clientHeight + scrollTop >= scrollHeight){

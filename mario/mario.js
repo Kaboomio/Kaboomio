@@ -9,8 +9,6 @@ let canvas = null;
 
 checkAuth();
 
-//small change
-
 // EVENT LISTENERS (for page)
 window.addEventListener('load', async ()=> {
     const profile = await getMyProfile();
