@@ -895,6 +895,15 @@ input[type=radio]:checked + figure {
     z-index: 1;
 }
 
+#whereAmI {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    top: 680px;
+    left: 60%;
+    z-index: 1;
+}
+
 /* about page CSS */
 #about-main{
     background-color: rgb(25, 25, 25);
