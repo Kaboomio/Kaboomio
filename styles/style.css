@@ -892,6 +892,28 @@ input[type=radio]:checked + figure {
     padding: 10px;
 }
 
+.icon{
+    height: 45px;
+    width: 52px;
+    border-radius: 50%;
+    background-color: goldenrod;
+    margin: 10px 5px 10px 30px;
+    border: goldenrod inset 8px;
+    box-shadow: 5px 5px 14px -2px rgba(6, 6, 6, 0.53);
+}
+
+.icon:hover{
+    animation: shake 4s infinite;
+}
+
+@keyframes shake {
+    0%{ transform: rotate(10deg); }
+    25%{ transform: rotate(-25deg)}
+    50%{ transform: rotate(25deg) }
+    75% { transform: rotate(-25deg)}
+    100%{ transform: rotate(10deg)}
+}
+
 @keyframes credits {
     0%{top: -1500px;}
     100%{top: 0px;}
