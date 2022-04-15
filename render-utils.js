@@ -371,6 +371,7 @@ export function renderMarioHeader(profile) {
     const nameEl = document.createElement('h1');
     const headerMiddle = document.createElement('div');
     const fullscreenButton = document.createElement('button');
+    const muteButton = document.createElement('button');
     const headerRight = document.createElement('div');
     const homeDiv = document.createElement('div');
     const homeAnchor = document.createElement('a');
@@ -399,6 +400,8 @@ export function renderMarioHeader(profile) {
     headerMiddle.id = 'toggle-fullscreen';
     fullscreenButton.id = 'fullscreen';
     fullscreenButton.textContent = 'Fullscreen';
+    muteButton.id = 'mute';
+    muteButton.textContent = 'Mute';
 
     headerRight.classList.add('header-right');
     homeDiv.classList.add('icons');
@@ -447,7 +450,7 @@ export function renderMarioHeader(profile) {
     logoutDiv.append(logoutAnchor, logoutTooltip);
     
     headerLeft.append(avatarDiv, nameEl);
-    headerMiddle.appendChild(fullscreenButton);
+    headerMiddle.append(fullscreenButton, muteButton);
     headerRight.append(homeDiv, leaderboardDiv, settingsDiv, logoutDiv);
 
     header.append(headerLeft, headerMiddle, headerRight);
