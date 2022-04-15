@@ -623,7 +623,7 @@ h1{
 
 #kaboomio{
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     background-color: rgb(45, 0, 93);
     padding: 20px;
     width: 90%;
@@ -631,6 +631,7 @@ h1{
     margin: 40px 0px;
     flex-wrap: wrap;
     border-radius: 10px;
+    font-size: 2vw;
 }
 
 #kaboomio img{
