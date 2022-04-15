@@ -22,7 +22,7 @@ checkAuth();
 
 // EVENT LISTENERS
 window.addEventListener('load', async () => {
-    const profile = await getProfile(profileId);
+    const profile = await getMyProfile();
     if (!profile.username) {
         location.replace('../profile-setup');
     }
