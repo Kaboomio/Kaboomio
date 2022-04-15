@@ -115,13 +115,11 @@ export async function createScore(score, level, initials, time) {
 
     const myProfile = await getMyProfile();
 
-    const timeInSeconds = Math.round(Number(time) / 60);
-
     const scoreObject = {
         score: score,
         level: level,
         initials: initials,
-        time: timeInSeconds,
+        time: time,
         profile_id: myProfile.id
     };
 
