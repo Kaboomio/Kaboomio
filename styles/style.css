@@ -897,11 +897,12 @@ input[type=radio]:checked + figure {
 
 #whereAmI {
     position: fixed;
-    width: 60px;
-    height: 60px;
-    top: 680px;
-    left: 60%;
+    width: 75px;
+    height: 70px;
+    top: 640px;
+    left: 64%;
     z-index: 1;
+    border-radius: 100px;
 }
 
 /* about page CSS */
