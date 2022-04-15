@@ -374,6 +374,8 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
             if (bigMario || fireMario) {
                 destroy(d);
                 addCarefulText();
+                mario.area.height = 20;
+                mario.area.width = 20;
                 wait(0.1, () => {
                     bigMario = false;
                     fireMario = false;
