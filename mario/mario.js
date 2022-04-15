@@ -245,7 +245,8 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
             } else {
                 marioAirGlideSpeed = -marioLeftSpeed / 3;
             }
-            play('jump');
+            const jump = play('jump');
+            jump.volume(0.1);
         }
     });
 
