@@ -117,7 +117,7 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
     let marioAirGlideSpeed = 0;
     let isJumping = true; 
     let marioDirection = 'right';
-    let bigMario = false;
+    let bigMario = true;
     let fireMario = false;
     let timeLeft = 400;
     let currentLevel = Number(levelNumber);
@@ -863,7 +863,7 @@ function addCarefulText() {
             width: 200, 
             font: 'sinko', 
         }),
-        pos(camPos().x - 110, camPos().y - 80),
+        pos(center().x - 85, center().y - 100),
         fixed(),
         lifespan(1.5, { fade: 0.01 })
     ]);
