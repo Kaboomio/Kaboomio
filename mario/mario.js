@@ -208,6 +208,7 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
             mario.move(-marioLeftSpeed, 0);
             mario.flipX(true);
         }
+        marioDirection = 'left';
     });
 
     onKeyRelease('left', () => {
@@ -229,6 +230,7 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
         mario.move(marioRightSpeed, 0);
         mario.flipX(false);
         play('silence');
+        marioDirection = 'right';
     });
     
     onKeyRelease('right', () => {
