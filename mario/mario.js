@@ -95,7 +95,6 @@ let music = play('theme');
 music.volume(0.25);
 music.pause();
 
-
 //START SCENE
 scene('start', () => {
     // Start screen labels
@@ -114,12 +113,12 @@ scene('start', () => {
 
     // Press space to continue
     onKeyDown('space', () => {
-        go('game', { score: 0, count: 0, levelNumber: 1 });
+        go('game', { score: 0, count: 0, levelNumber: 1, totalPlayTime: 0 });
     });
 });
 
 //GAME SCENE
-scene('game', ({ score, count, levelNumber }) => {
+scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
     layers(['bg', 'obj', 'ui'], 'obj'); 
     music.play();
     music.volume(0.0);
@@ -147,7 +146,6 @@ scene('game', ({ score, count, levelNumber }) => {
     let bigMario = false;
     let fireMario = false;
     const enemyScore = 100;
-
     let timeLeft = 400;
     let currentLevel = Number(levelNumber);
     let lastMarioXPos = 0;
@@ -155,6 +153,8 @@ scene('game', ({ score, count, levelNumber }) => {
     let currTime = 0;
     let lastFrame = 0;
     let currFrame = 0;
+    let gameLoadTime = time();
+    let levelPlayTime = 0;
 
     //MARIO & HIS MOVEMENT
     const mario = add([
@@ -263,7 +263,8 @@ scene('game', ({ score, count, levelNumber }) => {
             isJumping = true;
         }
         if (mario.pos.y >= fallToDeath) {
-            go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
+            totalPlayTime = totalPlayTime + timeLeft;
+            go('lose', { score: scoreLabel.value, time: totalPlayTime, level: currentLevel });
         }
         updateMarioSprite();
     });
@@ -344,16 +345,18 @@ scene('game', ({ score, count, levelNumber }) => {
             } 
         } else {
             if (bigMario) {
-                bigMario = false;
-                mario.unuse('solid');
-                wait(3, mario.use('solid'));
-            } else {
-                go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
+                destroy(d);
+                addCarefulText();
+                wait(0.1, () => {
+                    bigMario = false;
+                }); 
+            } else if (!bigMario) {
+                totalPlayTime = totalPlayTime + timeLeft;
+                go('lose', { score: scoreLabel.value, time: totalPlayTime, level: currentLevel });
                 music.pause();
             }
         }
     });
-
 
     mario.onCollide('powerup', (obj) => {
         if (obj.is('mushroom')) {
@@ -380,7 +383,6 @@ scene('game', ({ score, count, levelNumber }) => {
 
     mario.onCollide('brick', (obj) => {
         const marioPlusBlockHeight = bigMario || fireMario ? 54 : 40;
-
         if (mario.pos.y === obj.pos.y + marioPlusBlockHeight) {
             const mushroomSurprises = get('mushroom-surprise');
             const coinSurprises = get('coin-surprise');
@@ -415,28 +417,11 @@ scene('game', ({ score, count, levelNumber }) => {
         }
     });
 
-
-//bullet enemy movement
-
+    //bullet enemy movement
     let bulletspeed = 70;
     onUpdate('bullet', (obj) => {
         obj.move(-bulletspeed, 0);
     });
-
-
-//add score to canvas function
-
-    function addScoreText(obj, score) {
-        add([
-            text(score, {
-                size: 10,
-                width: 25, 
-                font: 'sinko', 
-            }),
-            pos(obj.pos.x, obj.pos.y),
-            lifespan(1, { fade: 0.01 })
-        ]);
-    }
 
     //GAME LEVEL CONFIG
     const mapWidth = 3000;
@@ -452,8 +437,8 @@ scene('game', ({ score, count, levelNumber }) => {
         '&': () => [sprite('surprise-box'), solid(), area(), bump(), 'fire-surprise', 'brick'],
         'f': () => [sprite('flower'), solid(), area(), 'fire', 'powerup', body()],
         '#': () => [sprite('surprise-box'), solid(), area(), bump(), 'mushroom-surprise', 'brick'],
-        '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
-        'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
+        '^': () => [sprite('enemies', { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
+        'k': () => [sprite('enemies', { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
         's': () => [sprite('spiny'), solid(), area(), 'bullet', 'dangerous', body(), patrol(150)],
         'b': () => [sprite('bullet'), solid(), area(), 'bullet', 'dangerous'],
         '-': () => [sprite('pipe-top'), solid(), area(), 'pipe', pos(0, 2), scale(1.2), 'brick'],
@@ -524,7 +509,7 @@ scene('game', ({ score, count, levelNumber }) => {
             width: 320, 
             font: 'sinko', 
         }),
-        pos(60, 30),
+        pos(31, 30),
         layer('ui'),
         fixed(),
         {
@@ -586,19 +571,29 @@ scene('game', ({ score, count, levelNumber }) => {
         pos(530, 30),
         fixed()
     ]);
-
+    
     //TIMER CODE
     let timer = get('timer');
-
     onUpdate(() => {
-        currTime = time();
+        currTime = time() - gameLoadTime;
         const timeCheck = Math.floor(currTime / .4);
-        if ((401 - timeCheck) < timeLeft) {
-            timeLeft--;
-            timer[0].text = timeLeft;
-        }
-        if (timeLeft < 1) {
-            go('lose', { score: scoreLabel.value, timeLeft: 0, level: currentLevel });
+        if (!levelComplete) {
+            if ((400 - timeCheck) < timeLeft) {
+                timeLeft--;
+                timer[0].text = timeLeft;
+                levelPlayTime = 400 - timeLeft;
+            }
+            if (timeLeft < 1) {
+                totalPlayTime = 400 + totalPlayTime;
+                go('lose', { score: scoreLabel.value, time: totalPlayTime, level: currentLevel });
+            }
+        } else {
+            if (timeLeft > 0) {
+                timeLeft--;
+                timer[0].text = timeLeft;
+                scoreLabel.value += 50;
+                scoreLabel.text = scoreLabel.value;
+            }
         }
     });
 
@@ -625,16 +620,21 @@ scene('game', ({ score, count, levelNumber }) => {
                 layer('ui'),
                 music.pause(),
             ]);
-            wait(1, () => {
-                if (currentLevel >= Levels.length) {
-                    go('winner', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
-                } else {
-                    currentLevel++;
-                    go('game', { score: scoreLabel.value, count: coinCountLabel.value, levelNumber: currentLevel }, currentLevel);
+            levelComplete = true;
+            totalPlayTime = totalPlayTime + levelPlayTime;
+            mario.onUpdate(() => {
+                if (timeLeft === 0) {
+                    wait(1, () => {
+                        if (currentLevel >= Levels.length) {
+                            go('winner', { score: scoreLabel.value, time: totalPlayTime, level: currentLevel });
+                        } else {
+                            currentLevel++;
+                            go('game', { score: scoreLabel.value, count: coinCountLabel.value, time: 400, mario: mario, levelNumber: currentLevel, totalPlayTime: totalPlayTime }, currentLevel);
+                        }
+                    });
                 }
             });
         }
-        levelComplete = true;
     });
 });
 
@@ -757,13 +757,41 @@ scene('winner', ({ score, time, level }) => {
     });
 });
 
+
 //initialize start scene - must be at end of game configs
-go('game', { score: 0, count: 0, levelNumber: 1 });
+go('start', { score: 0, count: 0, levelNumber: 1 });
 
 
 
 // Local Functions
-function patrol(distance = 150, speed = 30, dir = 1) {
+//add score to canvas
+function addScoreText(obj, score) {
+    add([
+        text(score, {
+            size: 10,
+            width: 25, 
+            font: 'sinko', 
+        }),
+        pos(obj.pos.x, obj.pos.y),
+        lifespan(1, { fade: 0.01 })
+    ]);
+}
+
+// add be careful text to canvas
+function addCarefulText() {
+    add([
+        text('Be Careful...', {
+            size: 18,
+            width: 200, 
+            font: 'sinko', 
+        }),
+        pos(camPos().x - 110, camPos().y - 80),
+        fixed(),
+        lifespan(1.5, { fade: 0.01 })
+    ]);
+}
+
+function patrol(distance = 150, speed = 50, dir = 1) {
     return {
         id: 'patrol',
         require: ['pos', 'area'],
@@ -834,7 +862,8 @@ function bump(offset = 8, speed = 2, stopAtOrigin = true, isY = true){
                         this.bumped = false;
                         this.pos.x = this.origPos;
                         this.direction = -1;
-                    }}
+                    }
+                }
             }
         },
         bump(){
@@ -992,26 +1021,26 @@ const Levels = [[
     '          %   =%=%=                 -       -            =#=           =    ==     %  %  %    =          ==        /  /          //  /              ==%=          //////           i     ',
     '                             -      |       |                                                                     //  //        ///  //      -               -   ///////           i     ',
     '                       -     |      |       |                                                                    ///  ///      ////  ///     |               |  ////////           i     ',
-    '     ) (   ^           |     |     ^|   ^   |    (          (          )         k     )        )               ////  ////    /////  ////    |      ^   ^    | /////////           i     ',
+    '     ) (   ^           |     |     ^|   ^   |  (           (          )          ^     )        )               ////  ////    /////  ////    |      ^   ^    | /////////           i     ',
     '====================================================  ==========   ================================================================  ====================================================',
     '====================================================  ==========   ================================================================  ====================================================',
     '====================================================  ==========   ================================================================  ====================================================',
 ], 
 [
-    '                                                                                          !                           !                 !            !                   !                ',
-    '                                                                       !                                %                                                                                 ',
+    '                                                                                          !             %             !                 !            !                   !                ',
+    '                                                                       !                                                                                                                  ',
     '          !                                                                                       !                              !      !                   !                             ',
-    '                                                   !                           !                      ======   !                                                                !         ',
-    '                                    !                                                                                        !                 !                                          ',
-    '               %%         !                                                                                                                                             /                 ',
-    '   !                                                                                   ======                                                           !              //               ! ',
-    '              ====                                                                                                                                                    ///                 ',
-    '                     !                                                       ====                       =======                                                      ////                 ',
+    '                                                   !                           !                   ======   !                                                                   !         ',
+    '               %%                   !                                                                                        !                 !                                          ',
+    '                          !                                                         ======                                                                              /                 ',
+    '   !                                                                                                                                                   !               //               ! ',
+    '              ====                                                          ====                                                                                      ///                 ',
+    '                     !                                                                                 =======                                                       ////                 ',
     '                                                                ==                                                    =====                                         /////                 ',
-    '           ====  ====                                                     ======                  ======                                         -                 //////                 ',
+    '           =%%=  ====                                                     ======                  ======                                         -                 //////                 ',
     '                                                           -                                                                     //    -         |                ///////                 ',
-    '               ==                                     -    |                                                                   ////    |         |               ////////                 ',
-    '   ( (          )           ^         )  s            |   )|           ^  (   ^ )    ^ )    ^               )        (        /////    |  s    s |           s  /////////  )   )   i    ) ',
+    '                                                      -    |                                                                   ////    |         |               ////////                 ',
+    '   (   (        )           ^         )          s    |   )|           ^  (   ^ )    ^ )    ^               )        (        /////    |  s    s |           s  /////////  )   )   i    ) ',
     '===================================================   ==========   =================================     ==========================   ====================================================',
     '===================================================   ==========   =================================     ==========================   ====================================================',
     '===================================================   ==========   =================================     ==========================   ====================================================',
