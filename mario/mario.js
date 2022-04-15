@@ -97,7 +97,6 @@ let music = play('theme');
 music.volume(0.25);
 music.pause();
 
-
 //START SCENE
 scene('start', () => {
     // Start screen labels
@@ -116,12 +115,12 @@ scene('start', () => {
 
     // Press space to continue
     onKeyDown('space', () => {
-        go('game', { score: 0, count: 0, levelNumber: 1 });
+        go('game', { score: 0, count: 0, levelNumber: 1, totalPlayTime: 0 });
     });
 });
 
 //GAME SCENE
-scene('game', ({ score, count, levelNumber }) => {
+scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
     layers(['bg', 'obj', 'ui'], 'obj'); 
     music.play();
     music.volume(0.0);
@@ -146,10 +145,9 @@ scene('game', ({ score, count, levelNumber }) => {
     const coinScore = 200;
     let isJumping = true; 
     let marioDirection = 'right';
-    let bigMario = true;
+    let bigMario = false;
     let fireMario = false;
     const enemyScore = 100;
-
     let timeLeft = 400;
     let currentLevel = Number(levelNumber);
     let lastMarioXPos = 0;
@@ -157,6 +155,8 @@ scene('game', ({ score, count, levelNumber }) => {
     let currTime = 0;
     let lastFrame = 0;
     let currFrame = 0;
+    let gameLoadTime = time();
+    let levelPlayTime = 0;
 
     //MARIO & HIS MOVEMENT
     const mario = add([
@@ -265,7 +265,8 @@ scene('game', ({ score, count, levelNumber }) => {
             isJumping = true;
         }
         if (mario.pos.y >= fallToDeath) {
-            go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
+            totalPlayTime = totalPlayTime + timeLeft;
+            go('lose', { score: scoreLabel.value, time: totalPlayTime, level: currentLevel });
         }
         updateMarioSprite();
     });
@@ -352,7 +353,8 @@ scene('game', ({ score, count, levelNumber }) => {
                     bigMario = false;
                 }); 
             } else if (!bigMario) {
-                go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
+                totalPlayTime = totalPlayTime + timeLeft;
+                go('lose', { score: scoreLabel.value, time: totalPlayTime, level: currentLevel });
                 music.pause();
             }
         }
@@ -509,7 +511,7 @@ scene('game', ({ score, count, levelNumber }) => {
             width: 320, 
             font: 'sinko', 
         }),
-        pos(60, 30),
+        pos(31, 30),
         layer('ui'),
         fixed(),
         {
@@ -575,14 +577,25 @@ scene('game', ({ score, count, levelNumber }) => {
     //TIMER CODE
     let timer = get('timer');
     onUpdate(() => {
-        currTime = time();
+        currTime = time() - gameLoadTime;
         const timeCheck = Math.floor(currTime / .4);
-        if ((401 - timeCheck) < timeLeft) {
-            timeLeft--;
-            timer[0].text = timeLeft;
-        }
-        if (timeLeft < 1) {
-            go('lose', { score: scoreLabel.value, timeLeft: 0, level: currentLevel });
+        if (!levelComplete) {
+            if ((400 - timeCheck) < timeLeft) {
+                timeLeft--;
+                timer[0].text = timeLeft;
+                levelPlayTime = 400 - timeLeft;
+            }
+            if (timeLeft < 1) {
+                totalPlayTime = 400 + totalPlayTime;
+                go('lose', { score: scoreLabel.value, time: totalPlayTime, level: currentLevel });
+            }
+        } else {
+            if (timeLeft > 0) {
+                timeLeft--;
+                timer[0].text = timeLeft;
+                scoreLabel.value += 50;
+                scoreLabel.text = scoreLabel.value;
+            }
         }
     });
 
@@ -609,16 +622,21 @@ scene('game', ({ score, count, levelNumber }) => {
                 layer('ui'),
                 music.pause(),
             ]);
-            wait(1, () => {
-                if (currentLevel >= Levels.length) {
-                    go('winner', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
-                } else {
-                    currentLevel++;
-                    go('game', { score: scoreLabel.value, count: coinCountLabel.value, levelNumber: currentLevel }, currentLevel);
+            levelComplete = true;
+            totalPlayTime = totalPlayTime + levelPlayTime;
+            mario.onUpdate(() => {
+                if (timeLeft === 0) {
+                    wait(1, () => {
+                        if (currentLevel >= Levels.length) {
+                            go('winner', { score: scoreLabel.value, time: totalPlayTime, level: currentLevel });
+                        } else {
+                            currentLevel++;
+                            go('game', { score: scoreLabel.value, count: coinCountLabel.value, time: 400, mario: mario, levelNumber: currentLevel, totalPlayTime: totalPlayTime }, currentLevel);
+                        }
+                    });
                 }
             });
         }
-        levelComplete = true;
     });
 });
 
@@ -741,8 +759,9 @@ scene('winner', ({ score, time, level }) => {
     });
 });
 
+
 //initialize start scene - must be at end of game configs
-go('game', { score: 0, count: 0, levelNumber: 1 });
+go('start', { score: 0, count: 0, levelNumber: 1 });
 
 
 
@@ -1004,7 +1023,7 @@ const Levels = [[
     '          %   =%=%=                 -       -            =#=           =    ==     %  %  %    =          ==        /  /          //  /              ==%=          //////           i     ',
     '                             -      |       |                                                                     //  //        ///  //      -               -   ///////           i     ',
     '                       -     |      |       |                                                                    ///  ///      ////  ///     |               |  ////////           i     ',
-    '     ) (   ^           |     |     ^|   ^   |  (             (          )         k     )        )               ////  ////    /////  ////    |      ^   ^    | /////////           i     ',
+    '     ) (   ^           |     |     ^|   ^   |  (            (          )         k     )        )               ////  ////    /////  ////    |      ^   ^    | /////////           i     ',
     '====================================================  ==========   ================================================================  ====================================================',
     '====================================================  ==========   ================================================================  ====================================================',
     '====================================================  ==========   ================================================================  ====================================================',
