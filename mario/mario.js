@@ -336,7 +336,7 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
             isJumping = true;
         }
         if (mario.pos.y >= fallToDeath) {
-            totalPlayTime = totalPlayTime + timeLeft;
+            totalPlayTime = totalPlayTime + (400 - timeLeft);
             go('lose', { score: scoreLabel.value, time: totalPlayTime, level: currentLevel });
         }
         updateMarioSprite();
@@ -384,7 +384,7 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
                     fireMario = false;
                 }); 
             } else if (!bigMario) {
-                totalPlayTime = totalPlayTime + timeLeft;
+                totalPlayTime = totalPlayTime + (400 - timeLeft);
                 go('lose', { score: scoreLabel.value, time: totalPlayTime, level: currentLevel });
                 music.pause();
             }
