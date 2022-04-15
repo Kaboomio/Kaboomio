@@ -143,7 +143,7 @@ scene('game', ({ score, count }) => {
     const coinScore = 200;
     let isJumping = true; 
     let marioDirection = 'right';
-    let bigMario = false;
+    let bigMario = true;
     let fireMario = false;
     const enemyScore = 100;
 
@@ -332,16 +332,17 @@ scene('game', ({ score, count }) => {
             } 
         } else {
             if (bigMario) {
-                bigMario = false;
-                mario.unuse('solid');
-                wait(3, mario.use('solid'));
-            } else {
+                destroy(d);
+                addCarefulText();
+                wait(0.1, () => {
+                    bigMario = false;
+                }); 
+            } else if (!bigMario) {
                 go('lose', { score: scoreLabel.value, time: timeLeft, level: currentLevel });
                 music.pause();
             }
         }
     });
-
 
     mario.onCollide('powerup', (obj) => {
         if (obj.is('mushroom')) {
@@ -368,7 +369,6 @@ scene('game', ({ score, count }) => {
 
     mario.onCollide('brick', (obj) => {
         const marioPlusBlockHeight = bigMario || fireMario ? 54 : 40;
-
         if (mario.pos.y === obj.pos.y + marioPlusBlockHeight) {
             const mushroomSurprises = get('mushroom-surprise');
             const coinSurprises = get('coin-surprise');
@@ -403,28 +403,11 @@ scene('game', ({ score, count }) => {
         }
     });
 
-
-//bullet enemy movement
-
+    //bullet enemy movement
     let bulletspeed = 70;
     onUpdate('bullet', (obj) => {
         obj.move(-bulletspeed, 0);
     });
-
-
-//add score to canvas function
-
-    function addScoreText(obj, score) {
-        add([
-            text(score, {
-                size: 10,
-                width: 25, 
-                font: 'sinko', 
-            }),
-            pos(obj.pos.x, obj.pos.y),
-            lifespan(1, { fade: 0.01 })
-        ]);
-    }
 
     //GAME LEVEL CONFIG
     const mapWidth = 1700;
@@ -460,7 +443,7 @@ scene('game', ({ score, count }) => {
         '&': () => [sprite('surprise-box'), solid(), area(), bump(), 'fire-surprise', 'brick'],
         'f': () => [sprite('flower'), solid(), area(), 'fire', 'powerup', body()],
         '#': () => [sprite('surprise-box'), solid(), area(), bump(), 'mushroom-surprise', 'brick'],
-        '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
+        '^': () => [sprite('enemies', { frame: 0 }, { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), bump(), patrol(150)],
         'k': () => [sprite('enemies', { frame: 0 }, { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
         's': () => [sprite('spiny'), solid(), area(), 'bullet', 'dangerous', body(), patrol(150)],
         'b': () => [sprite('bullet'), solid(), area(), 'bullet', 'dangerous'],
@@ -596,10 +579,9 @@ scene('game', ({ score, count }) => {
         pos(530, 30),
         fixed()
     ]);
-
+    
     //TIMER CODE
     let timer = get('timer');
-
     onUpdate(() => {
         currTime = time();
         const timeCheck = Math.floor(currTime / .4);
@@ -708,6 +690,33 @@ go('game', { score: 0, count: 0 });
 
 
 // Local Functions
+//add score to canvas
+function addScoreText(obj, score) {
+    add([
+        text(score, {
+            size: 10,
+            width: 25, 
+            font: 'sinko', 
+        }),
+        pos(obj.pos.x, obj.pos.y),
+        lifespan(1, { fade: 0.01 })
+    ]);
+}
+
+// add be careful text to canvas
+function addCarefulText() {
+    add([
+        text('Be Careful...', {
+            size: 18,
+            width: 200, 
+            font: 'sinko', 
+        }),
+        pos(camPos().x - 110, camPos().y - 80),
+        fixed(),
+        lifespan(1.5, { fade: 0.01 })
+    ]);
+}
+
 function patrol(distance = 150, speed = 50, dir = 1) {
     return {
         id: 'patrol',
@@ -779,7 +788,8 @@ function bump(offset = 8, speed = 2, stopAtOrigin = true, isY = true){
                         this.bumped = false;
                         this.pos.x = this.origPos;
                         this.direction = -1;
-                    }}
+                    }
+                }
             }
         },
         bump(){
