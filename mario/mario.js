@@ -18,6 +18,8 @@ document.addEventListener('click', async (e) => {
     const buttonId = e.path[0].id;
     await goFullscreen(e, buttonId);
     await goGameboy(e, buttonId);
+    await muteGame(e, buttonId);
+    await unmuteGame(e, buttonId);
     // STAY FOCUSED TO CANVAS IF CLICKING ANYWHERE ELSE BUT BUTTONS
     window.canvas.focus();
 });
@@ -73,11 +75,12 @@ loadSound('superstar', 'sounds/superstar.mp3');
 
 //PLAY MARIO THEME SONG ON LOAD
 let music = play('theme'); 
-music.volume(0.25);
 music.pause();
+volume(1);
 
 //START OPENING MARIO SCENE
 scene('start', () => {
+    music.volume(0.05);
     // Start screen labels
     add([
         sprite('start-screen'),
@@ -461,7 +464,7 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
         if (fireMario) {
             spawnFireball(mario.pos, marioDirection);
             const fireball = play('fireballSound');
-            fireball.volume(0.1);
+            fireball.volume(0.05);
         }
     });
 
@@ -728,7 +731,7 @@ scene('lose', ({ score, time, level }) => {
         scale(0.25),
         
         gameOverMusic.play(),
-        gameOverMusic.volume(0.25)
+        gameOverMusic.volume(0.05)
     ]);
     add([
         text(score, 32), 
@@ -787,7 +790,7 @@ scene('winner', ({ score, time, level }) => {
         scale(0.25),
         
         youWinMusic.play(),
-        youWinMusic.volume(0.25)
+        youWinMusic.volume(0.1)
     ]);
     add([
         text(score, 32), 
@@ -987,6 +990,22 @@ async function goGameboy(e, buttonId) {
         gameboy.classList.remove('hidden');
         e.path[0].id = 'fullscreen';
         e.path[0].textContent = 'Fullscreen';
+    }
+}
+
+// mute -> unmute -> mute
+async function muteGame(e, buttonId) {
+    if (buttonId === 'mute') {
+        volume(0.0);
+        e.path[0].id = 'unmute';
+        e.path[0].textContent = 'Unmute';
+    }
+}
+async function unmuteGame(e, buttonId) {
+    if (buttonId === 'unmute') {
+        volume(1);
+        e.path[0].id = 'mute';
+        e.path[0].textContent = 'Mute';
     }
 }
 
