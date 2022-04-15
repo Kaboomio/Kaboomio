@@ -245,14 +245,16 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
             } else {
                 marioAirGlideSpeed = -marioLeftSpeed / 3;
             }
-            play('jump');
+            const jump = play('jump');
+            jump.volume(0.1);
         }
     });
 
     onKeyPress('down', () => {
         if (fireMario) {
             spawnFireball(mario.pos, marioDirection);
-            play('fireballSound');
+            const fireball = play('fireballSound');
+            fireball.volume(0.1);
         }
     });
 
@@ -344,11 +346,12 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
                 addScoreText(d, enemyScore);
             } 
         } else {
-            if (bigMario) {
+            if (bigMario || fireMario) {
                 destroy(d);
                 addCarefulText();
                 wait(0.1, () => {
                     bigMario = false;
+                    fireMario = false;
                 }); 
             } else if (!bigMario) {
                 totalPlayTime = totalPlayTime + timeLeft;
@@ -368,6 +371,8 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
         if (obj.is('fire')) {
             fireMario = true;
             destroy(obj);
+            mario.area.width = 26;
+            mario.area.height = 34;
         }
     });
 
