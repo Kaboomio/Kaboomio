@@ -253,7 +253,8 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
     onKeyPress('down', () => {
         if (fireMario) {
             spawnFireball(mario.pos, marioDirection);
-            play('fireballSound');
+            const fireball = play('fireballSound');
+            fireball.volume(0.1);
         }
     });
 
