@@ -13,6 +13,7 @@ const audio = [
 whereAmI.addEventListener('click', () => {
     const fullscreenBtn = document.querySelector('#fullscreen');
     if (fullscreenBtn) {
+        // very nice!
         const randomNumber = Math.round(Math.random() * (audio.length - 1));
         const audioFile = new Audio(audio[randomNumber]);
         audioFile.play();
