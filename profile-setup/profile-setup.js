@@ -40,12 +40,12 @@ form.addEventListener('submit', async (e) => {
 
 // FUNCTIONS
 async function checkUsername(check) {
-    let test = true;
+    let isValid = true;
     for (let username of usernames) {
         if (username === check) {
             alert('Username is taken. Try again.');
-            test = false;
+            isValid = false;
         }
     }
-    return test;
+    return isValid;
 }

@@ -18,12 +18,15 @@ window.addEventListener('load', async () => {
 
 document.addEventListener('click', (e) => {
     // LOGOUT BUTTON FUNCTIONALITY
+    // curious why you couldn't just add the event listener to element itself? 
+    // If I were maintaining this codebase, I'd want an explanation in comments here, since there is some brittleness here
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
         logout();
     }
 });
 
 scoreContainerEl.addEventListener('scroll', () => {
+    // again, very cool and ambitious :)
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
     if (clientHeight + scrollTop >= scrollHeight){
         console.log(clientHeight);

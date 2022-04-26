@@ -1,3 +1,20 @@
+/* Amazing work, but really tough for humans to read. 1120 lines is way too big. I imagine you would have gotten here if you had more time, but I would want to see this file split up into a few smaller files, named by category (game-scene.js, state-scene.js, lose-scene.js, levels-tata.js, etc), with even more comments to clarify the some obscure decisions (why e.path[0]? what is a glideSpeed and when does it change, etc). I would try to do it myself, but I'm afraid of breaking everything and having to pour hours into debugging and understanding your code, which speaks to the problem here. I imagine the merge conflicts were occasionally arduous.
+
+As it is, this code is not maintainable, and would have to be superglued to the team that wrote it. As impressive as your outcomes are here, inheriting this codebase would be a real chore, and if this were in a production app, you might find yourself constantly fielding questions from other devs about the specifics of the mysterious work on this page. It's an annoying place to find yourself as a developer: you will have moved on to other interesting problems, but new devs will constantly be dragging you back to helping with this file.
+
+Also, storing more of your numbers in constants would be important for maintainability--you do this a bit throughout, but `e.pos.y >= 273` should be `e.pos.y >= NUMBER_WITH_A_CLARIFYING_NAME`, where the variable is possibly defined in a separate constants.js file. 
+
+*/
+
+// i'm not going to do all of them, but strings that are reused are called 'magic strings' and should live in constants (like so) in a separate file. Otherwise, misspellings will not be caught by VSCode, and difficut-to-debug problems will emerge
+const DANGEROUS = 'dangerous';
+
+const fontObject = {
+    size: 18,
+    width: 320, 
+    font: 'sinko', 
+};
+
 import { checkAuth, logout, getMyProfile, createScore } from '../fetch-utils.js';
 import { renderMarioHeader } from '../render-utils.js';
 import kaboom from '../kaboom/dist/kaboom.mjs';
@@ -207,10 +224,10 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
         '&': () => [sprite('surprise-box'), solid(), area(), bump(), 'fire-surprise', 'brick'],
         'f': () => [sprite('flower'), solid(), area(), 'fire', 'powerup', body()],
         '#': () => [sprite('surprise-box'), solid(), area(), bump(), 'mushroom-surprise', 'brick'],
-        '^': () => [sprite('enemies', { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
-        'k': () => [sprite('enemies', { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
-        's': () => [sprite('spiny'), solid(), area(), 'bullet', 'dangerous', body(), patrol(150)],
-        'b': () => [sprite('bullet'), solid(), area(), 'bullet', 'dangerous'],
+        '^': () => [sprite('enemies', { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', DANGEROUS, body(), patrol(150)],
+        'k': () => [sprite('enemies', { anim: 'KoopaWalk' }), solid(), area(), 'koopa', DANGEROUS, body(), patrol(150)],
+        's': () => [sprite('spiny'), solid(), area(), 'bullet', DANGEROUS, body(), patrol(150)],
+        'b': () => [sprite('bullet'), solid(), area(), 'bullet', DANGEROUS],
         '-': () => [sprite('pipe-top'), solid(), area(), 'pipe', pos(0, 2), scale(1.2), 'brick'],
         '+': () => [sprite('block'), solid(), area(), bump()],
         '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body(), patrol(150)],
@@ -359,14 +376,14 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
     }
 
     //MARIO ACTIONS
-    //mario interactions with Dangerous items on screen (i.e. Goombas and Koopas)
-    mario.onCollide('dangerous', (d) => {
+    //mario interactions withDANGEROUSitems on screen (i.e. Goombas and Koopas)
+    mario.onCollide(DANGEROUS, (d) => {
         if (isJumping) {
             if (d.is('goomba')) {
                 d.frame = 2;
                 d.unuse('anim');
                 d.unuse('patrol');
-                d.unuse('dangerous');
+                d.unuse(DANGEROUS);
                 d.unuse('solid');
                 d.area.height = 10;
                 scoreLabel.value += enemyScore;
@@ -495,8 +512,8 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
         }
     });
 
-    //fireball collision with dangerous items
-    onCollide('dangerous', 'fireball', (item, item2) => {
+    //fireball collision withDANGEROUSitems
+    onCollide(DANGEROUS, 'fireball', (item, item2) => {
         if (item.is('goomba')) {
             destroy(item);
             destroy(item2);
@@ -505,7 +522,7 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
             item.frame = 6;
             item.move(0, 100);
             item.unuse('patrol');
-            item.unuse('dangerous');
+            item.unuse(DANGEROUS);
             item.unuse('solid');
             item.unuse('anim');
         }
@@ -534,58 +551,34 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
     //GAMEPLAY HEADER TEXT
     // TOP ROW LABELS
     add([
-        text('Score', {
-            size: 18,
-            width: 320, 
-            font: 'sinko', 
-        }),
+        text('Score', fontObject),
         pos(31, 6),
         fixed()
     ]);
     add([
-        text('Coins', {
-            size: 18,
-            width: 320, 
-            font: 'sinko', 
-        }),
+        text('Coins', fontObject),
         pos(150, 6),
         fixed()
     ]);
     add([
-        text('World', {
-            size: 18,
-            width: 320, 
-            font: 'sinko', 
-        }),
+        text('World', fontObject),
         pos(270, 6),
         fixed()
     ]);
     add([
-        text('Time', {
-            size: 18,
-            width: 320, 
-            font: 'sinko', 
-        }),
+        text('Time', fontObject),
         pos(390, 6),
         fixed()
     ]);
     add([
-        text('Lives', {
-            size: 18,
-            width: 320, 
-            font: 'sinko', 
-        }),
+        text('Lives', fontObject),
         pos(500, 6),
         fixed()
     ]);
     // BOTTOM ROW LABELS
     // SCORE COUNT
     const scoreLabel = add([
-        text(score, {
-            size: 18,
-            width: 320, 
-            font: 'sinko', 
-        }),
+        text(score, fontObject),
         pos(31, 30),
         layer('ui'),
         fixed(),
@@ -601,11 +594,7 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
         fixed()
     ]);
     const coinCountLabel = add([
-        text('x' + count, {
-            size: 18,
-            width: 320, 
-            font: 'sinko', 
-        }),
+        text('x' + count, fontObject),
         pos(180, 30),
         fixed(),
         layer('ui'),
@@ -615,21 +604,13 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
     ]);
     // CURRENT LEVEL
     add([
-        text('1-' + currentLevel, {
-            size: 18,
-            width: 320, 
-            font: 'sinko', 
-        }),
+        text('1-' + currentLevel, fontObject),
         pos(285, 30),
         fixed()
     ]);
     // TIME LEFT
     add([
-        text(timeLeft, {
-            size: 18,
-            width: 320, 
-            font: 'sinko', 
-        }),
+        text(timeLeft, fontObject),
         pos(397, 30),
         layer('ui'),
         fixed(),
@@ -640,11 +621,7 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
     ]);
     // LIVES LEFT
     add([
-        text('1', {
-            size: 18,
-            width: 320, 
-            font: 'sinko', 
-        }),
+        text('1', fontObject),
         pos(530, 30),
         fixed()
     ]);
@@ -675,7 +652,7 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
     });
 
     // destroy enemies who are off screen left
-    let enemies = get('dangerous');
+    let enemies = get(DANGEROUS);
     onUpdate(() => {
         for (let enemy of enemies) {
             if (toScreen(enemy.pos).x < -20) {
@@ -869,7 +846,7 @@ function addCarefulText() {
     ]);
 }
 
-//adding the ability for dangerous enemies to patrol an area rather than just walk forward
+//adding the ability forDANGEROUSenemies to patrol an area rather than just walk forward
 function patrol(distance = 150, speed = 50, dir = 1) {
     return {
         id: 'patrol',
@@ -1020,6 +997,7 @@ function checkIfNewFrame(currTime, currFrame) {
 }
 
 // GLIDE FUNCTIONS - moves mario according to glide speed & decreases glide speed each time function is called
+// It's kind of unavoidable in game code, but this code is very challenging to read. Two suggestions i have: store your number in named constants (const MEDIUM_GLIDE = 50, or whatever) and add comments. If I were tasked with maintaining this code, i would be very scared to touch this function for fear of unpredictable consequences. Any bugs in this code would probably last a long time. In situations like this, writing tests is absolutely crucial--otherwise this function becomes untouchable.
 function marioLeftGlide(marioLeftGlideSpeed, mario) {
     if (marioLeftGlideSpeed > 100) {
         if (toScreen(mario.pos).x > 10) {

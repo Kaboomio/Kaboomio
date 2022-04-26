@@ -1,5 +1,6 @@
 const SUPABASE_URL = 'https://houeghgfcehojgitoeuv.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhvdWVnaGdmY2Vob2pnaXRvZXV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDk2OTM3OTMsImV4cCI6MTk2NTI2OTc5M30.ILc0KmFBK-JZ7zwqJFfF1v1Hcp1IFa3tO1PD3lskmWc';
+const BUCKET_PATH = '/storage/v1/object/public/avatars/';
 
 export const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -65,8 +66,9 @@ export async function getAllUsernames() {
         .from('profiles')
         .select('username');
 
+    // nice munging!
     const usernames = response.body
-        .filter(username => {if (username.username !== null) return username.username;})
+        .filter(username => username.username)
         .map(username => username.username.toLowerCase());
 
     return usernames;
@@ -78,7 +80,7 @@ export async function updateProfile(username, avatar, bio) {
         .from('profiles')
         .update({ 
             username, 
-            img_url: `https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/${avatar}.png`,
+            img_url: `${SUPABASE_URL}${BUCKET_PATH}${avatar}.png`,
             bio
         })
         .match({ user_id: user.id });
@@ -116,10 +118,10 @@ export async function createScore(score, level, initials, time) {
     const myProfile = await getMyProfile();
 
     const scoreObject = {
-        score: score,
-        level: level,
-        initials: initials,
-        time: time,
+        score,
+        level,
+        initials,
+        time,
         profile_id: myProfile.id
     };
 

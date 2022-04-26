@@ -34,6 +34,7 @@ window.addEventListener('load', async () => {
 });
 
 document.addEventListener('click', (e) => {
+    // seems like if you're going to copy and paste this, it should live in a separate utils file to be imported/exported. I see the same code repeated in 6 places throughout the app
     // LOGOUT BUTTON FUNCTIONALITY
     if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
         logout();
