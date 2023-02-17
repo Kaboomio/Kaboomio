@@ -1,66 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <link rel="icon" href="../assets/kaboomio-logo-small.png" />
+        <link rel="stylesheet" href="../styles/style.css" />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"
+        ></script>
+        <style>
+            canvas {
+                position: fixed;
+                top: 120px;
+                left: 50%;
+                transform: translateX(-50%);
+                height: 342px;
+                width: 608px;
+                padding-top: 70px;
+                padding-bottom: 440px;
+                padding-left: 42px;
+                padding-right: 54px;
+            }
+            #gameboyContainer {
+                position: fixed;
+                top: 120px;
+                left: 50%;
+                transform: translateX(-50%);
+                height: 852px;
+                width: 704px;
+                z-index: 1;
+            }
+            @media (max-width: 935px) {
+                header {
+                    font-size: 0.5rem;
+                    width: fit-content;
+                }
+            }
+        </style>
+        <title>Kaboomio</title>
+    </head>
 
-<head>
-    <link rel="icon" href="../assets/kaboomio-logo-small.png">
-    <link rel="stylesheet" href="../styles/style.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <style>
-        canvas {
-            position: fixed;
-            top: 120px;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 342px;
-            width: 608px;
-            padding-top: 70px;
-            padding-bottom: 440px;
-            padding-left: 42px;
-            padding-right: 54px;
-        }
-        #gameboyContainer {
-            position: fixed;
-            top: 120px;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 852px;
-            width: 704px;
-            z-index: 1;
-        }
-        @media (max-width: 935px){
-        header{
-            font-size: .5rem;
-            width: fit-content;
-        }
-    }
-    </style>
-    <title>Kaboomio</title>
-</head>
-
-<body>
-    <div class="loading-screen">
-        <div class="loading-img-container">
-            <img src="../assets/mario-running.gif" class="loading-img" />
+    <body>
+        <div class="loading-screen">
+            <div class="loading-img-container">
+                <img src="../assets/mario-running.gif" class="loading-img" />
+            </div>
+            <p>Loading...</p>
         </div>
-        <p>Loading...</p>
-    </div>
-    <header>
-
-    </header>
-    <img src="../assets/gameboyContainer.png" alt="" id="gameboyContainer">
-    <div id="whereAmI"></div>
-    <footer>
-        <div class="footer-left">
-            <a href="../about-page" id="about-link" draggable="false">
-                <div>
-                    Meet the Team
-                </div>
-            </a>
-        </div>
-        <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
-    </footer>
-    <script type="module" src="./mario.js"></script>
-    <script type="module" src="../easterEgg.js"></script>
-</body>
-
+        <header></header>
+        <img src="../assets/gameboyContainer.png" alt="" id="gameboyContainer" />
+        <div id="whereAmI"></div>
+        <footer>
+            <div class="footer-left">
+                <a href="../about-page" id="about-link" draggable="false">
+                    <div>Meet the Team</div>
+                </a>
+            </div>
+            <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
+        </footer>
+        <script type="module" src="./mario.js"></script>
+        <script type="module" src="../easterEgg.js"></script>
+    </body>
 </html>

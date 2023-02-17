@@ -1,132 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <link rel="icon" href="../assets/kaboomio-logo-small.png">
-    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/reset.css">
-    <link rel="stylesheet" href="../styles/style.css">
-    <link rel="stylesheet" href="../styles/home.css">
-    <style>
-        @media (max-width: 836px) {
-            header {
-                font-size: .5rem;
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"
+        ></script>
+        <link rel="icon" href="../assets/kaboomio-logo-small.png" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../styles/reset.css" />
+        <link rel="stylesheet" href="../styles/style.css" />
+        <link rel="stylesheet" href="../styles/home.css" />
+        <style>
+            @media (max-width: 836px) {
+                header {
+                    font-size: 0.5rem;
+                }
             }
-        }
-        @media (max-width: 650px) {
-            .footer-right {
-                font-size: .8rem
+            @media (max-width: 650px) {
+                .footer-right {
+                    font-size: 0.8rem;
+                }
             }
-        }
-    </style>
-    <title>Meet The Team | Kaboomio</title>
-</head>
-<body class="about-body">
-    <div class="loading-screen">
-        <div class="loading-img-container">
-            <img src="../assets/mario-running.gif" class="loading-img" />
+        </style>
+        <title>Meet The Team | Kaboomio</title>
+    </head>
+    <body class="about-body">
+        <div class="loading-screen">
+            <div class="loading-img-container">
+                <img src="../assets/mario-running.gif" class="loading-img" />
+            </div>
+            <p>Loading...</p>
         </div>
-        <p>Loading...</p>
-    </div>
-    <header>
-        <div class="header-left">
-            <h1>Meet the Kaboomio Team</h1>
-        </div>
-        <div class="header-right">
-            <div class="icons">
-                <a href="../leaderboard/" draggable="false">
-                    <img src="../assets/trophy-icon.png" id="trophy-icon" draggable="false" />
-                </a>
-                <span class="tooltip">Leaderboard</span>
+        <header>
+            <div class="header-left">
+                <h1>Meet the Kaboomio Team</h1>
             </div>
-            <div class="icons">
-                <a href="../" draggable="false">
-                    <img src="../assets/sign-in-icon.png" id="sign-in-icon" draggable="false" />
-                </a>
-                <span class="tooltip">Sign In</span>
-            </div>
-        </div>
-    </header>    
-    <main id="about-main">
-        <div id="about-container">
-            <div class="about-team flex-row">
-                <div class="about-name-img-container">
-                    <h3 class="about-name">Beau Elliott</h3>
-                    <img src="../assets/Beau-headshot copy.png" alt="" class="about-imgs" draggable="false">
+            <div class="header-right">
+                <div class="icons">
+                    <a href="../leaderboard/" draggable="false">
+                        <img src="../assets/trophy-icon.png" id="trophy-icon" draggable="false" />
+                    </a>
+                    <span class="tooltip">Leaderboard</span>
                 </div>
-                <div class="about-bio-container">
-                    <ul>
-                        <li class="about-bio">.....Avid circus monkey 🎪 and full stack software developer (in training).</li>
-                        <li class="about-bio">.....Beau currently resides in Seattle, WA and loves eating ramen, teaching pole dance, and rock climbing.</li>
-                        <li class="about-bio">.....Favorite Mario Character: Yoshi!</li>
-                        <li class="about-bio">.....Favorite Retro Game: Mortal Kombat.</li>
-                        <a href="https://github.com/belliott15" target="_blank" ><img class="icon" src="/assets/github-logo.png" /></a>
-                        <a href="https://www.linkedin.com/in/beau-elliott15/" target="_blank" ><img class="icon" src="/assets/linked-in-icon.png" /></a>
-                    </ul>
+                <div class="icons">
+                    <a href="../" draggable="false">
+                        <img src="../assets/sign-in-icon.png" id="sign-in-icon" draggable="false" />
+                    </a>
+                    <span class="tooltip">Sign In</span>
                 </div>
             </div>
-            <div class="about-team flex-row">
-                <div class="about-name-img-container">
-                    <h3 class="about-name">Will Gunderson</h3>
-                    <img src="../assets/willHeadshot.png" alt="" class="about-imgs" draggable="false">
-                    
+        </header>
+        <main id="about-main">
+            <div id="about-container">
+                <div class="about-team flex-row">
+                    <div class="about-name-img-container">
+                        <h3 class="about-name">Beau Elliott</h3>
+                        <img
+                            src="../assets/Beau-headshot copy.png"
+                            alt=""
+                            class="about-imgs"
+                            draggable="false"
+                        />
+                    </div>
+                    <div class="about-bio-container">
+                        <ul>
+                            <li class="about-bio">
+                                .....Avid circus monkey 🎪 and full stack software developer (in
+                                training).
+                            </li>
+                            <li class="about-bio">
+                                .....Beau currently resides in Seattle, WA and loves eating ramen,
+                                teaching pole dance, and rock climbing.
+                            </li>
+                            <li class="about-bio">.....Favorite Mario Character: Yoshi!</li>
+                            <li class="about-bio">.....Favorite Retro Game: Mortal Kombat.</li>
+                            <a href="https://github.com/belliott15" target="_blank"
+                                ><img class="icon" src="/assets/github-logo.png"
+                            /></a>
+                            <a href="https://www.linkedin.com/in/beau-elliott15/" target="_blank"
+                                ><img class="icon" src="/assets/linked-in-icon.png"
+                            /></a>
+                        </ul>
+                    </div>
                 </div>
-                <div class="about-bio-container">
-                    <ul>
-                        <li class="about-bio">.....Will is a software developer in training, currently living in Bend, OR.</li>
-                        <li class="about-bio">.....When not coding, you can find Will swimming, hiking, and drinking a beer outside.</li>
-                        <li class="about-bio">.....Favorite Mario Character: Koopa Troopa.</li>
-                        <li class="about-bio">.....Favorite Retro Game: Street Fighter II.</li>
-                        <a href="https://github.com/willgundy" target="_blank" ><img class="icon" src="/assets/github-logo.png" /></a>
-                        <a href="https://www.linkedin.com/in/will-gunderson/" target="_blank" ><img class="icon" src="/assets/linked-in-icon.png" /></a>
-                    </ul>
+                <div class="about-team flex-row">
+                    <div class="about-name-img-container">
+                        <h3 class="about-name">Will Gunderson</h3>
+                        <img
+                            src="../assets/willHeadshot.png"
+                            alt=""
+                            class="about-imgs"
+                            draggable="false"
+                        />
+                    </div>
+                    <div class="about-bio-container">
+                        <ul>
+                            <li class="about-bio">
+                                .....Will is a software developer in training, currently living in
+                                Bend, OR.
+                            </li>
+                            <li class="about-bio">
+                                .....When not coding, you can find Will swimming, hiking, and
+                                drinking a beer outside.
+                            </li>
+                            <li class="about-bio">.....Favorite Mario Character: Koopa Troopa.</li>
+                            <li class="about-bio">.....Favorite Retro Game: Street Fighter II.</li>
+                            <a href="https://github.com/willgundy" target="_blank"
+                                ><img class="icon" src="/assets/github-logo.png"
+                            /></a>
+                            <a href="https://www.linkedin.com/in/will-gunderson/" target="_blank"
+                                ><img class="icon" src="/assets/linked-in-icon.png"
+                            /></a>
+                        </ul>
+                    </div>
+                </div>
+                <div class="about-team flex-row">
+                    <div class="about-name-img-container">
+                        <h3 class="about-name">Riley Hoffman</h3>
+                        <img
+                            src="../assets/riley-headshot.jpeg"
+                            alt=""
+                            class="about-imgs"
+                            draggable="false"
+                        />
+                    </div>
+                    <div class="about-bio-container">
+                        <ul>
+                            <li class="about-bio">
+                                .....Riley is a full stack software developer in training, hailing
+                                from Portland, OR
+                            </li>
+                            <li class="about-bio">
+                                .....Outside of coding, he enjoys skiing, running, eating gyros, and
+                                watching any sport under the sun.
+                            </li>
+                            <li class="about-bio">.....Favorite Mario Character: Toad</li>
+                            <li class="about-bio">.....Favorite Retro Game: Galaga</li>
+                            <a href="https://github.com/rileyjhoff" target="_blank"
+                                ><img class="icon" src="/assets/github-logo.png"
+                            /></a>
+                            <a href="https://www.linkedin.com/in/riley-j-hoffman/" target="_blank"
+                                ><img class="icon" src="/assets/linked-in-icon.png"
+                            /></a>
+                        </ul>
+                    </div>
+                </div>
+                <div class="about-team flex-row">
+                    <div class="about-name-img-container">
+                        <h3 class="about-name">Cody Wise</h3>
+                        <img
+                            src="../assets/about-cody.jpg"
+                            alt=""
+                            class="about-imgs"
+                            draggable="false"
+                        />
+                    </div>
+                    <div class="about-bio-container">
+                        <ul>
+                            <li class="about-bio">
+                                .....Cody is a full stack software developer in training living in
+                                Portland, Oregon
+                            </li>
+                            <li class="about-bio">
+                                .....Cody enjoys using his skills to solve problems in innovative
+                                ways.
+                            </li>
+                            <li class="about-bio">
+                                .....When he is not coding, you can find him spending time with
+                                family, cooking, hiking, and playing video games.
+                            </li>
+                            <li class="about-bio">.....Favorite Mario Character: Bowser</li>
+                            <li class="about-bio">.....Favorite Retro Game: Super Mario Bros 3</li>
+                            <a href="https://github.com/Cody-Wise" target="_blank"
+                                ><img class="icon" src="/assets/github-logo.png"
+                            /></a>
+                            <a href="https://www.linkedin.com/in/codyawise/" target="_blank"
+                                ><img class="icon" src="/assets/linked-in-icon.png"
+                            /></a>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div class="about-team flex-row">
-                <div class="about-name-img-container">
-                    <h3 class="about-name">Riley Hoffman</h3>
-                    <img src="../assets/riley-headshot.jpeg" alt="" class="about-imgs" draggable="false">
-                    
-                </div>
-                <div class="about-bio-container">
-                    <ul>
-                        <li class="about-bio">.....Riley is a full stack software developer in training, hailing from Portland, OR</li>
-                        <li class="about-bio">.....Outside of coding, he enjoys skiing, running, eating gyros, and watching any sport under the sun.</li>
-                        <li class="about-bio">.....Favorite Mario Character: Toad</li>
-                        <li class="about-bio">.....Favorite Retro Game: Galaga</li>
-                        <a href="https://github.com/rileyjhoff" target="_blank"><img class="icon" src="/assets/github-logo.png" /></a>
-                        <a href="https://www.linkedin.com/in/riley-j-hoffman/" target="_blank"><img class="icon" src="/assets/linked-in-icon.png" /></a>
-                    </ul>
-                </div>
-            </div>
-            <div class="about-team flex-row">
-                <div class="about-name-img-container">
-                    <h3 class="about-name">Cody Wise</h3>
-                    <img src="../assets/about-cody.jpg" alt="" class="about-imgs" draggable="false">
-                    
-                </div>
-                <div class="about-bio-container">
-                    <ul>
-                        <li class="about-bio">.....Cody is a full stack software developer in training living in Portland, Oregon</li>
-                        <li class="about-bio">.....Cody enjoys using his skills to solve problems in innovative ways.</li>
-                        <li class="about-bio">.....When he is not coding, you can find him spending time with family, cooking, hiking, and playing video games.</li>
-                        <li class="about-bio">.....Favorite Mario Character: Bowser</li>
-                        <li class="about-bio">.....Favorite Retro Game: Super Mario Bros 3</li>
-                        <a href="https://github.com/Cody-Wise" target="_blank"><img class="icon" src="/assets/github-logo.png" /></a>
-                        <a href="https://www.linkedin.com/in/codyawise/" target="_blank"><img class="icon" src="/assets/linked-in-icon.png" /></a>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
-    </footer>
-    <script type="module" src="./about.js"></script>
-</body>
-
+        </main>
+        <footer>
+            <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
+        </footer>
+        <script type="module" src="./about.js"></script>
+    </body>
 </html>
