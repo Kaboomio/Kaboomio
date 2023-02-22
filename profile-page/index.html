@@ -1,185 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <link rel="icon" href="../assets/kaboomio-logo-small.png">
-    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/reset.css">
-    <link rel="stylesheet" href="../styles/style.css">
-    <link rel="stylesheet" href="../styles/home.css">
-    <style>
-        @media (min-width: 750px) {
-            header {
-                font-size: 1rem;
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"
+        ></script>
+        <link rel="icon" href="../assets/kaboomio-logo-small.png" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../styles/reset.css" />
+        <link rel="stylesheet" href="../styles/style.css" />
+        <link rel="stylesheet" href="../styles/home.css" />
+        <style>
+            @media (min-width: 750px) {
+                header {
+                    font-size: 1rem;
+                }
             }
-        }
-    </style>
-    <title>Profile | Kaboomio</title>
-</head>
-<body>
-    <div class="loading-screen">
-        <div class="loading-img-container">
-            <img src="../assets/mario-running.gif" class="loading-img" />
-        </div>
-        <p>Loading...</p>
-    </div>
-    <header>
-        
-    </header>
-    <main id="profilePage">
-        <div class="flex-row space-between infoSection">
-            <div class="profileMargins">
-                <div class="flex-row">
-                    <img src="" alt="No Avatar" id="avatar" draggable="false">
-                    <h2 id="username">Mario!</h2>
-                </div>
-                <span id="joinedDate">Joined Date: </span>
+        </style>
+        <title>Profile | Kaboomio</title>
+    </head>
+    <body>
+        <div class="loading-screen">
+            <div class="loading-img-container">
+                <img src="../assets/mario-running.gif" class="loading-img" />
             </div>
-            <div class="icons">
-                <img src="../assets/edit-icon2.png" alt="" id="editIcon" class="hidden">
-                <span class="tooltip hidden">Edit</span>
-            </div>
-            <p id="bio"></p>
+            <p>Loading...</p>
         </div>
-        <div class="profileEditForm hidden">
-            <form id="editProfile">
-                <div class="username-bio">
-                    <div>
-                        <h3>Edit Username:</h3>
-                        <input type="text" name="username" minlength="6" maxlength="15" id="editUsername" placeholder="Username (6-15 characters)" required>
-                    </div>
-                    <div>
-                        <h3>Edit Bio:</h3>
-                        <textarea id="editBio" name="bio" placeholder="Write a brief bio here"></textarea>
-                    </div>
-                    <button>Wahoo!</button>
-                </div>
-                <div class="avatar-select">
-                    <h3>Choose A New Avatar:</h3>
+        <header></header>
+        <main id="profilePage">
+            <div class="flex-row space-between infoSection">
+                <div class="profileMargins">
                     <div class="flex-row">
-                        <label for="mario">
-                            <input type="radio" name="avatar" id="mario">
-                            <figure>
-                                <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/mario.png" alt="" class="avatar-imgs" draggable="false">
-                                <figcaption>Mario</figcaption>
-                            </figure>
-                        </label>
-                        <label for="luigi">
-                            <input type="radio" name="avatar" id="luigi">
-                            <figure>
-                                <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/luigi.png" alt="" class="avatar-imgs" draggable="false">
-                                <figcaption>Luigi</figcaption>
-                            </figure>
-                        </label>
-                        <label for="yoshi">
-                            <input type="radio" name="avatar" id="yoshi">
-                            <figure>
-                                <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/yoshi.png" alt="" class="avatar-imgs" draggable="false">
-                                <figcaption>Yoshi</figcaption>
-                            </figure>
-                        </label>
-                        <label for="toad">
-                            <input type="radio" name="avatar" id="toad">
-                            <figure>
-                                <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/toad.png" alt="" class="avatar-imgs" draggable="false">
-                                <figcaption>Toad</figcaption>
-                            </figure>
-                        </label>
-                        <label for="peach">
-                            <input type="radio" name="avatar" id="peach">
-                            <figure>
-                                <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/peach.png" alt="" class="avatar-imgs" draggable="false">
-                                <figcaption>Peach</figcaption>
-                            </figure>
-                        </label>
-                        <label for="daisy">
-                            <input type="radio" name="avatar" id="daisy">
-                            <figure>
-                                <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/daisy.png" alt="" class="avatar-imgs" draggable="false">
-                                <figcaption>Daisy</figcaption>
-                            </figure>
-                        </label>
-                        <label for="donkey-kong">
-                            <input type="radio" name="avatar" id="donkey-kong">
-                            <figure>
-                                <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/donkey-kong.png" alt="" class="avatar-imgs" draggable="false">
-                                <figcaption>Donkey Kong</figcaption>
-                            </figure>
-                        </label>
-                        <label for="toadette">
-                            <input type="radio" name="avatar" id="toadette">
-                            <figure>
-                                <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/toadette.png" alt="" class="avatar-imgs" draggable="false">
-                                <figcaption>Toadette</figcaption>
-                            </figure>
-                        </label>
-                        <label for="bowser">
-                            <input type="radio" name="avatar" id="bowser">
-                            <figure>
-                                <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/bowser.png" alt="" class="avatar-imgs" draggable="false">
-                                <figcaption>Bowser</figcaption>
-                            </figure>
-                        </label>
-                        <label for="wario">
-                            <input type="radio" name="avatar" id="wario">
-                            <figure>
-                                <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/wario.png" alt="" class="avatar-imgs" draggable="false">
-                                <figcaption>Wario</figcaption>
-                            </figure>
-                        </label>
-                        <label for="boo">
-                            <input type="radio" name="avatar" id="boo">
-                            <figure>
-                                <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/boo.png" alt="" class="avatar-imgs" draggable="false">
-                                <figcaption>Boo</figcaption>
-                            </figure>
-                        </label>
-                        <label for="koopa-troopa">
-                            <input type="radio" name="avatar" id="koopa-troopa">
-                            <figure>
-                                <img src="https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/koopa-troopa.png" alt="" class="avatar-imgs" draggable="false">
-                                <figcaption>Koopa Troopa</figcaption>
-                            </figure>
-                        </label>
+                        <img src="" alt="No Avatar" id="avatar" draggable="false" />
+                        <h2 id="username">Mario!</h2>
+                    </div>
+                    <span id="joinedDate">Joined Date: </span>
                 </div>
+                <div class="icons">
+                    <img src="../assets/edit-icon2.png" alt="" id="editIcon" class="hidden" />
+                    <span class="tooltip hidden">Edit</span>
                 </div>
-            </form>
-        </div>
-        <div class="scoreDiv">
-            <h3>User Scores</h3>
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Initials</th>
-                            <th>Score</th>
-                            <th>Level</th>
-                            <th>Date</th>
-                            <th>Elapsed Time</th>
-                        </tr>
-                    </thead>
-                    <tbody  id="previousScoresContainer">
-
-                    </tbody>
-                </table>
+                <p id="bio"></p>
             </div>
-        </div>
-    </main>
-    <footer>
-        <div class="footer-left">
-            <a href="../about-page" id="about-link" draggable="false">
+            <div class="profileEditForm hidden">
+                <form id="editProfile">
+                    <div class="username-bio">
+                        <div>
+                            <h3>Edit Username:</h3>
+                            <input
+                                type="text"
+                                name="username"
+                                minlength="6"
+                                maxlength="15"
+                                id="editUsername"
+                                placeholder="Username (6-15 characters)"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <h3>Edit Bio:</h3>
+                            <textarea
+                                id="editBio"
+                                name="bio"
+                                placeholder="Write a brief bio here"
+                            ></textarea>
+                        </div>
+                        <button>Wahoo!</button>
+                    </div>
+                    <div class="avatar-select">
+                        <h3>Choose A New Avatar:</h3>
+                        <div class="flex-row">
+                            <label for="mario">
+                                <input type="radio" name="avatar" id="mario" />
+                                <figure>
+                                    <img
+                                        src="https://rwbjopjlvkaogcdsnhcg.supabase.co/storage/v1/object/public/avatars/mario.png"
+                                        alt=""
+                                        class="avatar-imgs"
+                                        draggable="false"
+                                    />
+                                    <figcaption>Mario</figcaption>
+                                </figure>
+                            </label>
+                            <label for="luigi">
+                                <input type="radio" name="avatar" id="luigi" />
+                                <figure>
+                                    <img
+                                        src="https://rwbjopjlvkaogcdsnhcg.supabase.co/storage/v1/object/public/avatars/luigi.png"
+                                        alt=""
+                                        class="avatar-imgs"
+                                        draggable="false"
+                                    />
+                                    <figcaption>Luigi</figcaption>
+                                </figure>
+                            </label>
+                            <label for="yoshi">
+                                <input type="radio" name="avatar" id="yoshi" />
+                                <figure>
+                                    <img
+                                        src="https://rwbjopjlvkaogcdsnhcg.supabase.co/storage/v1/object/public/avatars/yoshi.png"
+                                        alt=""
+                                        class="avatar-imgs"
+                                        draggable="false"
+                                    />
+                                    <figcaption>Yoshi</figcaption>
+                                </figure>
+                            </label>
+                            <label for="toad">
+                                <input type="radio" name="avatar" id="toad" />
+                                <figure>
+                                    <img
+                                        src="https://rwbjopjlvkaogcdsnhcg.supabase.co/storage/v1/object/public/avatars/toad.png"
+                                        alt=""
+                                        class="avatar-imgs"
+                                        draggable="false"
+                                    />
+                                    <figcaption>Toad</figcaption>
+                                </figure>
+                            </label>
+                            <label for="peach">
+                                <input type="radio" name="avatar" id="peach" />
+                                <figure>
+                                    <img
+                                        src="https://rwbjopjlvkaogcdsnhcg.supabase.co/storage/v1/object/public/avatars/peach.png"
+                                        alt=""
+                                        class="avatar-imgs"
+                                        draggable="false"
+                                    />
+                                    <figcaption>Peach</figcaption>
+                                </figure>
+                            </label>
+                            <label for="daisy">
+                                <input type="radio" name="avatar" id="daisy" />
+                                <figure>
+                                    <img
+                                        src="https://rwbjopjlvkaogcdsnhcg.supabase.co/storage/v1/object/public/avatars/daisy.png"
+                                        alt=""
+                                        class="avatar-imgs"
+                                        draggable="false"
+                                    />
+                                    <figcaption>Daisy</figcaption>
+                                </figure>
+                            </label>
+                            <label for="donkey-kong">
+                                <input type="radio" name="avatar" id="donkey-kong" />
+                                <figure>
+                                    <img
+                                        src="https://rwbjopjlvkaogcdsnhcg.supabase.co/storage/v1/object/public/avatars/donkey-kong.png"
+                                        alt=""
+                                        class="avatar-imgs"
+                                        draggable="false"
+                                    />
+                                    <figcaption>Donkey Kong</figcaption>
+                                </figure>
+                            </label>
+                            <label for="toadette">
+                                <input type="radio" name="avatar" id="toadette" />
+                                <figure>
+                                    <img
+                                        src="https://rwbjopjlvkaogcdsnhcg.supabase.co/storage/v1/object/public/avatars/toadette.png"
+                                        alt=""
+                                        class="avatar-imgs"
+                                        draggable="false"
+                                    />
+                                    <figcaption>Toadette</figcaption>
+                                </figure>
+                            </label>
+                            <label for="bowser">
+                                <input type="radio" name="avatar" id="bowser" />
+                                <figure>
+                                    <img
+                                        src="https://rwbjopjlvkaogcdsnhcg.supabase.co/storage/v1/object/public/avatars/bowser.png"
+                                        alt=""
+                                        class="avatar-imgs"
+                                        draggable="false"
+                                    />
+                                    <figcaption>Bowser</figcaption>
+                                </figure>
+                            </label>
+                            <label for="wario">
+                                <input type="radio" name="avatar" id="wario" />
+                                <figure>
+                                    <img
+                                        src="https://rwbjopjlvkaogcdsnhcg.supabase.co/storage/v1/object/public/avatars/wario.png"
+                                        alt=""
+                                        class="avatar-imgs"
+                                        draggable="false"
+                                    />
+                                    <figcaption>Wario</figcaption>
+                                </figure>
+                            </label>
+                            <label for="boo">
+                                <input type="radio" name="avatar" id="boo" />
+                                <figure>
+                                    <img
+                                        src="https://rwbjopjlvkaogcdsnhcg.supabase.co/storage/v1/object/public/avatars/boo.png"
+                                        alt=""
+                                        class="avatar-imgs"
+                                        draggable="false"
+                                    />
+                                    <figcaption>Boo</figcaption>
+                                </figure>
+                            </label>
+                            <label for="koopa-troopa">
+                                <input type="radio" name="avatar" id="koopa-troopa" />
+                                <figure>
+                                    <img
+                                        src="https://rwbjopjlvkaogcdsnhcg.supabase.co/storage/v1/object/public/avatars/koopa-troopa.png"
+                                        alt=""
+                                        class="avatar-imgs"
+                                        draggable="false"
+                                    />
+                                    <figcaption>Koopa Troopa</figcaption>
+                                </figure>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="scoreDiv">
+                <h3>User Scores</h3>
                 <div>
-                    Meet the Team
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Initials</th>
+                                <th>Score</th>
+                                <th>Level</th>
+                                <th>Date</th>
+                                <th>Elapsed Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="previousScoresContainer"></tbody>
+                    </table>
                 </div>
-            </a>
-        </div>
-        <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
-    </footer>
-    <script type="module" src="./profile.js"></script>
-</body>
-
+            </div>
+        </main>
+        <footer>
+            <div class="footer-left">
+                <a href="../about-page" id="about-link" draggable="false">
+                    <div>Meet the Team</div>
+                </a>
+            </div>
+            <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
+        </footer>
+        <script type="module" src="./profile.js"></script>
+    </body>
 </html>

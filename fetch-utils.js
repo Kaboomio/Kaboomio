@@ -1,6 +1,6 @@
-const SUPABASE_URL = 'https://houeghgfcehojgitoeuv.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhvdWVnaGdmY2Vob2pnaXRvZXV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDk2OTM3OTMsImV4cCI6MTk2NTI2OTc5M30.ILc0KmFBK-JZ7zwqJFfF1v1Hcp1IFa3tO1PD3lskmWc';
-
+const SUPABASE_URL = 'https://rwbjopjlvkaogcdsnhcg.supabase.co';
+const SUPABASE_KEY =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ3YmpvcGpsdmthb2djZHNuaGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzY2NTY4NzAsImV4cCI6MTk5MjIzMjg3MH0.O50ts5I4I75eHb527-c07WYcZSDu5g3xkBxCvFkdDuM';
 export const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 export function getUser() {
@@ -43,31 +43,26 @@ export async function logout() {
 }
 
 export async function createProfile() {
-    const response = await client
-        .from('profiles')
-        .insert({});
+    const user = getUser();
+    const response = await client.from('profiles').insert({ user_id: user.id });
     return checkError(response);
 }
 
 export async function getMyProfile() {
     const user = getUser();
-    const response = await client
-        .from('profiles')
-        .select()
-        .match({ user_id: user.id })
-        .single();
+    const response = await client.from('profiles').select().match({ user_id: user.id }).single();
 
     return checkError(response);
 }
 
 export async function getAllUsernames() {
-    const response = await client
-        .from('profiles')
-        .select('username');
+    const response = await client.from('profiles').select('username');
 
     const usernames = response.body
-        .filter(username => {if (username.username !== null) return username.username;})
-        .map(username => username.username.toLowerCase());
+        .filter((username) => {
+            if (username.username !== null) return username.username;
+        })
+        .map((username) => username.username.toLowerCase());
 
     return usernames;
 }
@@ -76,10 +71,10 @@ export async function updateProfile(username, avatar, bio) {
     const user = getUser();
     const response = await client
         .from('profiles')
-        .update({ 
-            username, 
-            img_url: `https://houeghgfcehojgitoeuv.supabase.co/storage/v1/object/public/avatars/${avatar}.png`,
-            bio
+        .update({
+            username,
+            img_url: `https://rwbjopjlvkaogcdsnhcg.supabase.co/storage/v1/object/public/avatars/${avatar}.png`,
+            bio,
         })
         .match({ user_id: user.id });
 
@@ -87,32 +82,22 @@ export async function updateProfile(username, avatar, bio) {
 }
 
 export async function getProfile(id) {
-    const response = await client
-        .from('profiles')
-        .select('*')
-        .match({ id: id })
-        .single();
+    const response = await client.from('profiles').select('*').match({ id: id }).single();
 
     return response.body;
 }
 
 export async function getProfileScores(id) {
-    const response = await client
-        .from('scores')
-        .select('*')
-        .match({ profile_id: id });
+    const response = await client.from('scores').select('*').match({ profile_id: id });
 
     return response.body;
 }
-
 
 function checkError({ data, error }) {
     return error ? console.error(error) : data;
 }
 
-
 export async function createScore(score, level, initials, time) {
-
     const myProfile = await getMyProfile();
 
     const scoreObject = {
@@ -120,24 +105,16 @@ export async function createScore(score, level, initials, time) {
         level: level,
         initials: initials,
         time: time,
-        profile_id: myProfile.id
+        profile_id: myProfile.id,
     };
 
-
-    const response = await client
-        .from('scores')
-        .insert(scoreObject)
-        .single();
+    const response = await client.from('scores').insert(scoreObject).single();
 
     return checkError(response);
 }
 
 export async function deleteScore(id) {
-    const response = await client
-        .from('scores')
-        .delete()
-        .match({ id: id })
-        .single();
-    
+    const response = await client.from('scores').delete().match({ id: id }).single();
+
     return response.body;
 }

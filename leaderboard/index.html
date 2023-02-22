@@ -1,85 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <link rel="icon" href="../assets/kaboomio-logo-small.png">
-    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/reset.css">
-    <link rel="stylesheet" href="../styles/style.css">
-    <link rel="stylesheet" href="../styles/home.css">
-    <title>Leaderboard | Kaboomio</title>
-    <style>
-
-    </style>
-    <!-- Keep below in this html file -->
-    <style>
-        @media (min-width: 600px) {
-            header {
-                font-size: 1rem;
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"
+        ></script>
+        <link rel="icon" href="../assets/kaboomio-logo-small.png" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../styles/reset.css" />
+        <link rel="stylesheet" href="../styles/style.css" />
+        <link rel="stylesheet" href="../styles/home.css" />
+        <title>Leaderboard | Kaboomio</title>
+        <style></style>
+        <!-- Keep below in this html file -->
+        <style>
+            @media (min-width: 600px) {
+                header {
+                    font-size: 1rem;
+                }
             }
-        }
-    </style>
-</head>
-<body id="leaderboard-body">
-    <div class="loading-screen">
-        <div class="loading-img-container">
-            <img src="../assets/mario-running.gif" class="loading-img" />
-        </div>
-        <p>Loading...</p>
-    </div>
-    <header>
-        <div class="header-left">
-            <h1>Leaderboard</h1>
-        </div>
-        <div class="header-right">
-            <div class="icons">
-                <a href="../" draggable="false">
-                    <img src="../assets/sign-in-icon.png" id="sign-in-icon" draggable="false" />
-                </a>
-                <span class="tooltip">Sign In</span>
+        </style>
+    </head>
+    <body id="leaderboard-body">
+        <div class="loading-screen">
+            <div class="loading-img-container">
+                <img src="../assets/mario-running.gif" class="loading-img" />
             </div>
+            <p>Loading...</p>
         </div>
-    </header>    
-<div class="leaderboard">
-
-    <div class="leaderboard-left">
-        <a href="/about-page/index.html" draggable="false" id="leaderboard-trophy-container"><img class="trophy" src="../assets/leaderboard-trophy.png" alt="" draggable="false"></a>
-    </div>
-
-    <div class="leaderboard-right">
-        <h1>Top Scores</h1>
-        <select name="sort-param" id="sort-param">
-            <option value="score">Sort by Score</option>
-            <option value="time">Sort by Time</option>
-        </select>
-        <select name="sort-asc-desc" id="sort-asc-desc">
-            <option value="desc">Highest</option>
-            <option value="asc">Lowest</option>
-        </select>
-        <div class="table">
-            <h3>Initials</h3>  <h3>Score</h3> <h3>Time</h3> 
-        </div>
-            <div class="score-container">
-
+        <header>
+            <div class="header-left">
+                <h1>Leaderboard</h1>
             </div>
-    </div>
-
-</div>
-    <footer>
-        <div class="footer-left">
-            <a href="../about-page" id="about-link" draggable="false">
-                <div>
-                    Meet the Team
+            <div class="header-right">
+                <div class="icons">
+                    <a href="../" draggable="false">
+                        <img src="../assets/sign-in-icon.png" id="sign-in-icon" draggable="false" />
+                    </a>
+                    <span class="tooltip">Sign In</span>
                 </div>
-            </a>
-        </div>
-        <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
-    </footer>
-    <script type="module" src="./leaderboard.js"></script>
-</body>
+            </div>
+        </header>
+        <div class="leaderboard">
+            <div class="leaderboard-left">
+                <a href="/about-page/index.html" draggable="false" id="leaderboard-trophy-container"
+                    ><img
+                        class="trophy"
+                        src="../assets/leaderboard-trophy.png"
+                        alt=""
+                        draggable="false"
+                /></a>
+            </div>
 
+            <div class="leaderboard-right">
+                <h1>Top Scores</h1>
+                <select name="sort-param" id="sort-param">
+                    <option value="score">Sort by Score</option>
+                    <option value="time">Sort by Time</option>
+                </select>
+                <select name="sort-asc-desc" id="sort-asc-desc">
+                    <option value="desc">Highest</option>
+                    <option value="asc">Lowest</option>
+                </select>
+                <div class="table">
+                    <h3>Initials</h3>
+                    <h3>Score</h3>
+                    <h3>Time</h3>
+                </div>
+                <div class="score-container"></div>
+            </div>
+        </div>
+        <footer>
+            <div class="footer-left">
+                <a href="../about-page" id="about-link" draggable="false">
+                    <div>Meet the Team</div>
+                </a>
+            </div>
+            <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
+        </footer>
+        <script type="module" src="./leaderboard.js"></script>
+    </body>
 </html>

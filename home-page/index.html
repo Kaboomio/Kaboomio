@@ -1,75 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"
+        ></script>
+        <link rel="icon" href="../assets/kaboomio-logo-small.png" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../styles/reset.css" />
+        <link rel="stylesheet" href="../styles/style.css" />
+        <link rel="stylesheet" href="../styles/home.css" />
+        <title>Home | Kaboomio</title>
+        <style>
+            #avatar-icon:hover {
+                animation: shake 4s forwards infinite;
+            }
+            @keyframes shake {
+                0% {
+                    transform: rotate(10deg);
+                }
+                25% {
+                    transform: rotate(-25deg);
+                }
+                50% {
+                    transform: rotate(25deg);
+                }
+                75% {
+                    transform: rotate(-25deg);
+                }
+                100% {
+                    transform: rotate(10deg);
+                }
+            }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <link rel="icon" href="../assets/kaboomio-logo-small.png">
-    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/reset.css">
-    <link rel="stylesheet" href="../styles/style.css">
-    <link rel="stylesheet" href="../styles/home.css">
-    <title>Home | Kaboomio</title>
-    <style>
-        #avatar-icon:hover{
-        animation: shake 4s forwards infinite;
-        }
-        @keyframes shake {
-    0%{ transform: rotate(10deg); }
-    25%{ transform: rotate(-25deg)}
-    50%{ transform: rotate(25deg) }
-    75% { transform: rotate(-25deg)}
-    100%{ transform: rotate(10deg)}
-}
-
-#label a{
-    text-decoration: none;
-}
-    </style>
-</head>
-<body>
-    <div class="loading-screen">
-        <div class="loading-img-container">
-            <img src="../assets/mario-running.gif" class="loading-img" />
+            #label a {
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="loading-screen">
+            <div class="loading-img-container">
+                <img src="../assets/mario-running.gif" class="loading-img" />
+            </div>
+            <p>Loading...</p>
         </div>
-        <p>Loading...</p>
-    </div>
-    <header>
-
-    </header>    
-    <main id="homepage2">
-        <section id="kaboomio">
-            <h1>Welcome to Kaboomio</h1>
-            <img id="kaboomio-img" src="/assets/kaboomio-logo-big.png" draggable="false" />
-        </section>
-        <h1>Lets play some games</h1>
-        <section id="second-row">
-            <section id="display-games">
-                <img src="/assets/real-play.GIF" draggable="false" />
-                <button id="play-game-button">Mario Time!</button>
+        <header></header>
+        <main id="homepage2">
+            <section id="kaboomio">
+                <h1>Welcome to Kaboomio</h1>
+                <img id="kaboomio-img" src="/assets/kaboomio-logo-big.png" draggable="false" />
             </section>
-            <section id="leaderboard-container">
-                <p id="label">Leader Board <a href="/leaderboard/index.html" draggable="false">🏆</a></p>
-                <div id="display-leaderboard">
-                </div>
-                <a href="/about-page/index.html" id="yoshi-egg" draggable="false"><img src="/assets/egg gif.gif" draggable="false"></a>
+            <h1>Lets play some games</h1>
+            <section id="second-row">
+                <section id="display-games">
+                    <img src="/assets/real-play.GIF" draggable="false" />
+                    <button id="play-game-button">Mario Time!</button>
+                </section>
+                <section id="leaderboard-container">
+                    <p id="label">
+                        Leader Board <a href="/leaderboard/index.html" draggable="false">🏆</a>
+                    </p>
+                    <div id="display-leaderboard"></div>
+                    <a href="/about-page/index.html" id="yoshi-egg" draggable="false"
+                        ><img src="/assets/egg gif.gif" draggable="false"
+                    /></a>
+                </section>
             </section>
-        </section>
-        <!-- <img  id='kaboomio-logo' src="/assets/Kaboomio.gif" /> -->
-    </main>
-    <footer>
-        <div class="footer-left">
-            <a href="../about-page" id="about-link" draggable="false">
-                <div>
-                    Meet the Team
-                </div>
-            </a>
-        </div>
-        <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
-    </footer>
-    <script type="module" src="./home-page.js"></script>
-</body>
-
+            <!-- <img  id='kaboomio-logo' src="/assets/Kaboomio.gif" /> -->
+        </main>
+        <footer>
+            <div class="footer-left">
+                <a href="../about-page" id="about-link" draggable="false">
+                    <div>Meet the Team</div>
+                </a>
+            </div>
+            <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
+        </footer>
+        <script type="module" src="./home-page.js"></script>
+    </body>
 </html>

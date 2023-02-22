@@ -1,4 +1,12 @@
-import { checkAuth, logout, getMyProfile, getProfile, getProfileScores, getUser, updateProfile, deleteScore } from '../fetch-utils.js';
+import {
+    checkAuth,
+    getMyProfile,
+    getProfile,
+    getProfileScores,
+    getUser,
+    updateProfile,
+    deleteScore,
+} from '../fetch-utils.js';
 import { renderProfileHeader } from '../render-utils.js';
 
 const title = document.querySelector('title');
@@ -31,13 +39,6 @@ window.addEventListener('load', async () => {
     await displayScoreTable();
     await fetchAndDisplayHeader(profile);
     loadingScreen.classList.add('invisible');
-});
-
-document.addEventListener('click', (e) => {
-    // LOGOUT BUTTON FUNCTIONALITY
-    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
-        logout();
-    }
 });
 
 editIconEl.addEventListener('click', toggleEditing);
@@ -130,20 +131,20 @@ async function displayScoreTable() {
         removeScoreEl.classList.add('removeItem');
         removeScoreEl.textContent = '\u00D7';
         removeScoreEl.id = score.id;
-        
+
         const userProfileId = await getMyProfile();
-        
+
         removeScoreEl.addEventListener('click', async () => {
             await deleteScore(removeScoreEl.id);
             await displayScoreTable();
         });
-        
+
         if (userProfileId.id.toString() !== profileId) {
             removeScoreEl.classList.add('hidden');
         }
-        
+
         scoreRow.append(initialsEl, scoreEl, levelEl, dateEl, timeEl, removeScoreEl);
-        
+
         previousScoresContainer.append(scoreRow);
     }
 }

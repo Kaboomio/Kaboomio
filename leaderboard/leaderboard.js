@@ -1,4 +1,4 @@
-import { logout, client, getMyProfile, getUser } from '../fetch-utils.js';
+import { client, getMyProfile, getUser } from '../fetch-utils.js';
 import { renderLeaderboardHeader } from '../render-utils.js';
 
 const body = document.querySelector('body');
@@ -16,16 +16,9 @@ window.addEventListener('load', async () => {
     loadingScreen.classList.add('invisible');
 });
 
-document.addEventListener('click', (e) => {
-    // LOGOUT BUTTON FUNCTIONALITY
-    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
-        logout();
-    }
-});
-
 scoreContainerEl.addEventListener('scroll', () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    if (clientHeight + scrollTop >= scrollHeight){
+    if (clientHeight + scrollTop >= scrollHeight) {
         console.log(clientHeight);
     }
 });
@@ -35,7 +28,7 @@ sortParameter.addEventListener('change', fetchAndDisplayLeaderboard);
 ascdescSelect.addEventListener('change', fetchAndDisplayLeaderboard);
 
 // FUNCTIONS
-async function getLeaderboard(type, trueFalse){
+async function getLeaderboard(type, trueFalse) {
     const response = await client
         .from('scores')
         .select('*')
@@ -67,7 +60,7 @@ async function fetchAndDisplayLeaderboard() {
         scoreEl.addEventListener('click', () => {
             window.location.replace(`../profile-page/?id=${score.profile_id}`);
         });
-        
+
         scoreContainerEl.append(scoreEl);
     }
 }

@@ -1,4 +1,4 @@
-import { checkAuth, logout, client, getMyProfile } from '../fetch-utils.js';
+import { checkAuth, client, getMyProfile } from '../fetch-utils.js';
 import { renderHomeHeader } from '../render-utils.js';
 
 const body = document.querySelector('body');
@@ -20,29 +20,22 @@ window.addEventListener('load', async () => {
     loadingScreen.classList.add('invisible');
 });
 
-document.addEventListener('click', (e) => {
-    // LOGOUT BUTTON FUNCTIONALITY
-    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
-        logout();
-    }
-});
-
 playGameButton.addEventListener('click', () => {
     window.location.replace('../mario');
 });
 
-yoshiEgg.addEventListener('click', () =>{
-    const yoshiSound = new Audio('../assets/sounds/yoshi_1.mp3'); 
-    function playYoshi(){
+yoshiEgg.addEventListener('click', () => {
+    const yoshiSound = new Audio('../assets/sounds/yoshi_1.mp3');
+    function playYoshi() {
         yoshiSound.play();
     }
     playYoshi();
 });
 
 // FUNCTIONS
-async function fetchAndDisplayLeaderboard(){
+async function fetchAndDisplayLeaderboard() {
     leaderboardDisplay.textContent = '';
-    
+
     const leaderboard = await getScoreboard();
     const leaderDiv = document.createElement('div');
     const leaderboardTag = document.createElement('p');
@@ -50,11 +43,10 @@ async function fetchAndDisplayLeaderboard(){
 
     leaderboardTag.textContent = `Initials.......Score........Time`;
 
-    for (let leaders of leaderboard){
+    for (let leaders of leaderboard) {
         const leaderboard = document.createElement('a');
         leaderboard.classList.add('mini');
         leaderboard.textContent = `${leaders.initials}.............${leaders.score}.........${leaders.time}`;
-        console.log(leaders.profile_id);
         leaderboard.addEventListener('click', async () => {
             leaderboard.href = `../profile-page/?id=${leaders.profile_id}`;
         });
@@ -68,7 +60,7 @@ async function fetchAndDisplayLeaderboard(){
     leaderboardDisplay.append(leaderDiv);
 }
 
-async function getScoreboard(){
+async function getScoreboard() {
     const response = await client
         .from('scores')
         .select('*')

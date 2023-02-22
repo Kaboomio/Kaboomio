@@ -1,3 +1,5 @@
+import { logout } from './fetch-utils.js';
+
 export function renderHomeHeader(profile) {
     const header = document.createElement('header');
     const headerLeft = document.createElement('div');
@@ -21,7 +23,7 @@ export function renderHomeHeader(profile) {
     const logoutAnchor = document.createElement('a');
     const logoutImg = document.createElement('img');
     const logoutTooltip = document.createElement('span');
-    
+
     headerLeft.classList.add('header-left');
     avatarImg.id = 'avatar-icon';
     avatarImg.src = `${profile.img_url}`;
@@ -62,18 +64,20 @@ export function renderHomeHeader(profile) {
     logoutTooltip.textContent = 'Logout';
     logoutTooltip.classList.add('tooltip');
 
+    logoutImg.addEventListener('click', () => logout());
+
     avatarDiv.append(avatarImg);
-    
+
     homeAnchor.append(homeImg);
     leaderboardAnchor.append(leaderboardImg);
     settingsAnchor.append(settingsImg);
     logoutAnchor.append(logoutImg);
-    
+
     homeDiv.append(homeAnchor, homeTooltip);
     leaderboardDiv.append(leaderboardAnchor, leaderboardTooltip);
     settingsDiv.append(settingsAnchor, settingsTooltip);
     logoutDiv.append(logoutAnchor, logoutTooltip);
-    
+
     headerLeft.append(avatarDiv, nameEl);
     headerRight.append(homeDiv, leaderboardDiv, settingsDiv, logoutDiv);
 
@@ -149,6 +153,8 @@ export function renderLeaderboardHeader(profile) {
         settingsTooltip.textContent = 'Edit Profile';
     }
 
+    logoutImg.addEventListener('click', () => logout());
+
     homeAnchor.append(homeImg);
     leaderboardAnchor.append(leaderboardImg);
     settingsAnchor.append(settingsImg);
@@ -195,6 +201,8 @@ export function renderProfileHeader(profile, userId) {
     const logoutImg = document.createElement('img');
     const logoutTooltip = document.createElement('span');
 
+    logoutImg.addEventListener('click', () => logout());
+
     headerLeft.classList.add('header-left');
     headerRight.classList.add('header-right');
     homeDiv.classList.add('icons');
@@ -227,7 +235,7 @@ export function renderProfileHeader(profile, userId) {
     logoutAnchor.draggable = false;
     logoutTooltip.textContent = 'Logout';
     logoutTooltip.classList.add('tooltip');
-    
+
     // CONDITIONAL ELEMENT ATTRIBUTES IF USER HAS NOT FINISHED PROFILE SETUP
     if (!profile.username) {
         settingsAnchor.href = '../profile-setup';
@@ -237,7 +245,7 @@ export function renderProfileHeader(profile, userId) {
         settingsAnchor.href = `../profile-page/?id=${profile.id}`;
         settingsTooltip.textContent = 'Edit Profile';
     }
-    
+
     // CONDITIONAL HEADER TEXT IF USER HAS NOT FINISHED PROFILE SETUP, IS ON THEIR PROFILE, OR IS ON ANOTHER USER'S PROFILE
     if (!profile.username) {
         nameEl.textContent = 'Dont forget to finish profile setup!';
@@ -292,7 +300,9 @@ export function renderAboutHeader(profile) {
     const logoutAnchor = document.createElement('a');
     const logoutImg = document.createElement('img');
     const logoutTooltip = document.createElement('span');
-    
+
+    logoutImg.addEventListener('click', () => logout());
+
     headerLeft.classList.add('header-left');
     nameEl.textContent = `Meet the Kaboomio Team`;
 
@@ -327,7 +337,7 @@ export function renderAboutHeader(profile) {
     logoutAnchor.draggable = false;
     logoutTooltip.textContent = 'Logout';
     logoutTooltip.classList.add('tooltip');
-    
+
     // CONDITIONAL ELEMENT ATTRIBUTES IF USER HAS NOT FINISHED PROFILE SETUP
     if (!profile.username) {
         nameEl.textContent = 'Dont forget to finish profile setup!';
@@ -339,7 +349,6 @@ export function renderAboutHeader(profile) {
         settingsTooltip.textContent = 'Edit Profile';
     }
 
-    
     homeAnchor.append(homeImg);
     leaderboardAnchor.append(leaderboardImg);
     settingsAnchor.append(settingsImg);
@@ -354,7 +363,7 @@ export function renderAboutHeader(profile) {
     leaderboardDiv.append(leaderboardAnchor, leaderboardTooltip);
     settingsDiv.append(settingsAnchor, settingsTooltip);
     logoutDiv.append(logoutAnchor, logoutTooltip);
-    
+
     headerLeft.append(nameEl);
     headerRight.append(homeDiv, leaderboardDiv, settingsDiv, logoutDiv);
 
@@ -389,7 +398,9 @@ export function renderMarioHeader(profile) {
     const logoutAnchor = document.createElement('a');
     const logoutImg = document.createElement('img');
     const logoutTooltip = document.createElement('span');
-    
+
+    logoutImg.addEventListener('click', () => logout());
+
     headerLeft.classList.add('header-left');
     avatarImg.id = 'avatar-icon';
     avatarImg.draggable = false;
@@ -448,7 +459,7 @@ export function renderMarioHeader(profile) {
     leaderboardDiv.append(leaderboardAnchor, leaderboardTooltip);
     settingsDiv.append(settingsAnchor, settingsTooltip);
     logoutDiv.append(logoutAnchor, logoutTooltip);
-    
+
     headerLeft.append(avatarDiv, nameEl);
     headerMiddle.append(fullscreenButton, muteButton);
     headerRight.append(homeDiv, leaderboardDiv, settingsDiv, logoutDiv);

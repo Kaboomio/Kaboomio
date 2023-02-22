@@ -1,4 +1,4 @@
-import { checkAuth, logout, getMyProfile, createScore } from '../fetch-utils.js';
+import { checkAuth, getMyProfile, createScore } from '../fetch-utils.js';
 import { renderMarioHeader } from '../render-utils.js';
 import kaboom from '../kaboom/dist/kaboom.mjs';
 
@@ -10,12 +10,8 @@ let canvas = null;
 checkAuth();
 
 document.addEventListener('click', async (e) => {
-    // LOGOUT BUTTON FUNCTIONALITY
-    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
-        logout();
-    }
     // FULLSCREEN BUTTON FUNCTIONALITY
-    const buttonId = e.path[0].id;
+    const buttonId = e.target.id;
     await goFullscreen(e, buttonId);
     await goGameboy(e, buttonId);
     await muteGame(e, buttonId);
@@ -29,7 +25,7 @@ kaboom({
     global: true,
     width: 608,
     height: 342,
-    scale: 3, 
+    scale: 3,
     debug: true,
     frameRate: 60,
     background: [4, 156, 216, 1],
@@ -74,7 +70,7 @@ loadSound('silence', 'sounds/silence.mp3');
 loadSound('superstar', 'sounds/superstar.mp3');
 
 //PLAY MARIO THEME SONG ON LOAD
-let music = play('theme'); 
+let music = play('theme');
 music.pause();
 volume(1);
 
@@ -82,17 +78,12 @@ volume(1);
 scene('start', () => {
     music.volume(0.05);
     // Start screen labels
-    add([
-        sprite('start-screen'),
-        origin('center'), 
-        pos(center().x, center().y - 30), 
-        scale(0.65),
-    ]);
+    add([sprite('start-screen'), origin('center'), pos(center().x, center().y - 30), scale(0.65)]);
     add([
         text('Press Spacebar To Start'),
-        origin('center'), 
-        pos(center().x, center().y + 90), 
-        scale(0.25)
+        origin('center'),
+        pos(center().x, center().y + 90),
+        scale(0.25),
     ]);
 
     // Press space to continue
@@ -104,18 +95,18 @@ scene('start', () => {
 //GAME SCENE
 //this area contains all info about the actual gameplay of Mario
 scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
-    layers(['bg', 'obj', 'ui'], 'obj'); 
+    layers(['bg', 'obj', 'ui'], 'obj');
     music.play();
     music.volume(0.05);
     camPos(310, 160);
-    
+
     // GAMEPLAY VARIABLES
     let marioRightSpeed = 20;
     let marioLeftSpeed = 20;
     let marioLeftGlideSpeed = 0;
     let marioRightGlideSpeed = 0;
     let marioAirGlideSpeed = 0;
-    let isJumping = true; 
+    let isJumping = true;
     let marioDirection = 'right';
     let bigMario = false;
     let fireMario = false;
@@ -135,107 +126,132 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
 
     //GAME LEVEL CONFIG
     const mapWidth = 3000;
-    
+
     //setting global variable for all level maps to be used in gameplay
-    const Levels = [[
-        '                                                                                                                                                                                         ',
-        '                                                                                                    !                                                                    !               ',
-        '                               !                                                                                                     !                    !                              ',
-        '         !                                                     !                                                    !                                                                    ',
-        '                                            !                                                              !                           !                !                          i     ',
-        '                    !                                                           !                                                                                      /           i     ',
-        '                %                                           =====   ===%              #          ===    =%%=                                                          //           i     ',
-        '                                                                                                                                                                     ///           i     ',
-        '                                                                                                                                                                    ////           i     ',
-        '                                                                                                                                                                   /////           i     ',
-        '          %   =&=#=                 -       -            =#=           =    ==     %  %  %    =          ==        /  /          //  /              ==%=          //////           i     ',
-        '                             -      |       |                                                                     //  //        ///  //      -               -   ///////           i     ',
-        '                       -     |      |       |                                                                    ///  ///      ////  ///     |               |  ////////           i     ',
-        '     ) (   ^           |     |     ^|   ^   |  (           (          )          ^     )        )               ////  ////    /////  ////    |      ^   ^    | /////////           i     ',
-        '====================================================  ==========   ================================================================  ====================================================',
-        '====================================================  ==========   ================================================================  ====================================================',
-        '====================================================  ==========   ================================================================  ====================================================',
-    ], 
-    [
-        '                                                                                          !             %             !                 !            !                   !                ',
-        '                                                                       !                                                                                                                  ',
-        '          !                                                                                       !                              !      !                   !                             ',
-        '                                                   !                           !                   ======   !                                                                   !         ',
-        '               %%                   !                                                                                        !                 !                                          ',
-        '                          !                                                         ======                                                                              /                 ',
-        '   !                                                                                                                                                   !               //               ! ',
-        '              ====                                                          ====                                                                                      ///                 ',
-        '                     !                                                                                 =======                                                       ////                 ',
-        '                                                                ==                                                    =====                                         /////                 ',
-        '           =%%=  ====                                                     ======                  ======                                         -                 //////                 ',
-        '                                                           -                                                                     //    -         |                ///////                 ',
-        '                                                      -    |                                                                   ////    |         |               ////////                 ',
-        '   (   (        )           ^         )          s    |   )|           ^  (   ^ )    ^ )    ^               )        (        /////    |  s    s |           s  /////////  )   )   i    ) ',
-        '===================================================   ==========   =================================     ==========================   ====================================================',
-        '===================================================   ==========   =================================     ==========================   ====================================================',
-        '===================================================   ==========   =================================     ==========================   ====================================================',
-    ],
-    [
-        '                                                         !                                 !        *****%             !                 !            !                   !               ',
-        '           !                                   !                                                    ******                                                                                ',
-        '                                                                                                 !  ******                            !      !                   !             %          ',
-        '                            !                              !                    !                *  ======   !                                                                  !         ',
-        '                                         !                                                      ==                           !                 !                                          ',
-        '     !                                                                            =&=    =%=                                                                             /                ',
-        '                                                                                                                                                      !                 //              ! ',
-        '                                                                                     ***                                                                               ///                ',
-        '         ==%==%==                                                                  ===%===                                        =====                               ////                ',
-        '                                                                                                                                                                     /////                ',
-        '                            *                  *            /                                                            -                                          //////                ',
-        '                         *     *           *   -           //                 ======   =============               -     |                       -                 ///////                ',
-        '                      *     -     *            |          ///                                                -     |     |                       |                ////////                ',
-        '    (   * ) *  *  *)  *     |    )   *  *      |        //////        ^ )  ^   )  ^    ^)   ^ )  ^           |  )  |     |   ^ )          s    s |           s   /////////     )   i    ) ',
-        '===================================================   ==========   =================================     ==========================   ====================================================',
-        '===================================================   ==========   =================================     ==========================   ====================================================',
-        '===================================================   ==========   =================================     ==========================   ====================================================',
-    ]];
+    const Levels = [
+        [
+            '                                                                                                                                                                                         ',
+            '                                                                                                    !                                                                    !               ',
+            '                               !                                                                                                     !                    !                              ',
+            '         !                                                     !                                                    !                                                                    ',
+            '                                            !                                                              !                           !                !                          i     ',
+            '                    !                                                           !                                                                                      /           i     ',
+            '                %                                           =====   ===%              #          ===    =%%=                                                          //           i     ',
+            '                                                                                                                                                                     ///           i     ',
+            '                                                                                                                                                                    ////           i     ',
+            '                                                                                                                                                                   /////           i     ',
+            '          %   =&=#=                 -       -            =#=           =    ==     %  %  %    =          ==        /  /          //  /              ==%=          //////           i     ',
+            '                             -      |       |                                                                     //  //        ///  //      -               -   ///////           i     ',
+            '                       -     |      |       |                                                                    ///  ///      ////  ///     |               |  ////////           i     ',
+            '     ) (   ^           |     |     ^|   ^   |  (           (          )          ^     )        )               ////  ////    /////  ////    |      ^   ^    | /////////           i     ',
+            '====================================================  ==========   ================================================================  ====================================================',
+            '====================================================  ==========   ================================================================  ====================================================',
+            '====================================================  ==========   ================================================================  ====================================================',
+        ],
+        [
+            '                                                                                          !             %             !                 !            !                   !                ',
+            '                                                                       !                                                                                                                  ',
+            '          !                                                                                       !                              !      !                   !                             ',
+            '                                                   !                           !                   ======   !                                                                   !         ',
+            '               %%                   !                                                                                        !                 !                                          ',
+            '                          !                                                         ======                                                                              /                 ',
+            '   !                                                                                                                                                   !               //               ! ',
+            '              ====                                                          ====                                                                                      ///                 ',
+            '                     !                                                                                 =======                                                       ////                 ',
+            '                                                                ==                                                    =====                                         /////                 ',
+            '           =%%=  ====                                                     ======                  ======                                         -                 //////                 ',
+            '                                                           -                                                                     //    -         |                ///////                 ',
+            '                                                      -    |                                                                   ////    |         |               ////////                 ',
+            '   (   (        )           ^         )          s    |   )|           ^  (   ^ )    ^ )    ^               )        (        /////    |  s    s |           s  /////////  )   )   i    ) ',
+            '===================================================   ==========   =================================     ==========================   ====================================================',
+            '===================================================   ==========   =================================     ==========================   ====================================================',
+            '===================================================   ==========   =================================     ==========================   ====================================================',
+        ],
+        [
+            '                                                         !                                 !        *****%             !                 !            !                   !               ',
+            '           !                                   !                                                    ******                                                                                ',
+            '                                                                                                 !  ******                            !      !                   !             %          ',
+            '                            !                              !                    !                *  ======   !                                                                  !         ',
+            '                                         !                                                      ==                           !                 !                                          ',
+            '     !                                                                            =&=    =%=                                                                             /                ',
+            '                                                                                                                                                      !                 //              ! ',
+            '                                                                                     ***                                                                               ///                ',
+            '         ==%==%==                                                                  ===%===                                        =====                               ////                ',
+            '                                                                                                                                                                     /////                ',
+            '                            *                  *            /                                                            -                                          //////                ',
+            '                         *     *           *   -           //                 ======   =============               -     |                       -                 ///////                ',
+            '                      *     -     *            |          ///                                                -     |     |                       |                ////////                ',
+            '    (   * ) *  *  *)  *     |    )   *  *      |        //////        ^ )  ^   )  ^    ^)   ^ )  ^           |  )  |     |   ^ )          s    s |           s   /////////     )   i    ) ',
+            '===================================================   ==========   =================================     ==========================   ====================================================',
+            '===================================================   ==========   =================================     ==========================   ====================================================',
+            '===================================================   ==========   =================================     ==========================   ====================================================',
+        ],
+    ];
 
     //configuring the map to display
-    
+
     const levelConfig = {
         width: 20,
         height: 20,
-        'i': () => [sprite('invisible'), area(), solid(), 'invisible'],
+        i: () => [sprite('invisible'), area(), solid(), 'invisible'],
         '=': () => [sprite('brick'), area(), solid(), 'brick'],
         '*': () => [sprite('coin'), area(), 'coin'],
         '%': () => [sprite('surprise-box'), solid(), area(), bump(), 'coin-surprise', 'brick'],
         '&': () => [sprite('surprise-box'), solid(), area(), bump(), 'fire-surprise', 'brick'],
-        'f': () => [sprite('flower'), solid(), area(), 'fire', 'powerup', body()],
+        f: () => [sprite('flower'), solid(), area(), 'fire', 'powerup', body()],
         '#': () => [sprite('surprise-box'), solid(), area(), bump(), 'mushroom-surprise', 'brick'],
-        '^': () => [sprite('enemies', { anim: 'GoombaWalk' }), solid(), area(20, 20), 'goomba', 'dangerous', body(), patrol(150)],
-        'k': () => [sprite('enemies', { anim: 'KoopaWalk' }), solid(), area(), 'koopa', 'dangerous', body(), patrol(150)],
-        's': () => [sprite('spiny'), solid(), area(), 'bullet', 'dangerous', body(), patrol(150)],
-        'b': () => [sprite('bullet'), solid(), area(), 'bullet', 'dangerous'],
+        '^': () => [
+            sprite('enemies', { anim: 'GoombaWalk' }),
+            solid(),
+            area(20, 20),
+            'goomba',
+            'dangerous',
+            body(),
+            patrol(150),
+        ],
+        k: () => [
+            sprite('enemies', { anim: 'KoopaWalk' }),
+            solid(),
+            area(),
+            'koopa',
+            'dangerous',
+            body(),
+            patrol(150),
+        ],
+        s: () => [sprite('spiny'), solid(), area(), 'bullet', 'dangerous', body(), patrol(150)],
+        b: () => [sprite('bullet'), solid(), area(), 'bullet', 'dangerous'],
         '-': () => [sprite('pipe-top'), solid(), area(), 'pipe', pos(0, 2), scale(1.2), 'brick'],
         '+': () => [sprite('block'), solid(), area(), bump()],
-        '@': () => [sprite('mushroom'), solid(), area(), 'mushroom', 'powerup', body(), patrol(150)],
+        '@': () => [
+            sprite('mushroom'),
+            solid(),
+            area(),
+            'mushroom',
+            'powerup',
+            body(),
+            patrol(150),
+        ],
         '>': () => [sprite('fireball'), solid(), area(), 'mario-fireball', body()],
         '!': () => [sprite('cloud'), pos(20, 50), layer('bg')],
         '(': () => [sprite('hill'), pos(0, -15), layer('bg')],
         ')': () => [sprite('shrub'), pos(0, 3), layer('bg')],
         '/': () => [sprite('hard-block'), solid(), area(), scale(1.2), 'brick'],
-        '|': () => [sprite('pipe-bottom'), solid(), area(), scale(1.2), 'brick']
+        '|': () => [sprite('pipe-bottom'), solid(), area(), scale(1.2), 'brick'],
     };
 
     //initalize level
     const gameLevel = addLevel(Levels[currentLevel - 1], levelConfig);
 
-    
     //MARIO & HIS MOVEMENT
     //INITIALIZING MARIO
     const mario = add([
-        sprite('mario', { frame: 0, anim: 0 }), 
-        solid(), 
+        sprite('mario', { frame: 0, anim: 0 }),
+        solid(),
         area({ width: 20, height: 20 }),
-        pos(20, 240),        
+        pos(20, 240),
         body(),
         origin('bot'),
-        'mario'
+        'mario',
     ]);
 
     // CAMERA AND MARIO MOVEMENT BASED ON 60 FPS
@@ -283,13 +299,13 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
         marioDirection = 'left';
     });
 
-     //mario glide after releasing left key
+    //mario glide after releasing left key
     onKeyRelease('left', () => {
         marioRightGlideSpeed = 0;
         marioLeftGlideSpeed = marioLeftSpeed;
         marioLeftSpeed = 20;
     });
-    
+
     //mario movement on pressing right key
     onKeyDown('right', () => {
         marioRightGlideSpeed = 0;
@@ -306,7 +322,7 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
         play('silence');
         marioDirection = 'right';
     });
-    
+
     //mario glide after releasing right key
     onKeyRelease('right', () => {
         marioLeftGlideSpeed = 0;
@@ -372,7 +388,7 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
                 scoreLabel.value += enemyScore;
                 scoreLabel.text = scoreLabel.value;
                 addScoreText(d, enemyScore);
-            } 
+            }
         } else {
             if (bigMario || fireMario) {
                 destroy(d);
@@ -382,7 +398,7 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
                 wait(0.1, () => {
                     bigMario = false;
                     fireMario = false;
-                }); 
+                });
             } else if (!bigMario) {
                 totalPlayTime = totalPlayTime + (400 - timeLeft);
                 go('lose', { score: scoreLabel.value, time: totalPlayTime, level: currentLevel });
@@ -400,7 +416,11 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
             const fireSurprises = get('fire-surprise');
             for (let coinSurprise of coinSurprises) {
                 const marioDistance = coinSurprise.pos.x - mario.pos.x;
-                if (mario.pos.y === coinSurprise.pos.y + marioPlusBlockHeight && marioDistance > -20 && marioDistance < 0) {
+                if (
+                    mario.pos.y === coinSurprise.pos.y + marioPlusBlockHeight &&
+                    marioDistance > -20 &&
+                    marioDistance < 0
+                ) {
                     destroy(coinSurprise);
                     gameLevel.spawn('*', coinSurprise.gridPos.sub(0, 1));
                     const box = gameLevel.spawn('+', coinSurprise.gridPos.sub(0, 0));
@@ -409,7 +429,11 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
             }
             for (let fireSurprise of fireSurprises) {
                 const marioDistance = fireSurprise.pos.x - mario.pos.x;
-                if (mario.pos.y === fireSurprise.pos.y + marioPlusBlockHeight && marioDistance > -20 && marioDistance < 0) {
+                if (
+                    mario.pos.y === fireSurprise.pos.y + marioPlusBlockHeight &&
+                    marioDistance > -20 &&
+                    marioDistance < 0
+                ) {
                     destroy(fireSurprise);
                     gameLevel.spawn('f', fireSurprise.gridPos.sub(0, 1));
                     const box = gameLevel.spawn('+', fireSurprise.gridPos.sub(0, 0));
@@ -418,7 +442,11 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
             }
             for (let mushroomSurprise of mushroomSurprises) {
                 const marioDistance = mushroomSurprise.pos.x - mario.pos.x;
-                if (mario.pos.y === mushroomSurprise.pos.y + marioPlusBlockHeight && marioDistance > -20 && marioDistance < 0) {
+                if (
+                    mario.pos.y === mushroomSurprise.pos.y + marioPlusBlockHeight &&
+                    marioDistance > -20 &&
+                    marioDistance < 0
+                ) {
                     destroy(mushroomSurprise);
                     gameLevel.spawn('@', mushroomSurprise.gridPos.sub(0, 1));
                     const box = gameLevel.spawn('+', mushroomSurprise.gridPos.sub(0, 0));
@@ -481,7 +509,7 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
             fireballDirection = 'down';
         }
 
-        if ((e.pos.x < 0) || (e.pos.x > mapWidth)) {
+        if (e.pos.x < 0 || e.pos.x > mapWidth) {
             destroy(e);
         }
         if (fireballDirection === 'down') {
@@ -523,139 +551,128 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
     });
 
     // CASTLE BACKGROUND
-    add([
-        sprite('castle'),
-        pos(3600, 300),
-        layer('bg'),
-        origin('bot'),
-        scale(0.25)
-    ]);
+    add([sprite('castle'), pos(3600, 300), layer('bg'), origin('bot'), scale(0.25)]);
 
     //GAMEPLAY HEADER TEXT
     // TOP ROW LABELS
     add([
         text('Score', {
             size: 18,
-            width: 320, 
-            font: 'sinko', 
+            width: 320,
+            font: 'sinko',
         }),
         pos(31, 6),
-        fixed()
+        fixed(),
     ]);
     add([
         text('Coins', {
             size: 18,
-            width: 320, 
-            font: 'sinko', 
+            width: 320,
+            font: 'sinko',
         }),
         pos(150, 6),
-        fixed()
+        fixed(),
     ]);
     add([
         text('World', {
             size: 18,
-            width: 320, 
-            font: 'sinko', 
+            width: 320,
+            font: 'sinko',
         }),
         pos(270, 6),
-        fixed()
+        fixed(),
     ]);
     add([
         text('Time', {
             size: 18,
-            width: 320, 
-            font: 'sinko', 
+            width: 320,
+            font: 'sinko',
         }),
         pos(390, 6),
-        fixed()
+        fixed(),
     ]);
     add([
         text('Lives', {
             size: 18,
-            width: 320, 
-            font: 'sinko', 
+            width: 320,
+            font: 'sinko',
         }),
         pos(500, 6),
-        fixed()
+        fixed(),
     ]);
     // BOTTOM ROW LABELS
     // SCORE COUNT
     const scoreLabel = add([
         text(score, {
             size: 18,
-            width: 320, 
-            font: 'sinko', 
+            width: 320,
+            font: 'sinko',
         }),
         pos(31, 30),
         layer('ui'),
         fixed(),
         {
-            value: score
-        }
+            value: score,
+        },
     ]);
     // COIN IMAGE & COUNT
-    add([
-        sprite('coin'), 
-        pos(155, 32), 
-        layer('ui'), 
-        fixed()
-    ]);
+    add([sprite('coin'), pos(155, 32), layer('ui'), fixed()]);
     const coinCountLabel = add([
         text('x' + count, {
             size: 18,
-            width: 320, 
-            font: 'sinko', 
+            width: 320,
+            font: 'sinko',
         }),
         pos(180, 30),
         fixed(),
         layer('ui'),
         {
-            value: count
-        }
+            value: count,
+        },
     ]);
     // CURRENT LEVEL
     add([
         text('1-' + currentLevel, {
             size: 18,
-            width: 320, 
-            font: 'sinko', 
+            width: 320,
+            font: 'sinko',
         }),
         pos(285, 30),
-        fixed()
+        fixed(),
     ]);
     // TIME LEFT
     add([
         text(timeLeft, {
             size: 18,
-            width: 320, 
-            font: 'sinko', 
+            width: 320,
+            font: 'sinko',
         }),
         pos(397, 30),
         layer('ui'),
         fixed(),
         {
-            value: time
+            value: time,
         },
-        'timer'        
+        'timer',
     ]);
     // LIVES LEFT
     add([
         text('1', {
             size: 18,
-            width: 320, 
-            font: 'sinko', 
+            width: 320,
+            font: 'sinko',
         }),
         pos(530, 30),
-        fixed()
+        fixed(),
     ]);
-    
+
     //TIMER CODE
     let timer = get('timer');
     onUpdate(() => {
         currTime = time() - gameLoadTime;
-        const timeCheck = Math.floor(currTime / .4);
+        const timeCheck = Math.floor(currTime / 0.4);
         if (!levelComplete) {
-            if ((400 - timeCheck) < timeLeft) {
+            if (400 - timeCheck < timeLeft) {
                 timeLeft--;
                 timer[0].text = timeLeft;
                 levelPlayTime = 400 - timeLeft;
@@ -704,10 +721,25 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
                 if (timeLeft === 0) {
                     wait(1, () => {
                         if (currentLevel >= Levels.length) {
-                            go('winner', { score: scoreLabel.value, time: totalPlayTime, level: currentLevel });
+                            go('winner', {
+                                score: scoreLabel.value,
+                                time: totalPlayTime,
+                                level: currentLevel,
+                            });
                         } else {
                             currentLevel++;
-                            go('game', { score: scoreLabel.value, count: coinCountLabel.value, time: 400, mario: mario, levelNumber: currentLevel, totalPlayTime: totalPlayTime }, currentLevel);
+                            go(
+                                'game',
+                                {
+                                    score: scoreLabel.value,
+                                    count: coinCountLabel.value,
+                                    time: 400,
+                                    mario: mario,
+                                    levelNumber: currentLevel,
+                                    totalPlayTime: totalPlayTime,
+                                },
+                                currentLevel
+                            );
                         }
                     });
                 }
@@ -715,7 +747,6 @@ scene('game', ({ score, count, levelNumber, totalPlayTime }) => {
         }
     });
 });
-
 
 // GAME OVER SCENE
 scene('lose', ({ score, time, level }) => {
@@ -728,37 +759,28 @@ scene('lose', ({ score, time, level }) => {
         text('Game Over', {
             size: 226,
         }),
-        origin('center'), 
+        origin('center'),
         pos(center().x, center().y - 100),
         scale(0.25),
-        
+
         gameOverMusic.play(),
-        gameOverMusic.volume(0.05)
+        gameOverMusic.volume(0.05),
     ]);
-    add([
-        text(score, 32), 
-        origin('center'), 
-        pos(center().x, center().y - 20)
-    ]);
+    add([text(score, 32), origin('center'), pos(center().x, center().y - 20)]);
 
     // entering initials to be uploaded to supabase along with score
     add([
         text('Enter your initials and press Enter:'),
         scale(0.25),
         origin('center'),
-        pos(center().x, center().y + 60)
+        pos(center().x, center().y + 60),
     ]);
-    let n = add([
-        text(''),
-        origin('center'),
-        pos(center().x, center().y + 125),
-        { value: '' }
-    ]);
+    let n = add([text(''), origin('center'), pos(center().x, center().y + 125), { value: '' }]);
     let maxChar = 3;
     onCharInput((ch) => {
         n.value += ch;
         n.value = n.value.toUpperCase();
-        if (n.value.length > maxChar){
+        if (n.value.length > maxChar) {
             n.value = n.value.slice(0, 2);
         }
     });
@@ -787,37 +809,28 @@ scene('winner', ({ score, time, level }) => {
         text('You Win!', {
             size: 226,
         }),
-        origin('center'), 
+        origin('center'),
         pos(center().x, center().y - 100),
         scale(0.25),
-        
+
         youWinMusic.play(),
-        youWinMusic.volume(0.1)
+        youWinMusic.volume(0.1),
     ]);
-    add([
-        text(score, 32), 
-        origin('center'), 
-        pos(center().x, center().y - 20)
-    ]);
+    add([text(score, 32), origin('center'), pos(center().x, center().y - 20)]);
 
     // entering initials to be uploaded to supabase along with score
     add([
         text('Enter your initials and press Enter:'),
         scale(0.25),
         origin('center'),
-        pos(center().x, center().y + 60)
+        pos(center().x, center().y + 60),
     ]);
-    let n = add([
-        text(''),
-        origin('center'),
-        pos(center().x, center().y + 125),
-        { value: '' }
-    ]);
+    let n = add([text(''), origin('center'), pos(center().x, center().y + 125), { value: '' }]);
     let maxChar = 3;
     onCharInput((ch) => {
         n.value += ch;
         n.value = n.value.toUpperCase();
-        if (n.value.length > maxChar){
+        if (n.value.length > maxChar) {
             n.value = n.value.slice(0, 2);
         }
     });
@@ -835,11 +848,8 @@ scene('winner', ({ score, time, level }) => {
     });
 });
 
-
 //initialize start scene - must be at end of game configs
 go('start', { score: 0, count: 0, levelNumber: 1 });
-
-
 
 // Local Functions
 //add score to canvas
@@ -847,11 +857,11 @@ function addScoreText(obj, score) {
     add([
         text(score, {
             size: 10,
-            width: 35, 
-            font: 'sinko', 
+            width: 35,
+            font: 'sinko',
         }),
         pos(obj.pos.x, obj.pos.y),
-        lifespan(1, { fade: 0.01 })
+        lifespan(1, { fade: 0.01 }),
     ]);
 }
 
@@ -860,12 +870,12 @@ function addCarefulText() {
     add([
         text('Be Careful...', {
             size: 18,
-            width: 200, 
-            font: 'sinko', 
+            width: 200,
+            font: 'sinko',
         }),
         pos(center().x - 85, center().y - 100),
         fixed(),
-        lifespan(1.5, { fade: 0.01 })
+        lifespan(1.5, { fade: 0.01 }),
     ]);
 }
 
@@ -895,9 +905,9 @@ function patrol(distance = 150, speed = 50, dir = 1) {
 //adding fireballs to the game scene
 function spawnFireball(marioPos, marioDirection) {
     let fireballPos = marioPos;
-    if (marioDirection === 'left'){
+    if (marioDirection === 'left') {
         fireballPos = marioPos.sub(10, 10);
-    } else if (marioDirection === 'right'){
+    } else if (marioDirection === 'right') {
         fireballPos = marioPos.add(10, -10);
     }
     add([
@@ -908,24 +918,24 @@ function spawnFireball(marioPos, marioDirection) {
         area(),
         solid(),
         'fireball',
-        { speed: marioDirection === 'right' ? 180 : -180 }
+        { speed: marioDirection === 'right' ? 180 : -180 },
     ]);
 }
 
 //animation for bumping boxes as mario
-function bump(offset = 8, speed = 2, stopAtOrigin = true, isY = true){
+function bump(offset = 8, speed = 2, stopAtOrigin = true, isY = true) {
     return {
-        id: 'bump', 
+        id: 'bump',
         require: ['pos'],
         bumpOffset: offset,
         speed: speed,
         bumped: false,
         origPos: 0,
-        direction: -1, 
+        direction: -1,
         isY: isY,
         update() {
             if (this.bumped) {
-                if (isY){
+                if (isY) {
                     this.pos.y = this.pos.y + this.direction * this.speed;
                     if (this.pos.y < this.origPos - this.bumpOffset) {
                         this.direction = 1;
@@ -935,7 +945,8 @@ function bump(offset = 8, speed = 2, stopAtOrigin = true, isY = true){
                         this.pos.y = this.origPos;
                         this.direction = -1;
                     }
-                } else {this.pos.x = this.pos.x + this.direction * this.speed;
+                } else {
+                    this.pos.x = this.pos.x + this.direction * this.speed;
                     if (this.pos.x < this.origPos - this.bumpOffset) {
                         this.direction = 1;
                     }
@@ -947,14 +958,14 @@ function bump(offset = 8, speed = 2, stopAtOrigin = true, isY = true){
                 }
             }
         },
-        bump(){
+        bump() {
             this.bumped = true;
             if (isY) {
                 this.origPos = this.pos.y;
             } else {
                 this.origPos = this.pos.x;
             }
-        }
+        },
     };
 }
 
@@ -964,7 +975,7 @@ async function goFullscreen(e, buttonId) {
         let aspectRatio = 16 / 9;
         let vh = window.innerHeight - 115;
         let vw = window.innerWidth;
-        if ((vw / vh) < aspectRatio) {
+        if (vw / vh < aspectRatio) {
             canvas.style.width = `${vw}px`;
             canvas.style.height = `${vw / aspectRatio}px`;
             canvas.style.padding = '57.5px 0 0';
@@ -978,8 +989,8 @@ async function goFullscreen(e, buttonId) {
             canvas.style.top = '90px';
             gameboy.classList.add('hidden');
         }
-        e.path[0].id = 'gameboy';
-        e.path[0].textContent = 'Gameboy';
+        e.target.id = 'gameboy';
+        e.target.textContent = 'Gameboy';
     }
 }
 async function goGameboy(e, buttonId) {
@@ -990,8 +1001,8 @@ async function goGameboy(e, buttonId) {
         canvas.style.top = '120px';
         canvas.style.transform = 'translateX(-50%)';
         gameboy.classList.remove('hidden');
-        e.path[0].id = 'fullscreen';
-        e.path[0].textContent = 'Fullscreen';
+        e.target.id = 'fullscreen';
+        e.target.textContent = 'Fullscreen';
     }
 }
 
@@ -999,15 +1010,15 @@ async function goGameboy(e, buttonId) {
 async function muteGame(e, buttonId) {
     if (buttonId === 'mute') {
         volume(0.0);
-        e.path[0].id = 'unmute';
-        e.path[0].textContent = 'Unmute';
+        e.target.id = 'unmute';
+        e.target.textContent = 'Unmute';
     }
 }
 async function unmuteGame(e, buttonId) {
     if (buttonId === 'unmute') {
         volume(1);
-        e.path[0].id = 'mute';
-        e.path[0].textContent = 'Mute';
+        e.target.id = 'mute';
+        e.target.textContent = 'Mute';
     }
 }
 
@@ -1025,52 +1036,51 @@ function marioLeftGlide(marioLeftGlideSpeed, mario) {
         if (toScreen(mario.pos).x > 10) {
             mario.move(-marioLeftGlideSpeed, 0);
         }
-        return marioLeftGlideSpeed = marioLeftGlideSpeed - 6;
+        return (marioLeftGlideSpeed = marioLeftGlideSpeed - 6);
     } else if (marioLeftGlideSpeed > 50) {
         if (toScreen(mario.pos).x > 10) {
             mario.move(-marioLeftGlideSpeed, 0);
         }
-        return marioLeftGlideSpeed = marioLeftGlideSpeed - 5;
+        return (marioLeftGlideSpeed = marioLeftGlideSpeed - 5);
     } else if (marioLeftGlideSpeed > 20) {
         if (toScreen(mario.pos).x > 10) {
             mario.move(-marioLeftGlideSpeed, 0);
         }
-        return marioLeftGlideSpeed = marioLeftGlideSpeed - 3;
+        return (marioLeftGlideSpeed = marioLeftGlideSpeed - 3);
     } else if (marioLeftGlideSpeed > 4) {
         if (toScreen(mario.pos).x > 10) {
             mario.move(-marioLeftGlideSpeed, 0);
         }
-        return marioLeftGlideSpeed = marioLeftGlideSpeed - 2;
+        return (marioLeftGlideSpeed = marioLeftGlideSpeed - 2);
     } else if (marioLeftGlideSpeed > 0) {
         if (toScreen(mario.pos).x > 10) {
             mario.move(-marioLeftGlideSpeed, 0);
         }
-        return marioLeftGlideSpeed = marioLeftGlideSpeed - 1;
+        return (marioLeftGlideSpeed = marioLeftGlideSpeed - 1);
     } else if (marioLeftGlideSpeed < 0) {
-        return marioLeftGlideSpeed = 0;
+        return (marioLeftGlideSpeed = 0);
     }
 }
 function marioRightGlide(marioRightGlideSpeed, mario) {
     if (marioRightGlideSpeed > 100) {
         mario.move(marioRightGlideSpeed, 0);
-        return marioRightGlideSpeed = marioRightGlideSpeed - 6;
+        return (marioRightGlideSpeed = marioRightGlideSpeed - 6);
     } else if (marioRightGlideSpeed > 50) {
         mario.move(marioRightGlideSpeed, 0);
-        return marioRightGlideSpeed = marioRightGlideSpeed - 5;
+        return (marioRightGlideSpeed = marioRightGlideSpeed - 5);
     } else if (marioRightGlideSpeed > 20) {
         mario.move(marioRightGlideSpeed, 0);
-        return marioRightGlideSpeed = marioRightGlideSpeed - 3;
+        return (marioRightGlideSpeed = marioRightGlideSpeed - 3);
     } else if (marioRightGlideSpeed > 4) {
         mario.move(marioRightGlideSpeed, 0);
-        return marioRightGlideSpeed = marioRightGlideSpeed - 2;
+        return (marioRightGlideSpeed = marioRightGlideSpeed - 2);
     } else if (marioRightGlideSpeed > 0) {
         mario.move(marioRightGlideSpeed, 0);
-        return marioRightGlideSpeed = marioRightGlideSpeed - 1;
+        return (marioRightGlideSpeed = marioRightGlideSpeed - 1);
     } else if (marioRightGlideSpeed < 0) {
-        return marioRightGlideSpeed = 0;
+        return (marioRightGlideSpeed = 0);
     }
 }
-
 
 // SLOWING DOWN MARIO FUNCTIONS - slows down mario if he's idle or moving in the opposite direction
 function slowMarioRightSpeed(marioRightSpeed, lastMarioXPos, currMarioXPos) {
@@ -1086,11 +1096,11 @@ function slowMarioRightSpeed(marioRightSpeed, lastMarioXPos, currMarioXPos) {
 function slowMarioLeftSpeed(marioLeftSpeed, lastMarioXPos, currMarioXPos) {
     // SLOWING DOWN SPEED BECAUSE MARIO IS IDLE
     if (marioLeftSpeed > 20 && lastMarioXPos === currMarioXPos) {
-        return marioLeftSpeed = marioLeftSpeed - 4;
+        return (marioLeftSpeed = marioLeftSpeed - 4);
     }
     // IF MARIO IS MOVING RIGHT, SLOW DOWN LEFT SPEED
     if (marioLeftSpeed > 20 && lastMarioXPos < currMarioXPos) {
-        return marioLeftSpeed = 0;
+        return (marioLeftSpeed = 0);
     }
 }
 
@@ -1102,9 +1112,9 @@ async function fetchAndDisplayHeader(profile) {
     bodyDOM.prepend(header);
 }
 
-
 // EVENT LISTENERS (for page)
-window.addEventListener('load', async ()=> {
+window.addEventListener('load', async () => {
+    loadingScreen.classList.add('invisible');
     const profile = await getMyProfile();
     if (!profile.username) {
         location.replace('../profile-setup');
@@ -1112,6 +1122,4 @@ window.addEventListener('load', async ()=> {
     await fetchAndDisplayHeader(profile);
     canvas = document.querySelector('canvas');
     window.canvas.focus();
-    loadingScreen.classList.add('invisible');
-
 });

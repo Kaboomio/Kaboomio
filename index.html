@@ -1,77 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <link rel="icon" href="../assets/kaboomio-logo-small.png">
-    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles/reset.css">
-    <link rel="stylesheet" href="./styles/style.css">
-    <link rel="stylesheet" href="./styles/home.css">
-    <style>
-        @media (min-width: 400px) {
-            header {
-                font-size: 1rem;
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"
+        ></script>
+        <link rel="icon" href="../assets/kaboomio-logo-small.png" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="./styles/reset.css" />
+        <link rel="stylesheet" href="./styles/style.css" />
+        <link rel="stylesheet" href="./styles/home.css" />
+        <style>
+            @media (min-width: 400px) {
+                header {
+                    font-size: 1rem;
+                }
             }
-        }
-        .icons {
-            margin-right: 15px;
-        }
-    </style>
-    <title>Sign In | Kaboomio</title>
-</head>
+            .icons {
+                margin-right: 15px;
+            }
+        </style>
+        <title>Sign In | Kaboomio</title>
+    </head>
 
-<body>
-    <header>
-        <div class="header-left">
-            <img src="assets/kaboomio-logo-small.png" class="logo" draggable="false" />
-            <h1 id="sign-in-header">Kaboomio</h1>
-        </div>
-        <div class="header-right">
-            <div class="icons">
-                <a href="../leaderboard/" draggable="false">
-                    <img src="../assets/trophy-icon.png" id="trophy-icon" draggable="false" />
-                </a>
-                <span class="tooltip">Leaderboard</span>
+    <body>
+        <header>
+            <div class="header-left">
+                <img src="assets/kaboomio-logo-small.png" class="logo" draggable="false" />
+                <h1 id="sign-in-header">Kaboomio</h1>
             </div>
-        </div>
-    </header>
-    <main class="auth-main">
-        <div class="left">
-            <div class="auth-container">
-                <form id="sign-in">
-                    <h3>Sign In</h3>
-                    <label>Email </label><input type="email" name="email" id="sign-in-email"/>
-                    <label>Password </label><input type="password" name="password" id="sign-in-password"/>
-                    <button>Let's a Go!</button>
-                </form>
-            </div>
-        </div>
-        <div class="right">
-            <div class="auth-container">
-                <form id='sign-up'>
-                    <h3>Sign Up</h3>
-                    <label>Email </label><input type='email' name='email' id="sign-up-email" />
-                    <label>Password </label><input type='password' name='password' id="sign-up-password" />
-                    <button>Let's a Go!</button>
-                </form>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <div class="footer-left">
-            <a href="../about-page" id="about-link" draggable="false">
-                <div>
-                    Meet the Team
+            <div class="header-right">
+                <div class="icons">
+                    <a href="../leaderboard/" draggable="false">
+                        <img src="../assets/trophy-icon.png" id="trophy-icon" draggable="false" />
+                    </a>
+                    <span class="tooltip">Leaderboard</span>
                 </div>
-            </a>
-        </div>
-        <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
-    </footer>
-    <script type="module" src="./app.js"></script>
-</body>
-
+            </div>
+        </header>
+        <main class="auth-main">
+            <div class="left">
+                <div class="auth-container">
+                    <form id="sign-in">
+                        <h3>Sign In</h3>
+                        <label>Email </label><input type="email" name="email" id="sign-in-email" />
+                        <label>Password </label
+                        ><input type="password" name="password" id="sign-in-password" />
+                        <button>Let's a Go!</button>
+                    </form>
+                </div>
+            </div>
+            <div class="right">
+                <div class="auth-container">
+                    <form id="sign-up">
+                        <h3>Sign Up</h3>
+                        <label>Email </label><input type="email" name="email" id="sign-up-email" />
+                        <label>Password </label
+                        ><input type="password" name="password" id="sign-up-password" />
+                        <button>Let's a Go!</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <div class="footer-left">
+                <a href="../about-page" id="about-link" draggable="false">
+                    <div>Meet the Team</div>
+                </a>
+            </div>
+            <div class="copy footer-right">&copy; 2022 Alchemy Code Lab</div>
+        </footer>
+        <script type="module" src="./app.js"></script>
+    </body>
 </html>
