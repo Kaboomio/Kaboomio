@@ -1,9 +1,4 @@
-import { 
-    checkAuth, 
-    getAllUsernames, 
-    logout,
-    updateProfile,
-} from '../fetch-utils.js';
+import { checkAuth, getAllUsernames, logout, updateProfile } from '../fetch-utils.js';
 
 const form = document.querySelector('form');
 
@@ -14,13 +9,6 @@ checkAuth();
 // EVENT LISTENERS
 window.addEventListener('load', async () => {
     usernames = await getAllUsernames();
-});
-
-document.addEventListener('click', (e) => {
-    // LOGOUT BUTTON FUNCTIONALITY
-    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
-        logout();
-    }
 });
 
 form.addEventListener('submit', async (e) => {

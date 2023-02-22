@@ -12,13 +12,6 @@ window.addEventListener('load', async () => {
     loadingScreen.classList.add('invisible');
 });
 
-document.addEventListener('click', (e) => {
-    // LOGOUT BUTTON FUNCTIONALITY
-    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
-        logout();
-    }
-});
-
 // FUNCTIONS
 async function fetchAndDisplayHeader() {
     const profile = await getMyProfile();

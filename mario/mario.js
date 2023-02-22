@@ -1,4 +1,4 @@
-import { checkAuth, logout, getMyProfile, createScore } from '../fetch-utils.js';
+import { checkAuth, getMyProfile, createScore } from '../fetch-utils.js';
 import { renderMarioHeader } from '../render-utils.js';
 import kaboom from '../kaboom/dist/kaboom.mjs';
 
@@ -10,10 +10,6 @@ let canvas = null;
 checkAuth();
 
 document.addEventListener('click', async (e) => {
-    // LOGOUT BUTTON FUNCTIONALITY
-    if (e.path[0].id === 'logout' || e.path[0].id === 'logout-icon') {
-        logout();
-    }
     // FULLSCREEN BUTTON FUNCTIONALITY
     const buttonId = e.path[0].id;
     await goFullscreen(e, buttonId);
