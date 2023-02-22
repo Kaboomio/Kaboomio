@@ -1,4 +1,4 @@
-import { checkAuth, logout, client, getMyProfile } from '../fetch-utils.js';
+import { checkAuth, client, getMyProfile } from '../fetch-utils.js';
 import { renderHomeHeader } from '../render-utils.js';
 
 const body = document.querySelector('body');
@@ -47,7 +47,6 @@ async function fetchAndDisplayLeaderboard() {
         const leaderboard = document.createElement('a');
         leaderboard.classList.add('mini');
         leaderboard.textContent = `${leaders.initials}.............${leaders.score}.........${leaders.time}`;
-        console.log(leaders.profile_id);
         leaderboard.addEventListener('click', async () => {
             leaderboard.href = `../profile-page/?id=${leaders.profile_id}`;
         });

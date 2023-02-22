@@ -1,4 +1,4 @@
-import { checkAuth, getAllUsernames, logout, updateProfile } from '../fetch-utils.js';
+import { checkAuth, getAllUsernames, updateProfile } from '../fetch-utils.js';
 
 const form = document.querySelector('form');
 

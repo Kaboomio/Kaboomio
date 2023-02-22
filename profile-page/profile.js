@@ -1,6 +1,5 @@
 import {
     checkAuth,
-    logout,
     getMyProfile,
     getProfile,
     getProfileScores,

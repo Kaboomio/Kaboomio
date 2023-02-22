@@ -1,4 +1,4 @@
-import { logout, getMyProfile, getUser } from '../fetch-utils.js';
+import { getMyProfile, getUser } from '../fetch-utils.js';
 import { renderAboutHeader } from '../render-utils.js';
 
 const body = document.querySelector('body');
