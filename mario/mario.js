@@ -11,7 +11,7 @@ checkAuth();
 
 document.addEventListener('click', async (e) => {
     // FULLSCREEN BUTTON FUNCTIONALITY
-    const buttonId = e.path[0].id;
+    const buttonId = e.target.id;
     await goFullscreen(e, buttonId);
     await goGameboy(e, buttonId);
     await muteGame(e, buttonId);
@@ -989,8 +989,8 @@ async function goFullscreen(e, buttonId) {
             canvas.style.top = '90px';
             gameboy.classList.add('hidden');
         }
-        e.path[0].id = 'gameboy';
-        e.path[0].textContent = 'Gameboy';
+        e.target.id = 'gameboy';
+        e.target.textContent = 'Gameboy';
     }
 }
 async function goGameboy(e, buttonId) {
@@ -1001,8 +1001,8 @@ async function goGameboy(e, buttonId) {
         canvas.style.top = '120px';
         canvas.style.transform = 'translateX(-50%)';
         gameboy.classList.remove('hidden');
-        e.path[0].id = 'fullscreen';
-        e.path[0].textContent = 'Fullscreen';
+        e.target.id = 'fullscreen';
+        e.target.textContent = 'Fullscreen';
     }
 }
 
@@ -1010,15 +1010,15 @@ async function goGameboy(e, buttonId) {
 async function muteGame(e, buttonId) {
     if (buttonId === 'mute') {
         volume(0.0);
-        e.path[0].id = 'unmute';
-        e.path[0].textContent = 'Unmute';
+        e.target.id = 'unmute';
+        e.target.textContent = 'Unmute';
     }
 }
 async function unmuteGame(e, buttonId) {
     if (buttonId === 'unmute') {
         volume(1);
-        e.path[0].id = 'mute';
-        e.path[0].textContent = 'Mute';
+        e.target.id = 'mute';
+        e.target.textContent = 'Mute';
     }
 }
 
